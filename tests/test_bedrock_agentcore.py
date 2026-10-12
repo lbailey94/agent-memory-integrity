@@ -21,7 +21,8 @@ import uuid
 import pytest
 
 from agmi.adapters.bedrock_agentcore import (  # noqa: E402
-    NO_METADATA, NO_UPDATE, SESSION, BedrockAgentCoreEventsAdapter,
+    NO_METADATA, NO_REORDER, NO_SNAPSHOT, NO_UPDATE, SESSION,
+    BedrockAgentCoreEventsAdapter,
 )
 from agmi.attacks.at_rest import AT_REST_ATTACKS_WITH_SNAPSHOT  # noqa: E402
 
@@ -110,6 +111,11 @@ def test_the_api_refuses_every_edit_that_would_rewrite_an_event():
             a.write_raw(a.mutate_payload(existing))
         with pytest.raises(RuntimeError, match="no UpdateEvent"):
             a.replay_onto(2, a.read_other_raw()[1])
+        # A move to another position is a different refusal from a rewrite.
+        moved = a.read_all_raw()[1]
+        moved.seq = 3
+        with pytest.raises(RuntimeError, match="ordered by eventTimestamp"):
+            a.write_raw(moved)
         with pytest.raises(RuntimeError, match="fixed at"):
             a.write_meta(2, {"actorId": "someone-else"})
         assert [r.fields["text"] for r in a.read_all_raw()] == [
@@ -151,10 +157,13 @@ def test_the_nine_edits_split_into_three_measured_and_six_not_applicable():
     for name in NOT_APPLICABLE:
         r = results[name]
         assert r.status == "n/a", f"{name}: expected n/a, got {r.status}"
+    # Each refused edit names its own reason, not a catch-all.
     assert results["tamper"].error == NO_UPDATE
     assert results["cross_replay"].error == NO_UPDATE
     assert results["rollback_replay"].error == NO_UPDATE
+    assert results["reorder"].error == NO_REORDER
     assert results["metadata_tamper"].error == NO_METADATA
+    assert results["snapshot_rollback"].error == NO_SNAPSHOT
 
 
 def test_a_forged_event_can_be_planted_between_two_genuine_ones():

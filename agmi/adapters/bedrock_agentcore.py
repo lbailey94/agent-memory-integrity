@@ -89,6 +89,7 @@ NO_REORDER = ("not applicable: events are ordered by eventTimestamp, fixed at cr
               "existing event cannot be moved to another position")
 NO_METADATA = ("not applicable: an event's actor, session, timestamp and id are fixed at "
                "creation and the API exposes no way to change them")
+NO_SNAPSHOT = ("not applicable: a managed store exposes no snapshot or restore of its own state")
 
 _MEMORY_CACHE: dict[str, str] = {}
 
@@ -124,6 +125,7 @@ class BedrockAgentCoreEventsAdapter(MemoryAdapter):
     supports_snapshot = False
     detection_point = "read"
     metadata_na_reason = NO_METADATA
+    snapshot_na_reason = NO_SNAPSHOT
 
     #: How long to wait for the service to show a write.
     settle_seconds = 60.0
@@ -288,8 +290,15 @@ class BedrockAgentCoreEventsAdapter(MemoryAdapter):
     # --- the data-plane edits (the attacker's moves) ----------------------
 
     def write_raw(self, record: Record) -> None:
-        if record.fields.get("eventId"):
-            # An existing event: the API has no way to rewrite one.
+        event_id = record.fields.get("eventId")
+        if event_id:
+            # An existing event. Two different refusals, and they are not the
+            # same finding: a move to another position is blocked by the
+            # ordering rule, a rewrite in place by the missing update call.
+            events = self._raw_events(self._actor)
+            pos = next((i for i, e in enumerate(events) if e.get("eventId") == event_id), None)
+            if pos is not None and pos != record.seq:
+                raise RuntimeError(NO_REORDER)
             raise RuntimeError(NO_UPDATE)
         current = self._raw_events(self._actor)
         when = self._base_time() + dt.timedelta(seconds=len(current))

@@ -319,7 +319,8 @@ class SnapshotRollbackAttack(Attack):
         from agmi.attacks.base import AttackResult
         if not getattr(adapter, "supports_snapshot", False):
             return AttackResult(self.name, adapter.name, detected=False,
-                                error="adapter does not support a store snapshot",
+                                error=getattr(adapter, "snapshot_na_reason",
+                                              "adapter does not support a store snapshot"),
                                 version=self.version)
         return super().run(adapter)
 

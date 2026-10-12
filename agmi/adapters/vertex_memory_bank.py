@@ -116,6 +116,8 @@ class VertexMemoryBankAdapter(MemoryAdapter):
     supports_replay = True
     supports_metadata = True
     supports_snapshot = False
+    snapshot_na_reason = ("not applicable: a managed store exposes no snapshot or restore of its "
+                          "own state")
     detection_point = "read"
 
     #: How long to wait for the service to show a write (eventual consistency).
