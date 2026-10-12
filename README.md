@@ -10,7 +10,7 @@ A conformance test suite that measures whether AI agent memory and checkpoint st
   <a href="https://github.com/tech4biz-yasha/agmi/actions/workflows/scorecard.yml"><img src="https://github.com/tech4biz-yasha/agmi/actions/workflows/scorecard.yml/badge.svg" alt="scorecard"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT"></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-blue.svg" alt="python">
-  <img src="https://img.shields.io/badge/stores%20measured-18-green.svg" alt="stores measured">
+  <img src="https://img.shields.io/badge/stores%20measured-20-green.svg" alt="stores measured">
 </p>
 
 [![Method paper DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22995111.svg)](https://doi.org/10.5281/zenodo.22995111)
