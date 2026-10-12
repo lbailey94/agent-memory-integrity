@@ -261,7 +261,8 @@ class MetadataTamperAttack(Attack):
         from agmi.attacks.base import AttackResult
         if not getattr(adapter, "supports_metadata", False):
             return AttackResult(self.name, adapter.name, detected=False,
-                                error="adapter does not expose record metadata",
+                                error=getattr(adapter, "metadata_na_reason",
+                                              "adapter does not expose record metadata"),
                                 version=self.version)
         return super().run(adapter)
 

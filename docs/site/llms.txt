@@ -14,6 +14,7 @@ Method text proposed for IETF draft-han-bmwg-agent-security-benchmark metric 5.4
 - CrewAI long-term memory, LanceDB dataset (crewai 1.15.23): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 accepted
 - Vertex AI Agent Engine Memory Bank, managed store, edits through the data-plane API (google-cloud-aiplatform 2.4.0): T1 accepted, T2 accepted, T3 accepted, T4 n/a, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 n/a
 - OpenClaw agent memory, MEMORY.md read through memory_get (openclaw 2026.10.1): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 accepted
+- Hermes Agent memory, MEMORY.md read through the system-prompt snapshot (hermes-agent 0.19.0): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 n/a, T9 accepted
 - Letta block checkpoint history (letta 0.16.8): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 accepted
 - Mem0 local Qdrant store (mem0ai 2.0.20): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 accepted
 - inspeximus, receipts off (default) (inspeximus 3.0.0): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 accepted

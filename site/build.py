@@ -72,6 +72,7 @@ ROW_NAMES = {
     "crewai-ltm-lancedb": ("CrewAI long-term memory, LanceDB dataset", "crewai 1.15.23"),
     "vertex-memory-bank": ("Vertex AI Agent Engine Memory Bank, managed store, edits through the data-plane API", "google-cloud-aiplatform 2.4.0"),
     "openclaw-memory-md": ("OpenClaw agent memory, MEMORY.md read through memory_get", "openclaw 2026.10.1"),
+    "hermes-memory-md": ("Hermes Agent memory, MEMORY.md read through the system-prompt snapshot", "hermes-agent 0.19.0"),
     "acrf-memory-guard": ("acrf-memory-guard, per-entry HMAC over a JSON store", "acrf-memory-guard 0.1.0"),
     "agent-memory": ("Agent Memory reference runtime, SQLite canonical substrate, bucketed row digests, fail-closed open", "agent-memory-reference 0.2.0 (f2aef57)"),
     "langgraph-ledger": ("langgraph-ledger over SqliteSaver, hash-chained ledger, verify_thread audit", "langgraph-ledger 0.3.0"),
@@ -107,6 +108,7 @@ ROW_REPOS = {
     "crewai-ltm-lancedb": "https://github.com/crewAIInc/crewAI",
     "vertex-memory-bank": "https://docs.cloud.google.com/agent-builder/agent-engine/memory-bank/overview",
     "openclaw-memory-md": "https://github.com/openclaw/openclaw",
+    "hermes-memory-md": "https://github.com/NousResearch/hermes-agent",
     "acrf-memory-guard": "https://github.com/kannasekar-alt/ACRF",
     "agent-memory": "https://github.com/MythologIQ-Labs-LLC/agent-memory",
     "langgraph-ledger": "https://pypi.org/project/langgraph-ledger/",
@@ -516,7 +518,7 @@ def build():
     global d_date, d_platform
     d, rows = load()
     d_date, d_platform = d["date"], d["platform"]
-    at_rest_keys = [k for k in ["openfang(model,fixed)", "langgraph-sqlite", "langgraph-postgres", "langgraph-redis", "openai-agents-sqlite-session", "llamaindex-memory-sqlite", "crewai-ltm-lancedb", "vertex-memory-bank", "openclaw-memory-md", "letta-block-history",
+    at_rest_keys = [k for k in ["openfang(model,fixed)", "langgraph-sqlite", "langgraph-postgres", "langgraph-redis", "openai-agents-sqlite-session", "llamaindex-memory-sqlite", "crewai-ltm-lancedb", "vertex-memory-bank", "openclaw-memory-md", "hermes-memory-md", "letta-block-history",
                                 "mem0-qdrant-local", "inspeximus-default", "inspeximus-rcpt+dir",
                                 "inspeximus-rcpt+dir+home", "langgraph-ledger", "memory-blackbox-md", "memory-blackbox-md+restart", "atelya-attest-chain", "atelya-attest-chain+anchor", "continuum-events", "continuum-events+attest", "atmem-chain", "atmem-chain+checkpoint", "acrf-memory-guard", "agent-memory"] if k in rows]
     fd_keys = [k for k in ["langgraph-sqlite-store", "letta-archival", "mem0-qdrant-local",
@@ -526,7 +528,7 @@ def build():
     fd_cols = [(a, n, n) for a, n, _, _ in FRONT_DOOR]
 
     # count the headline
-    all8 = [k for k in ["langgraph-sqlite", "langgraph-postgres", "langgraph-redis", "openai-agents-sqlite-session", "llamaindex-memory-sqlite", "crewai-ltm-lancedb", "vertex-memory-bank", "openclaw-memory-md", "letta-block-history", "mem0-qdrant-local"]
+    all8 = [k for k in ["langgraph-sqlite", "langgraph-postgres", "langgraph-redis", "openai-agents-sqlite-session", "llamaindex-memory-sqlite", "crewai-ltm-lancedb", "vertex-memory-bank", "openclaw-memory-md", "hermes-memory-md", "letta-block-history", "mem0-qdrant-local"]
             if k in rows and all(rows[k]["cells"].get(a, {}).get("verdict", "n/a") in ("accepted", "n/a") for a, *_ in AT_REST)
             and any(rows[k]["cells"].get(a, {}).get("verdict") == "accepted" for a, *_ in AT_REST)]
 
@@ -539,7 +541,7 @@ def build():
   <div class="hero-text">
     <p class="lede">Edit an AI agent's memory behind its back. Restart the agent. Ask it what it remembers.</p>
     <h1>{len(all8)} of {len(all8)} memory stores serve the edit as genuine.</h1>
-    <p class="sub">LangGraph, OpenAI Agents SDK, LlamaIndex, CrewAI, OpenClaw, Letta, Mem0, inspeximus and Google's Vertex AI Memory Bank, measured against nine storage-level edits and six front-door attacks. Real libraries, pinned versions, reproducible in under a minute, re-run in CI on every change.</p>
+    <p class="sub">LangGraph, OpenAI Agents SDK, LlamaIndex, CrewAI, OpenClaw, Hermes, Letta, Mem0, inspeximus and Google's Vertex AI Memory Bank, measured against nine storage-level edits and six front-door attacks. Real libraries, pinned versions, reproducible in under a minute, re-run in CI on every change.</p>
     <p class="cta"><a class="btn" href="scorecard.html">See the scorecard</a> <a class="btn-quiet" href="run.html">Run it on your store</a></p>
   </div>
   <figure class="hero-fig" aria-label="Animation: a genuine record from another user is copied over this user's newest record, and the read path returns it as genuine">
@@ -611,7 +613,7 @@ def build():
   </ul>
 </section>'''
     (OUT / "index.html").write_text(page("Agent Memory Integrity: do AI agent memory stores notice when they are tampered with?",
-        "agmi measures whether AI agent memory and checkpoint stores notice tampering. Nine storage-level edits and six front-door attacks, measured on nineteen stores, from LangGraph and OpenClaw to Google's Vertex AI Memory Bank.",
+        "agmi measures whether AI agent memory and checkpoint stores notice tampering. Nine storage-level edits and six front-door attacks, measured on twenty stores, from LangGraph, OpenClaw and Hermes to Google's Vertex AI Memory Bank.",
         "index.html", hero, "index.html"))
 
     # ---- scorecard
@@ -646,7 +648,7 @@ def build():
   <h2>Per target, in full</h2>
   {per_target(at_rest_keys + [k for k in fd_keys if k not in at_rest_keys])}
 </section>'''
-    (OUT / "scorecard.html").write_text(page("Scorecard, Agent Memory Integrity", "Measured verdicts for nineteen memory stores, LangGraph and OpenClaw to Google's Vertex AI Memory Bank, on nine at-rest edits and six front-door attacks.", "scorecard.html", sc, "scorecard.html"))
+    (OUT / "scorecard.html").write_text(page("Scorecard, Agent Memory Integrity", "Measured verdicts for twenty memory stores, LangGraph, OpenClaw and Hermes to Google's Vertex AI Memory Bank, on nine at-rest edits and six front-door attacks.", "scorecard.html", sc, "scorecard.html"))
 
     # ---- edits
     ed = ('<section class="part"><h1>The edits and attacks</h1><p class="lede">Fifteen ways to change what an agent remembers. Nine need access to the store and are the at-rest edits, T1 to T9. Six only need to talk to the agent and are the front-door attacks. Each one below has a story, a picture of what changes, what the agent reads back, what stops it, and which stores stop it today.</p>'

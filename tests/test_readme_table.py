@@ -23,6 +23,7 @@ ROWS = {
     "Vertex AI Agent Engine Memory Bank, managed store, edits through the data-plane API":
         "vertex-memory-bank",
     "OpenClaw agent memory, `MEMORY.md` read through `memory_get`": "openclaw-memory-md",
+    "Hermes Agent memory, `MEMORY.md` read through the system-prompt snapshot": "hermes-memory-md",
     "Letta core memory checkpoint history": "letta-block-history",
     "Mem0 local Qdrant store": "mem0-qdrant-local",
     "inspeximus, receipts off (default), read path": "inspeximus-default",

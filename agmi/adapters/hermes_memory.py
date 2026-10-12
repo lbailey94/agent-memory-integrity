@@ -125,6 +125,8 @@ class HermesMemoryAdapter(MemoryAdapter):
     name = "hermes-memory-md"
     supports_replay = True
     supports_metadata = False
+    metadata_na_reason = ("not applicable: a Hermes memory entry is plain text with no owner, source or "
+                          "timestamp field to change")
     supports_snapshot = True
     detection_point = "read"
 
