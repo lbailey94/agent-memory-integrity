@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import datetime as _dt
 import json
+import os
 import platform
 import sys
 
@@ -176,6 +177,11 @@ def full_scorecard() -> str:
         openclaw_row = [("openclaw-memory-md", OpenClawMemoryAdapter(), None)]
     else:
         openclaw_row = []
+    if os.environ.get("AGMI_HERMES_PYTHON"):  # row only with AGMI_HERMES_PYTHON; a wrong version fails loudly
+        from agmi.adapters.hermes_memory import HermesMemoryAdapter
+        hermes_row = [("hermes-memory-md", HermesMemoryAdapter(), None)]
+    else:
+        hermes_row = []
     try:
         import langgraph.checkpoint.redis  # noqa: F401
         from agmi.adapters.langgraph_redis import LangGraphRedisAdapter, redis_uri
@@ -253,6 +259,7 @@ def full_scorecard() -> str:
         *([("crewai-ltm-lancedb", crewai_ltm, None)] if crewai_ltm else []),
         *([("vertex-memory-bank", VertexMemoryBankAdapter(), None)] if VertexMemoryBankAdapter else []),
         *openclaw_row,
+        *hermes_row,
         *([("langgraph-sqlite-store", None, lg_store)] if lg_store else []),
         *([letta_row] if letta_row else []),
         *([("letta-archival", None, letta_archival)] if letta_archival else []),
