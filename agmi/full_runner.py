@@ -171,6 +171,11 @@ def full_scorecard() -> str:
             VertexMemoryBankAdapter = None  # noqa: N806 - row only with AGMI_GCP_PROJECT
     except ImportError:
         VertexMemoryBankAdapter = None  # noqa: N806
+    if os.environ.get("AGMI_BEDROCK") == "1":  # row only with AGMI_BEDROCK=1; it bills per run
+        from agmi.adapters.bedrock_agentcore import BedrockAgentCoreEventsAdapter
+        bedrock_rows = [("bedrock-agentcore-events", BedrockAgentCoreEventsAdapter(), None)]
+    else:
+        bedrock_rows = []
     from agmi.adapters.openclaw_memory import openclaw_dir
     if openclaw_dir():  # row only with AGMI_OPENCLAW_DIR; a wrong version fails loudly
         from agmi.adapters.openclaw_memory import OpenClawMemoryAdapter
@@ -258,6 +263,7 @@ def full_scorecard() -> str:
         *([("llamaindex-memory-sqlite", llamaindex_memory, None)] if llamaindex_memory else []),
         *([("crewai-ltm-lancedb", crewai_ltm, None)] if crewai_ltm else []),
         *([("vertex-memory-bank", VertexMemoryBankAdapter(), None)] if VertexMemoryBankAdapter else []),
+        *bedrock_rows,
         *openclaw_row,
         *hermes_row,
         *([("langgraph-sqlite-store", None, lg_store)] if lg_store else []),
