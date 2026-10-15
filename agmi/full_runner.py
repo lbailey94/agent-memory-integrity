@@ -176,6 +176,16 @@ def full_scorecard() -> str:
         bedrock_rows = [("bedrock-agentcore-events", BedrockAgentCoreEventsAdapter(), None)]
     else:
         bedrock_rows = []
+    if os.environ.get("AGMI_RECALLSPECTION_REPO"):  # row only with the pinned checkout
+        from agmi.adapters.recallspection import (
+            RecallspectionAdapter, RecallspectionAnchoredAdapter,
+        )
+        recallspection_rows = [
+            ("recallspection-exact", RecallspectionAdapter(), None),
+            ("recallspection-exact+anchor", RecallspectionAnchoredAdapter(), None),
+        ]
+    else:
+        recallspection_rows = []
     from agmi.adapters.openclaw_memory import openclaw_dir
     if openclaw_dir():  # row only with AGMI_OPENCLAW_DIR; a wrong version fails loudly
         from agmi.adapters.openclaw_memory import OpenClawMemoryAdapter
@@ -284,6 +294,7 @@ def full_scorecard() -> str:
         *continuum_rows,
         *atmem_rows,
         *surgical_devops_rows,
+        *recallspection_rows,
         *([acrf_row] if acrf_row else []),
         *([agent_memory_row] if agent_memory_row else []),
         ("naive-mem(scoped)", None,
