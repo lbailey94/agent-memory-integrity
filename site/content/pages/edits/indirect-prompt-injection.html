@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hidden instruction: how memory stores respond | agmi</title>
+<meta name="description" content="Hidden instruction: Store an instruction disguised as a memory and see whether it comes back as context. Measured on 7 agent memory stores by agmi; 6 serve…">
+<link rel="canonical" href="https://agentmemoryintegrity.org/edits/indirect-prompt-injection.html">
+<meta name="theme-color" content="#F7F8F6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14212B" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="agmi, Agent Memory Integrity">
+<meta property="og:title" content="Hidden instruction: how memory stores respond">
+<meta property="og:description" content="Hidden instruction: Store an instruction disguised as a memory and see whether it comes back as context. Measured on 7 agent memory stores by agmi; 6 serve…">
+<meta property="og:url" content="https://agentmemoryintegrity.org/edits/indirect-prompt-injection.html">
+<meta property="og:image" content="https://agentmemoryintegrity.org/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hidden instruction: how memory stores respond">
+<meta name="twitter:description" content="Hidden instruction: Store an instruction disguised as a memory and see whether it comes back as context. Measured on 7 agent memory stores by agmi; 6 serve…">
+<meta name="twitter:image" content="https://agentmemoryintegrity.org/og.png">
+
+<link rel="icon" href="../logo.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="agmi findings" href="../feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="../site.css?v=0.6.3">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "agmi", "item": "https://agentmemoryintegrity.org/"}, {"@type": "ListItem", "position": 2, "name": "Edits", "item": "https://agentmemoryintegrity.org/edits/"}, {"@type": "ListItem", "position": 3, "name": "Hidden instruction", "item": "https://agentmemoryintegrity.org/edits/indirect-prompt-injection.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Hidden instruction: how memory stores respond", "description": "Hidden instruction: Store an instruction disguised as a memory and see whether it comes back as context. Measured on 7 agent memory stores by agmi; 6 serve it, 1 refuse it.", "url": "https://agentmemoryintegrity.org/edits/indirect-prompt-injection.html", "dateModified": "2026-10-08", "author": {"@type": "Person", "name": "Yasha Khandelwal"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <a class="brand" href="../index.html"><img src="../logo.svg" alt="" width="28" height="28"><span>agmi</span><small>Agent Memory Integrity</small></a>
+  <nav class="nav" aria-label="Primary"><a href="../scorecard.html">Scorecard</a><a href="../stores/index.html">Stores</a><a href="../edits/index.html" aria-current=page>Edits</a><a href="../levels/index.html">Levels</a><a href="../agent.html">Memory agent</a><a href="../findings/index.html">Findings</a><a href="../method.html">Method</a><a href="../run.html">Run it</a><details class="more"><summary>More</summary><div><a href="../architecture.html">Architecture</a><a href="../ecosystem.html">Ecosystem</a><a href="../cite.html">Cite</a><a href="../about.html">About</a></div></details></nav>
+  <a class="gh" href="https://github.com/tech4biz-yasha/agmi">GitHub</a>
+</header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">agmi</a> / <a href="../edits/index.html">Edits</a> / <span>Hidden instruction</span></nav>
+
+<header class="pagehead"><p class="kicker">Front-door attack</p><h1>Hidden instruction</h1>
+<p class="lede">Store an instruction disguised as a memory and see whether it comes back as context.</p><p><strong>What it looks like in the world:</strong> A memory that tells the agent what to do next.</p>
+<p class="mono muted">attack id indirect_prompt_injection · version 3 · attacker: write-access</p></header>
+
+<section><h2>Every store, this edit</h2><h3 class="v-acc"><span class="verdict">surfaced</span> 6</h3><ul class="dist"><li><a href="../stores/langgraph-sqlite-store.html">LangGraph SqliteStore</a></li><li><a href="../stores/letta-archival.html">Letta archival memory</a></li><li><a href="../stores/inspeximus-defended.html">inspeximus, trust root keyed on the label</a></li><li><a href="../stores/inspeximus-defended-key.html">inspeximus, trust root keyed on an attested key</a></li><li><a href="../stores/naive-mem-scoped.html">Reference store, user-scoped</a></li><li><a href="../stores/naive-mem-unscoped.html">Reference store, unscoped</a></li></ul><h3 class="v-rej"><span class="verdict">kept out</span> 1</h3><ul class="dist"><li><a href="../stores/reference-defended-model.html">Reference store, defended</a> <span class="muted">no instruction reached context (external: kept out 5 of 5; laundered: kept out 5 of 5; agent-laundered: kept out 5 of 5)</span></li></ul></section>
+<section><h2>Reproduce</h2><pre><code>pip install agent-memory-integrity
+python agmi/full_runner.py --json results/scorecard.json   # every row; the indirect_prompt_injection column is this page</code></pre></section>
+<p><a href="../edits/index.html">All 15 edits and attacks</a> · <a href="../scorecard.html">The scorecard</a></p>
+</main>
+<footer class="foot">
+  <div class="foot-grid">
+    <div><strong>agmi 0.6.3</strong><br>Measured 2026-10-08. 37 rows, 24 stores, nine storage-level edits, six front-door attacks.</div>
+    <div><a href="../cite.html">Cite</a> · <a href="https://doi.org/10.5281/zenodo.23193233">DOI</a> · <a href="https://pypi.org/project/agent-memory-integrity/">PyPI</a> · <a href="https://www.ietf.org/archive/id/draft-khandelwal-bmwg-agent-memory-integrity-01.html">Internet-Draft</a> · <a href="../feed.xml">Feed</a> · <a href="../llms.txt">llms.txt</a></div>
+    <div>Built and maintained by <a href="https://yashakhandelwal.com/">Yasha Khandelwal</a> (<a href="mailto:yasha.khandelwal@tech4biz.io">yasha.khandelwal@tech4biz.io</a>, <a href="https://orcid.org/0009-0005-2166-4951">ORCID</a>). Hosted assessments and vendor badges through <a href="https://auditraxlabs.com/">AuditTrax Labs</a>. MIT licence · <a href="https://github.com/tech4biz-yasha/agmi/blob/main/CONTRIBUTING.md">Add a row</a></div>
+  </div>
+</footer>
+<div id="drawer" class="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dtitle">
+  <div class="drawer-card"><button type="button" class="drawer-close" aria-label="Close">×</button>
+  <p class="drawer-kicker" id="dkick"></p><h2 id="dtitle"></h2><p class="drawer-verdict" id="dverdict"></p>
+  <dl><dt>What the tool said</dt><dd id="ddetail"></dd><dt>Detection point</dt><dd id="dpoint"></dd><dt>Reproduce</dt><dd><code id="drepro"></code></dd></dl></div>
+</div>
+<script src="../site.js?v=0.6.3" defer></script>
+</body>
+</html>

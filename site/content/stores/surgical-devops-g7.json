@@ -1,0 +1,11 @@
+{
+ "What this means": "<p>Nothing an attacker does to this store reaches the agent. Every one of the nine edits lands in the G7 directory and every one is refused when the agent next reads, by five separate checks rather than one blanket test. Which check fires tells you what was tried: a payload digest for content, a storage-position binding for order, an envelope context binding for a record brought in from elsewhere, envelope field validation for metadata, and a whole-store root against an independent witness for anything that changes the store as a whole. Five rows on this board already refuse all nine, and every one of them does it in an audit pass afterwards. This is the first to do it on the read path, which is the only moment that matters to an agent about to act.</p>",
+ "Where the attacker stands": "<p>The attacker reads and writes the G7 directory beneath the Surgical DevOps API, as a backing database, a mounted volume or process memory would allow. He holds neither the identity's private key nor the witness root. An attacker who holds either is a different measurement and this row does not speak for it.</p>",
+ "title": "Surgical DevOps G7",
+ "subtitle": "signed envelopes bound to their storage position, with an independent witness",
+ "source_url": "https://github.com/bonushora/surgical-dev-ops",
+ "source_label": "github.com/bonushora/surgical-dev-ops",
+ "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
+ "reproduce": "pip install agent-memory-integrity\ngit clone https://github.com/bonushora/surgical-dev-ops &amp;&amp; cd surgical-dev-ops\ngit checkout f267cf38b0ac321b6361602973b4d34b5c043e1c &amp;&amp; npm install   # Node v24.18.0\nexport AGMI_SDO_REPO=&lt;that checkout&gt;\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included\npython -m agmi.agent --target surgical-devops-g7 --families at-rest",
+ "label": "surgical-devops-g7"
+}

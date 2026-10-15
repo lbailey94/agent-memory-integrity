@@ -1,0 +1,11 @@
+{
+ "What this means": "<p>ExactMemory commits to its whole store with one MAC and gives every record a tag of its own inside it. An attacker who can write the store, but who holds neither key, cannot get a single record edit past the read path: the container MAC fails and the load refuses. What he can still do is put the whole store back to an earlier copy of itself. In this configuration the anchor holding the high-water mark sits beside the store on the same disk, so the rollback takes the anchor with it, the older store opens as current, and the newest genuine record is gone with no error. The row with the anchor moved off the store refuses that same rollback. One deployment choice separates them. The maintainer asked for this row to be published rather than the anchored one alone.</p>",
+ "Where the attacker stands": "<p>The attacker reads and writes the store directory, which here includes the anchor. He holds neither the container key nor the record keys, so he cannot forge either MAC.</p>",
+ "title": "Recallspection ExactMemory",
+ "subtitle": "anchor beside the store on the same disk, the default the product ships",
+ "source_url": "https://github.com/sciencedelicmetatech/exactmemory.recallspection",
+ "source_label": "github.com/sciencedelicmetatech/exactmemory.recallspection",
+ "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
+ "reproduce": "pip install agent-memory-integrity\ngit clone https://github.com/sciencedelicmetatech/exactmemory.recallspection\ncd exactmemory.recallspection &amp;&amp; git checkout c62ef7ada64928418a7e5d3251a6b65d005599b6\nexport AGMI_RECALLSPECTION_REPO=&lt;that checkout&gt;\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included\npython -m agmi.agent --target recallspection-exact --families at-rest",
+ "label": "recallspection-exact"
+}

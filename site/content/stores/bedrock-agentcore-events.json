@@ -1,0 +1,11 @@
+{
+ "What this means": "<p>There is no disk to edit here, so the attacker is a principal holding the data-plane permissions outside the agent's own session. What he can do, he does without a trace: delete any turn from the agent's history, and plant a new one at any point in time, because the event timestamp is set by the caller rather than the service. The agent's next ListEvents serves what is left as its own record, with no error and nothing on the read path that notices. What he cannot do is rewrite a turn that is already there, because the API has no update call at all, and that is a stronger position than a store whose records can be patched. Six of the nine edits are not applicable for that reason, and each says so in its own words rather than sitting blank. CloudTrail records the calls at the platform layer, outside the store, and the read path never consults it.</p>",
+ "Where the attacker stands": "<p>The attacker holds the AgentCore data-plane permissions for this memory, outside the agent's session: a leaked access key, a second workload in the same account, or a platform operator. He does not hold the agent's own session, and he does not need it.</p>",
+ "title": "AWS Bedrock AgentCore Memory, event plane",
+ "subtitle": "edits through the data-plane API",
+ "source_url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/memory.html",
+ "source_label": "docs.aws.amazon.com/bedrock-agentcore",
+ "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
+ "reproduce": "pip install &#x27;agent-memory-integrity[bedrock]&#x27;\nexport AGMI_BEDROCK=1 AWS_DEFAULT_REGION=us-east-1   # plus AWS credentials\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included\npython -m agmi.agent --target bedrock-agentcore-events --families at-rest",
+ "label": "bedrock-agentcore-events"
+}

@@ -1,0 +1,11 @@
+{
+ "What this means": "<p>The same store as the row above, with the anchor moved off the disk the attacker can write. The eight record edits are refused exactly as before, by the container MAC. The whole-store rollback is now refused too, and by a different check: the anchor has seen a later version than the store carries, so the load raises a rollback error rather than a tamper error. Keeping those two apart is the point of the row. It is one of the first two rows on this board to reach L4, where a rollback of the whole store to an older genuine copy is refused on the read path.</p>",
+ "Where the attacker stands": "<p>The attacker reads and writes the store. He cannot reach the anchor, which lives on a separate volume or a remote service. If the anchor sits on the same disk, that is the row above, and it is the configuration the product ships by default.</p>",
+ "title": "Recallspection ExactMemory, anchored",
+ "subtitle": "anchor off the store, on a separate volume or a remote service",
+ "source_url": "https://github.com/sciencedelicmetatech/exactmemory.recallspection",
+ "source_label": "github.com/sciencedelicmetatech/exactmemory.recallspection",
+ "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
+ "reproduce": "pip install agent-memory-integrity\ngit clone https://github.com/sciencedelicmetatech/exactmemory.recallspection\ncd exactmemory.recallspection &amp;&amp; git checkout c62ef7ada64928418a7e5d3251a6b65d005599b6\nexport AGMI_RECALLSPECTION_REPO=&lt;that checkout&gt;\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included\npython -m agmi.agent --target recallspection-exact+anchor --families at-rest",
+ "label": "recallspection-exact+anchor"
+}
