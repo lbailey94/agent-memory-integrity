@@ -117,6 +117,9 @@ def at_rest_target(name: str) -> MemoryAdapter:
     if name == "hermes-memory-md":
         from agmi.adapters.hermes_memory import HermesMemoryAdapter
         return HermesMemoryAdapter()
+    if name == "surgical-devops-g7":
+        from agmi.adapters.surgical_devops import SurgicalDevOpsAdapter
+        return SurgicalDevOpsAdapter()
     if name == "bedrock-agentcore-events":
         from agmi.adapters.bedrock_agentcore import BedrockAgentCoreEventsAdapter
         return BedrockAgentCoreEventsAdapter()
@@ -134,5 +137,5 @@ def at_rest_target(name: str) -> MemoryAdapter:
     raise SystemExit(
         f"unknown at-rest target {name!r}; choose one of: reference, "
         f"langgraph-sqlite, llamaindex, crewai, openai-agents, inspeximus-default, "
-        f"inspeximus-rcpt+dir, inspeximus-rcpt+dir+home, vertex-memory-bank, bedrock-agentcore-events, openclaw-memory-md, hermes-memory-md, "
+        f"inspeximus-rcpt+dir, inspeximus-rcpt+dir+home, vertex-memory-bank, bedrock-agentcore-events, surgical-devops-g7, openclaw-memory-md, hermes-memory-md, "
         f"atmem-chain, atmem-chain+checkpoint")

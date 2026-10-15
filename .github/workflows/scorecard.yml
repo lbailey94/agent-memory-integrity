@@ -84,3 +84,31 @@ jobs:
           python -m agmi.measure --target mem0 --embedder minilm 2>/dev/null
           python -m agmi.measure --target langgraph-store --embedder minilm 2>/dev/null
           python -m agmi.measure --target letta-archival --embedder minilm 2>/dev/null
+
+  corpus-drift:
+    # The vendored anchored-chain cases in tests/vectors are what the suite
+    # asserts against, so the pinned test stands on its own. This job runs the
+    # published corpus through the same verifier, so drift between the two
+    # shows up here rather than in a result nobody re-checked. It reports and
+    # never blocks: a corpus release moving is not a defect in this repo.
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,vectors]"
+      - name: The vendored cases still agree with the verifier
+        env:
+          PYTHONPATH: .
+        run: python -m pytest tests/test_anchored_chain_vectors.py -q -p no:warnings
+      - name: The published corpus agrees with the verifier
+        env:
+          PYTHONPATH: .
+        run: |
+          agent-evidence-vectors --corpus vectors-anchored-chain \
+            --verifier "python -m agmi.anchored_chain"
