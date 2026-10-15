@@ -2,6 +2,16 @@
 
 agmi is a scorecard. Its value is that every cell was produced the same way, so the rules below are the point of the project, not paperwork. They apply to every row, including rows the maintainer of agmi adds herself.
 
+## Start here
+
+- **docs/adding-a-row.md** is the practical path: the five questions to answer
+  before writing anything, what to write, and how to tell a real result from
+  an adapter bug.
+- **agmi/adapters/_template.py** is a commented skeleton of the whole adapter
+  contract. Copy it rather than starting from an existing adapter.
+- **Asking for a row rather than writing one** is welcome too: open a "Measure
+  my store" issue with the same five answers.
+
 ## How a tool gets a row
 
 1. **Seed and read through the tool's own API.** The adapter writes memories the way a user of that tool would, and reads them back the way the tool's users would. The raw store is touched only during the attack step, never to seed or to verify.
