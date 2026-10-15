@@ -215,6 +215,13 @@ def full_scorecard() -> str:
         acrf_row = ("acrf-memory-guard", AcrfMemoryGuardAdapter(), None)
     except ImportError:
         acrf_row = None
+    if os.environ.get("AGMI_SDO_REPO"):
+        from agmi.adapters.surgical_devops import SurgicalDevOpsAdapter
+        surgical_devops_rows = [
+            ("surgical-devops-g7", SurgicalDevOpsAdapter(), None)
+        ]
+    else:
+        surgical_devops_rows = []
     try:
         from agmi.adapters.mem0_at_rest import Mem0AtRestAdapter
         mem0_row = ("mem0-qdrant-local", Mem0AtRestAdapter(), _mem0_semantic())
@@ -276,6 +283,7 @@ def full_scorecard() -> str:
         *atelya_rows,
         *continuum_rows,
         *atmem_rows,
+        *surgical_devops_rows,
         *([acrf_row] if acrf_row else []),
         *([agent_memory_row] if agent_memory_row else []),
         ("naive-mem(scoped)", None,
@@ -294,6 +302,9 @@ def full_scorecard() -> str:
             ar_ad.name = label
             point = getattr(ar_ad, "detection_point", "read")
             checked_at[label] = point
+            provenance = getattr(ar_ad, "measured_on", None)
+            if callable(provenance):
+                measured_on[label] = provenance()
             for atk in at_rest:
                 res = atk.run(ar_ad)
                 status = res.status
