@@ -48,6 +48,14 @@ ROWS = {
     "acrf-memory-guard, per-entry HMAC over a JSON store, read path": "acrf-memory-guard",
     "MythologIQ Agent Memory reference runtime, SQLite canonical substrate, read path":
         "agent-memory",
+    "AWS Bedrock AgentCore Memory, event plane, edits through the data-plane API":
+        "bedrock-agentcore-events",
+    "Surgical DevOps G7, signed envelopes bound to their storage position with an "
+    "independent witness, read path": "surgical-devops-g7",
+    "Recallspection ExactMemory, anchor beside the store on the same disk, read path":
+        "recallspection-exact",
+    "Recallspection ExactMemory, anchor off the store, read path":
+        "recallspection-exact+anchor",
 }
 
 

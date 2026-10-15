@@ -10,7 +10,7 @@ A conformance test suite that measures whether AI agent memory and checkpoint st
   <a href="https://github.com/tech4biz-yasha/agmi/actions/workflows/scorecard.yml"><img src="https://github.com/tech4biz-yasha/agmi/actions/workflows/scorecard.yml/badge.svg" alt="scorecard"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT"></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-blue.svg" alt="python">
-  <img src="https://img.shields.io/badge/stores%20measured-20-green.svg" alt="stores measured">
+  <img src="https://img.shields.io/badge/stores%20measured-24-green.svg" alt="stores measured">
 </p>
 
 [![Method paper DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22995111.svg)](https://doi.org/10.5281/zenodo.22995111)
@@ -23,7 +23,7 @@ A conformance test suite that measures whether AI agent memory and checkpoint st
 
 ## The result in one table
 
-Twenty agent memory and checkpoint stores were seeded through their own APIs, edited behind their backs, and asked to read their memory again. The eleven that make no integrity claim, all three official LangGraph checkpointers, Google's managed Memory Bank and the memory of the OpenClaw and Hermes agents among them, served every applicable edit as genuine. The nine that do make a claim were measured against it, and the table shows exactly where each one holds and where it stops. One of them, the MythologIQ Agent Memory reference runtime, refuses all eight record-level edits on the read path and is the first row to do so.
+Twenty-four agent memory and checkpoint stores were seeded through their own APIs, edited behind their backs, and asked to read their memory again. The twelve that make no integrity claim, all three official LangGraph checkpointers, Google's managed Memory Bank, the event plane of AWS Bedrock AgentCore Memory and the memory of the OpenClaw and Hermes agents among them, served every applicable edit as genuine. The twelve that do make a claim were measured against it, and the table shows exactly where each one holds and where it stops. The MythologIQ Agent Memory reference runtime was the first row to refuse all eight record-level edits on the read path; Surgical DevOps G7 is the first to refuse all nine there, including a whole-store rollback.
 
 The nine edits: T1 content tamper, T2 tail truncation, T3 middle deletion, T4 reordering, T5 forged insertion, T6 cross-context replay, T7 rollback replay, T8 metadata tamper, and T9 snapshot rollback, which restores an older complete copy of the store after one more genuine record was written through the tool's own API. T1 to T8 are the edits proposed as the test method for IETF draft-han-bmwg-agent-security-benchmark metric 5.4.7 and defined in draft-khandelwal-bmwg-agent-memory-integrity. T6, T7 and T9 use only bytes the store itself wrote, in the wrong place or at the wrong time; they are the edits that separate encryption from integrity, and T9 is the one that separates a stored head from an anchored one: a head kept beside the records rolls back with them. T9 is measured where the adapter has the snapshot hooks; a blank T9 cell means not yet measured, not a pass.
 
@@ -38,6 +38,7 @@ The nine edits: T1 content tamper, T2 tail truncation, T3 middle deletion, T4 re
 | Vertex AI Agent Engine Memory Bank, managed store, edits through the data-plane API | google-cloud-aiplatform 2.4.0 | accepted | accepted | accepted | n/a | accepted | accepted | accepted | accepted | n/a |
 | OpenClaw agent memory, `MEMORY.md` read through `memory_get` | openclaw 2026.10.1 | accepted | accepted | accepted | accepted | accepted | accepted | accepted | accepted | accepted |
 | Hermes Agent memory, `MEMORY.md` read through the system-prompt snapshot | hermes-agent 0.19.0 | accepted | accepted | accepted | accepted | accepted | accepted | accepted | n/a | accepted |
+| AWS Bedrock AgentCore Memory, event plane, edits through the data-plane API | AgentCore Memory (events), us-east-1 | n/a | accepted | accepted | n/a | accepted | n/a | n/a | n/a | n/a |
 | Letta core memory checkpoint history | letta 0.16.8 | accepted | accepted | accepted | accepted | accepted | accepted | accepted | accepted | accepted |
 | Mem0 local Qdrant store | mem0ai 2.0.20 | accepted | accepted | accepted | accepted | accepted | accepted | accepted | accepted | accepted |
 | inspeximus, receipts off (default), read path | inspeximus 3.0.0 | accepted | accepted | accepted | accepted | accepted | accepted | accepted | accepted | accepted |
@@ -54,6 +55,9 @@ The nine edits: T1 content tamper, T2 tail truncation, T3 middle deletion, T4 re
 | AtMem 2.3.8, audit chain with an external checkpoint outside the attacker-controlled store directory, `verify()` audit | atmem 2.3.8 | reported | reported | reported | reported | reported | reported | reported | reported | reported |
 | acrf-memory-guard, per-entry HMAC over a JSON store, read path | acrf-memory-guard 0.1.0 | rejected | accepted | accepted | accepted | rejected | accepted | accepted | rejected | accepted |
 | MythologIQ Agent Memory reference runtime, SQLite canonical substrate, read path | agent-memory-reference 0.2.0 at f2aef57 | rejected | rejected | rejected | rejected | rejected | rejected | rejected | rejected | accepted |
+| Surgical DevOps G7, signed envelopes bound to their storage position with an independent witness, read path | surgical-dev-ops 2.6.0-rc.6 on Node v24.18.0 | rejected | rejected | rejected | rejected | rejected | rejected | rejected | rejected | rejected |
+| Recallspection ExactMemory, anchor beside the store on the same disk, read path | exactmemory.recallspection 3.2.0 | rejected | rejected | rejected | rejected | rejected | rejected | rejected | rejected | accepted |
+| Recallspection ExactMemory, anchor off the store, read path | exactmemory.recallspection 3.2.0 | rejected | rejected | rejected | rejected | rejected | rejected | rejected | rejected | rejected |
 
 The T6 cell on the inspeximus and Mem0 rows is now measured on a real edit. The inspeximus maintainer found (issue #5) that on those two adapters the edit had been a no-op: the victim pool was read from both contexts, so the donor was copied onto itself, and the earlier claim that a receipt does not bind the owning user rested on that no-op and is withdrawn. His fix (PR #6) scopes the victim pool to the first context; with it, both receipt rows report T6 on audit and Mem0 accepts it. The landed guard (control C3), added when the no-op was found, keeps any future no-op from scoring.
 

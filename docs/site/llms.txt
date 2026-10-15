@@ -13,6 +13,7 @@ Method text proposed for IETF draft-han-bmwg-agent-security-benchmark metric 5.4
 - LlamaIndex Memory, SQLAlchemy chat store (llama-index-core 0.14.24): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 accepted
 - CrewAI long-term memory, LanceDB dataset (crewai 1.15.23): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 accepted
 - Vertex AI Agent Engine Memory Bank, managed store, edits through the data-plane API (google-cloud-aiplatform 2.4.0): T1 accepted, T2 accepted, T3 accepted, T4 n/a, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 n/a
+- AWS Bedrock AgentCore Memory, event plane, edits through the data-plane API (AgentCore Memory (events), us-east-1): T1 n/a, T2 accepted, T3 accepted, T4 n/a, T5 accepted, T6 n/a, T7 n/a, T8 n/a, T9 n/a
 - OpenClaw agent memory, MEMORY.md read through memory_get (openclaw 2026.10.1): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 accepted
 - Hermes Agent memory, MEMORY.md read through the system-prompt snapshot (hermes-agent 0.19.0): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 n/a, T9 accepted
 - Letta block checkpoint history (letta 0.16.8): T1 accepted, T2 accepted, T3 accepted, T4 accepted, T5 accepted, T6 accepted, T7 accepted, T8 accepted, T9 accepted
@@ -31,6 +32,9 @@ Method text proposed for IETF draft-han-bmwg-agent-security-benchmark metric 5.4
 - AtMem 2.3.8, audit chain with an external checkpoint outside the attacker-controlled store directory, verify() audit (atmem 2.3.8): T1 reported, T2 reported, T3 reported, T4 reported, T5 reported, T6 reported, T7 reported, T8 reported, T9 reported
 - acrf-memory-guard, per-entry HMAC over a JSON store (acrf-memory-guard 0.1.0): T1 rejected, T2 accepted, T3 accepted, T4 accepted, T5 rejected, T6 accepted, T7 accepted, T8 rejected, T9 accepted
 - Agent Memory reference runtime, SQLite canonical substrate, bucketed row digests, fail-closed open (agent-memory-reference 0.2.0 (f2aef57)): T1 rejected, T2 rejected, T3 rejected, T4 rejected, T5 rejected, T6 rejected, T7 rejected, T8 rejected, T9 accepted
+- Surgical DevOps G7, signed envelopes bound to their storage position with an independent witness (surgical-dev-ops 2.6.0-rc.6 on Node v24.18.0): T1 rejected, T2 rejected, T3 rejected, T4 rejected, T5 rejected, T6 rejected, T7 rejected, T8 rejected, T9 rejected
+- Recallspection ExactMemory, anchor beside the store on the same disk (exactmemory.recallspection 3.2.0): T1 rejected, T2 rejected, T3 rejected, T4 rejected, T5 rejected, T6 rejected, T7 rejected, T8 rejected, T9 accepted
+- Recallspection ExactMemory, anchor off the store (exactmemory.recallspection 3.2.0): T1 rejected, T2 rejected, T3 rejected, T4 rejected, T5 rejected, T6 rejected, T7 rejected, T8 rejected, T9 rejected
 
 ## Front door (six attacks through the tool's own write path)
 - LangGraph SqliteStore: Planted fact surfaced, Cross-user leak kept out, Retrieval hijack surfaced, Hidden instruction surfaced, Update poisoning surfaced, Metadata poisoning surfaced

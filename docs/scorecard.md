@@ -32,6 +32,10 @@ Generated from the results file by `agmi.render`; do not edit by hand. Run of 20
 | atmem-chain+checkpoint | audit | reported | reported | reported | reported | reported |
 | acrf-memory-guard | read | rejected | accepted | accepted | accepted | rejected |
 | agent-memory | read | rejected | rejected | rejected | rejected | rejected |
+| surgical-devops-g7 | read | rejected | rejected | rejected | rejected | rejected |
+| bedrock-agentcore-events | read | n/a | accepted | accepted | n/a | accepted |
+| recallspection-exact | read | rejected | rejected | rejected | rejected | rejected |
+| recallspection-exact+anchor | read | rejected | rejected | rejected | rejected | rejected |
 
 ## Through the front door
 
@@ -454,3 +458,53 @@ Measured on: reference store with signed-write provenance, write-time quarantine
 - `indirect_prompt_injection`: kept out. no instruction reached context (external: kept out 5 of 5; laundered: kept out 5 of 5; agent-laundered: kept out 5 of 5).
 - `update_poisoning`: surfaced. attacker's correction served for the user's question (external: kept out 5 of 5; laundered: kept out 5 of 5; agent-laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside).
 - `metadata_poisoning`: surfaced. self-tagged memory passed the trust filter (external: kept out 5 of 5; laundered: kept out 5 of 5; agent-laundered: 5 of 5).
+
+### surgical-devops-g7
+
+Measured on: surgical-dev-ops 2.6.0-rc.6 at f267cf38, Node v24.18.0
+
+- `tamper`: rejected. detected on reload (Error: Store-integrity payload digest mismatch.).
+- `truncate`: rejected. detected on reload (Error: G7 whole-store root does not match the independent monotonic witness.).
+- `delete_middle`: rejected. detected on reload (Error: G7 whole-store root does not match the independent monotonic witness.).
+- `reorder`: rejected. detected on reload (Error: Persisted G7 authorization record does not match its requested storage position.).
+- `forge`: rejected. detected on reload (Error: Store-integrity payload digest mismatch.).
+- `cross_replay`: rejected. detected on reload (Error: Persisted G7 store-integrity envelope context binding mismatch.).
+- `rollback_replay`: rejected. detected on reload (Error: Persisted G7 authorization record does not match its requested storage position.).
+- `metadata_tamper`: rejected. detected on reload (Error: Store-integrity envelope contains missing or unknown fields.).
+- `snapshot_rollback`: rejected. the store noticed it was older than its last committed state (Error: G7 whole-store root does not match the independent monotonic witness.).
+
+### bedrock-agentcore-events
+
+Measured on: AWS Bedrock AgentCore Memory (events), boto3, us-east-1
+
+- `truncate`: accepted. accepted silently.
+- `delete_middle`: accepted. accepted silently.
+- `forge`: accepted. accepted silently.
+
+### recallspection-exact
+
+Measured on: exactmemory.recallspection 3.2.0 at c62ef7a
+
+- `tamper`: rejected. detected on reload (TamperError: Container MAC failed).
+- `truncate`: rejected. detected on reload (TamperError: Container MAC failed).
+- `delete_middle`: rejected. detected on reload (TamperError: Container MAC failed).
+- `reorder`: rejected. detected on reload (TamperError: Container MAC failed).
+- `forge`: rejected. detected on reload (TamperError: Container MAC failed).
+- `cross_replay`: rejected. detected on reload (TamperError: Container MAC failed).
+- `rollback_replay`: rejected. detected on reload (TamperError: Container MAC failed).
+- `metadata_tamper`: rejected. detected on reload (TamperError: Container MAC failed).
+- `snapshot_rollback`: accepted. the older copy opened as current; the newest genuine record is gone without an error.
+
+### recallspection-exact+anchor
+
+Measured on: exactmemory.recallspection 3.2.0 at c62ef7a
+
+- `tamper`: rejected. detected on reload (TamperError: Container MAC failed).
+- `truncate`: rejected. detected on reload (TamperError: Container MAC failed).
+- `delete_middle`: rejected. detected on reload (TamperError: Container MAC failed).
+- `reorder`: rejected. detected on reload (TamperError: Container MAC failed).
+- `forge`: rejected. detected on reload (TamperError: Container MAC failed).
+- `cross_replay`: rejected. detected on reload (TamperError: Container MAC failed).
+- `rollback_replay`: rejected. detected on reload (TamperError: Container MAC failed).
+- `metadata_tamper`: rejected. detected on reload (TamperError: Container MAC failed).
+- `snapshot_rollback`: rejected. the store noticed it was older than its last committed state (RollbackError: Log rollback vs remote anchor: log 5 < remote 6).

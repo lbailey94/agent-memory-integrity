@@ -74,6 +74,10 @@ ROW_NAMES = {
     "openclaw-memory-md": ("OpenClaw agent memory, MEMORY.md read through memory_get", "openclaw 2026.10.1"),
     "hermes-memory-md": ("Hermes Agent memory, MEMORY.md read through the system-prompt snapshot", "hermes-agent 0.19.0"),
     "acrf-memory-guard": ("acrf-memory-guard, per-entry HMAC over a JSON store", "acrf-memory-guard 0.1.0"),
+    "bedrock-agentcore-events": ("AWS Bedrock AgentCore Memory, event plane, edits through the data-plane API", "AgentCore Memory (events), us-east-1"),
+    "surgical-devops-g7": ("Surgical DevOps G7, signed envelopes bound to their storage position with an independent witness", "surgical-dev-ops 2.6.0-rc.6 on Node v24.18.0"),
+    "recallspection-exact": ("Recallspection ExactMemory, anchor beside the store on the same disk", "exactmemory.recallspection 3.2.0"),
+    "recallspection-exact+anchor": ("Recallspection ExactMemory, anchor off the store", "exactmemory.recallspection 3.2.0"),
     "agent-memory": ("Agent Memory reference runtime, SQLite canonical substrate, bucketed row digests, fail-closed open", "agent-memory-reference 0.2.0 (f2aef57)"),
     "langgraph-ledger": ("langgraph-ledger over SqliteSaver, hash-chained ledger, verify_thread audit", "langgraph-ledger 0.3.0"),
     "memory-blackbox-md": ("memory-blackbox memory.md watcher, agent process alive, scan audit", "memory-blackbox 0.1.1"),
@@ -518,9 +522,9 @@ def build():
     global d_date, d_platform
     d, rows = load()
     d_date, d_platform = d["date"], d["platform"]
-    at_rest_keys = [k for k in ["openfang(model,fixed)", "langgraph-sqlite", "langgraph-postgres", "langgraph-redis", "openai-agents-sqlite-session", "llamaindex-memory-sqlite", "crewai-ltm-lancedb", "vertex-memory-bank", "openclaw-memory-md", "hermes-memory-md", "letta-block-history",
+    at_rest_keys = [k for k in ["openfang(model,fixed)", "langgraph-sqlite", "langgraph-postgres", "langgraph-redis", "openai-agents-sqlite-session", "llamaindex-memory-sqlite", "crewai-ltm-lancedb", "vertex-memory-bank", "bedrock-agentcore-events", "openclaw-memory-md", "hermes-memory-md", "letta-block-history",
                                 "mem0-qdrant-local", "inspeximus-default", "inspeximus-rcpt+dir",
-                                "inspeximus-rcpt+dir+home", "langgraph-ledger", "memory-blackbox-md", "memory-blackbox-md+restart", "atelya-attest-chain", "atelya-attest-chain+anchor", "continuum-events", "continuum-events+attest", "atmem-chain", "atmem-chain+checkpoint", "acrf-memory-guard", "agent-memory"] if k in rows]
+                                "inspeximus-rcpt+dir+home", "langgraph-ledger", "memory-blackbox-md", "memory-blackbox-md+restart", "atelya-attest-chain", "atelya-attest-chain+anchor", "continuum-events", "continuum-events+attest", "atmem-chain", "atmem-chain+checkpoint", "acrf-memory-guard", "agent-memory", "surgical-devops-g7", "recallspection-exact", "recallspection-exact+anchor"] if k in rows]
     fd_keys = [k for k in ["langgraph-sqlite-store", "letta-archival", "mem0-qdrant-local",
                            "inspeximus-default", "inspeximus-defended", "inspeximus-defended-key",
                            "naive-mem(scoped)", "naive-mem(unscoped)", "reference-defended(model)"] if k in rows]
@@ -528,7 +532,7 @@ def build():
     fd_cols = [(a, n, n) for a, n, _, _ in FRONT_DOOR]
 
     # count the headline
-    all8 = [k for k in ["langgraph-sqlite", "langgraph-postgres", "langgraph-redis", "openai-agents-sqlite-session", "llamaindex-memory-sqlite", "crewai-ltm-lancedb", "vertex-memory-bank", "openclaw-memory-md", "hermes-memory-md", "letta-block-history", "mem0-qdrant-local"]
+    all8 = [k for k in ["langgraph-sqlite", "langgraph-postgres", "langgraph-redis", "openai-agents-sqlite-session", "llamaindex-memory-sqlite", "crewai-ltm-lancedb", "vertex-memory-bank", "bedrock-agentcore-events", "openclaw-memory-md", "hermes-memory-md", "letta-block-history", "mem0-qdrant-local"]
             if k in rows and all(rows[k]["cells"].get(a, {}).get("verdict", "n/a") in ("accepted", "n/a") for a, *_ in AT_REST)
             and any(rows[k]["cells"].get(a, {}).get("verdict") == "accepted" for a, *_ in AT_REST)]
 

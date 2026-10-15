@@ -2745,6 +2745,338 @@
           "detail": "self-tagged memory passed the trust filter (external: kept out 5 of 5; laundered: kept out 5 of 5; agent-laundered: 5 of 5)"
         }
       }
+    },
+    {
+      "label": "surgical-devops-g7",
+      "checked_at": "read",
+      "measured_on": "surgical-dev-ops 2.6.0-rc.6 at f267cf38, Node v24.18.0",
+      "cells": {
+        "tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (Error: Store-integrity payload digest mismatch.)"
+        },
+        "truncate": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (Error: G7 whole-store root does not match the independent monotonic witness.)"
+        },
+        "delete_middle": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (Error: G7 whole-store root does not match the independent monotonic witness.)"
+        },
+        "reorder": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (Error: Persisted G7 authorization record does not match its requested storage position.)"
+        },
+        "forge": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (Error: Store-integrity payload digest mismatch.)"
+        },
+        "cross_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (Error: Persisted G7 store-integrity envelope context binding mismatch.)"
+        },
+        "rollback_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (Error: Persisted G7 authorization record does not match its requested storage position.)"
+        },
+        "metadata_tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (Error: Store-integrity envelope contains missing or unknown fields.)"
+        },
+        "snapshot_rollback": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "the store noticed it was older than its last committed state (Error: G7 whole-store root does not match the independent monotonic witness.)"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        }
+      },
+      "measured_date": "2026-10-15"
+    },
+    {
+      "label": "bedrock-agentcore-events",
+      "checked_at": "read",
+      "measured_on": "AWS Bedrock AgentCore Memory (events), boto3, us-east-1",
+      "cells": {
+        "tamper": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: AgentCore has no UpdateEvent, so an event's content cannot be changed in place; delete plus create yields a different eventId, which is a different edit"
+        },
+        "truncate": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "delete_middle": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "reorder": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: events are ordered by eventTimestamp, fixed at creation, so an existing event cannot be moved to another position"
+        },
+        "forge": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "cross_replay": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: AgentCore has no UpdateEvent, so an event's content cannot be changed in place; delete plus create yields a different eventId, which is a different edit"
+        },
+        "rollback_replay": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: AgentCore has no UpdateEvent, so an event's content cannot be changed in place; delete plus create yields a different eventId, which is a different edit"
+        },
+        "metadata_tamper": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: an event's actor, session, timestamp and id are fixed at creation and the API exposes no way to change them"
+        },
+        "snapshot_rollback": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: a managed store exposes no snapshot or restore of its own state"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        }
+      },
+      "measured_date": "2026-10-15"
+    },
+    {
+      "label": "recallspection-exact",
+      "checked_at": "read",
+      "measured_on": "exactmemory.recallspection 3.2.0 at c62ef7a",
+      "cells": {
+        "tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "truncate": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "delete_middle": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "reorder": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "forge": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "cross_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "rollback_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "metadata_tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "snapshot_rollback": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        }
+      },
+      "measured_date": "2026-10-15"
+    },
+    {
+      "label": "recallspection-exact+anchor",
+      "checked_at": "read",
+      "measured_on": "exactmemory.recallspection 3.2.0 at c62ef7a",
+      "cells": {
+        "tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "truncate": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "delete_middle": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "reorder": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "forge": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "cross_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "rollback_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "metadata_tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
+        },
+        "snapshot_rollback": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "the store noticed it was older than its last committed state (RollbackError: Log rollback vs remote anchor: log 5 < remote 6)"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        }
+      },
+      "measured_date": "2026-10-15"
     }
   ]
 }
