@@ -117,6 +117,12 @@ def at_rest_target(name: str) -> MemoryAdapter:
     if name == "hermes-memory-md":
         from agmi.adapters.hermes_memory import HermesMemoryAdapter
         return HermesMemoryAdapter()
+    if name == "hdp-token-content-ref":
+        from agmi.adapters.hdp_token_store import HdpTokenStoreAdapter
+        return HdpTokenStoreAdapter()
+    if name == "hdp-token-uuid":
+        from agmi.adapters.hdp_token_store import HdpTokenStoreUuidAdapter
+        return HdpTokenStoreUuidAdapter()
     if name == "recallspection-exact":
         from agmi.adapters.recallspection import RecallspectionAdapter
         return RecallspectionAdapter()
@@ -143,5 +149,5 @@ def at_rest_target(name: str) -> MemoryAdapter:
     raise SystemExit(
         f"unknown at-rest target {name!r}; choose one of: reference, "
         f"langgraph-sqlite, llamaindex, crewai, openai-agents, inspeximus-default, "
-        f"inspeximus-rcpt+dir, inspeximus-rcpt+dir+home, vertex-memory-bank, bedrock-agentcore-events, surgical-devops-g7, recallspection-exact, recallspection-exact+anchor, openclaw-memory-md, hermes-memory-md, "
+        f"inspeximus-rcpt+dir, inspeximus-rcpt+dir+home, vertex-memory-bank, bedrock-agentcore-events, surgical-devops-g7, recallspection-exact, recallspection-exact+anchor, hdp-token-content-ref, hdp-token-uuid, openclaw-memory-md, hermes-memory-md, "
         f"atmem-chain, atmem-chain+checkpoint")

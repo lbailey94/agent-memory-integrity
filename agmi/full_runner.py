@@ -176,6 +176,16 @@ def full_scorecard() -> str:
         bedrock_rows = [("bedrock-agentcore-events", BedrockAgentCoreEventsAdapter(), None)]
     else:
         bedrock_rows = []
+    if os.environ.get("AGMI_HDP_REPO"):  # row only with the pinned HDP checkout and Node 22
+        from agmi.adapters.hdp_token_store import (
+            HdpTokenStoreAdapter, HdpTokenStoreUuidAdapter,
+        )
+        hdp_rows = [
+            ("hdp-token-content-ref", HdpTokenStoreAdapter(), None),
+            ("hdp-token-uuid", HdpTokenStoreUuidAdapter(), None),
+        ]
+    else:
+        hdp_rows = []
     if os.environ.get("AGMI_RECALLSPECTION_REPO"):  # row only with the pinned checkout
         from agmi.adapters.recallspection import (
             RecallspectionAdapter, RecallspectionAnchoredAdapter,
@@ -295,6 +305,7 @@ def full_scorecard() -> str:
         *atmem_rows,
         *surgical_devops_rows,
         *recallspection_rows,
+        *hdp_rows,
         *([acrf_row] if acrf_row else []),
         *([agent_memory_row] if agent_memory_row else []),
         ("naive-mem(scoped)", None,
