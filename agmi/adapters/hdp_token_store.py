@@ -1,7 +1,7 @@
 # agmi: Agent Memory Integrity test suite
 # Copyright (c) 2026 Yasha Khandelwal <yasha.khandelwal@tech4biz.io>
 # SPDX-License-Identifier: MIT
-"""HDP, the token-by-reference store of draft-helixar-hdp-agentic-delegation.
+"""HDP, the token-by-reference store of draft-helixar-hdp-agentic-delegation-03.
 
 Measured at the invitation of the draft's author, Siri (Helixar), who asked
 for the reference implementation to be run through the method and for the
@@ -11,14 +11,21 @@ The store is a `TokenStore`: `put`, `get` and `delete`, keyed by a reference.
 A record is one stored token, holding the whole delegation chain to that
 point. `storeToken` writes each token under two references at once, a version
 4 UUID taken from the token's own header and a sha256 content digest, which
-section 8.2 of the draft treats as two different things:
+section 8.2 of -03 treats as two different things:
 
   content reference   the digest is recomputed on read and compared, so a
                       substituted token is refused before it is returned
-  UUID reference      no such check. The UUID binds the token's id and
-                      nothing else, and 8.2 calls it a substitution point
-                      and steers implementers away from it wherever the
-                      resolving party does not control the store
+  UUID reference      no such check on content. The UUID binds the token's
+                      id and nothing else, so a differently-signed token
+                      carrying the same token_id resolves; 8.2 calls this a
+                      substitution point and steers implementers away from
+                      it wherever the resolving party does not control the
+                      store. This row's attacker holds no signing key, so
+                      what reaches the read path here is caught by the
+                      signature rather than by the reference
+
+Storing each token under both references is the reference implementation's
+default, not something the protocol requires.
 
 Two rows, one variable: which reference the recipient holds. Everything else
 is identical, same store, same attacker, same read path.
@@ -39,7 +46,7 @@ rollback of the whole store cannot be distinguished from normal operation.
 That cell is not a failure, it is a property, and 8.2 is explicit about it.
 
 Needs AGMI_HDP_REPO pointing at a checkout of Helixar-AI/HDP with
-`npm install` and a build run, and Node 22. Pinned to d685849, v0.2.1.
+`npm install` and a build run, and Node 22. Pinned to b753ba9, v0.2.2.
 """
 
 from __future__ import annotations
@@ -53,8 +60,8 @@ from pathlib import Path
 
 from agmi.adapters.base import MemoryAdapter, Record
 
-PIN = "d685849"
-HDP_VERSION = "0.2.1"
+PIN = "b753ba9"
+HDP_VERSION = "0.2.2"
 NODE_MAJOR = 22
 CTX, OTHER = "a", "b"
 BRIDGE = Path(__file__).resolve().parents[1] / "bridges" / "hdp_bridge.mjs"
