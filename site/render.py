@@ -54,7 +54,20 @@ EDITS = [
     ("metadata_tamper", "T8", "Metadata tamper", "metadata-tamper"),
     ("snapshot_rollback", "T9", "Snapshot rollback", "snapshot-rollback"),
 ]
+# The front-door families, for rows measured at the door rather than at rest.
+# Short label first, as the miniboard shows it, then the full name.
+FRONT_DOOR = [
+    ("memory_injection", "Planted fact", "Planted fact", "memory-injection"),
+    ("cross_session_bleed", "Cross-user", "Cross-user leak", "cross-session-bleed"),
+    ("retrieval_hijack", "Retrieval", "Retrieval hijack", "retrieval-hijack"),
+    ("indirect_prompt_injection", "Indirect", "Indirect prompt injection",
+     "indirect-prompt-injection"),
+    ("update_poisoning", "Update", "Update poisoning", "update-poisoning"),
+    ("metadata_poisoning", "Metadata", "Metadata poisoning", "metadata-poisoning"),
+]
 CLS = {
+    "surfaced": ("v-acc", "v-accepted", "surfaced"),
+    "kept out": ("v-rej", "v-rejected", "kept out"),
     "accepted": ("v-acc", "v-accepted", "served"),
     "rejected": ("v-rej", "v-rejected", "rejected"),
     "reported": ("v-rep", "v-reported", "reported"),
@@ -90,12 +103,17 @@ def file_name(label: str) -> str:
 
 
 def verdicts(row: dict) -> list[str]:
-    return [row["cells"].get(e, {}).get("verdict", "n/a") for e, *_ in EDITS]
+    fam = EDITS if any(
+        row["cells"].get(e, {}).get("verdict", "n/a") != "n/a" for e, *_ in EDITS
+    ) else FRONT_DOOR
+    return [row["cells"].get(e, {}).get("verdict", "n/a") for e, *_ in fam]
 
 
 def tally(row: dict) -> tuple[int, int, int, int]:
     v = verdicts(row)
-    return v.count("accepted"), v.count("reported"), v.count("rejected"), v.count("n/a")
+    served = v.count("accepted") + v.count("surfaced")
+    refused = v.count("rejected") + v.count("kept out")
+    return served, v.count("reported"), refused, v.count("n/a")
 
 
 def level_of(row: dict) -> str:
@@ -142,9 +160,21 @@ class Site:
 
     # --- fragments ----------------------------------------------------------
 
+    @staticmethod
+    def families(row: dict) -> list[tuple[str, str, str, str]]:
+        """Which set of attacks this row was measured against.
+
+        A row is measured either at rest, against the nine storage-level
+        edits, or at the front door, against the six content families. The
+        results file says which by which cells carry a verdict."""
+        if any(row["cells"].get(e, {}).get("verdict", "n/a") != "n/a"
+               for e, *_ in EDITS):
+            return EDITS
+        return FRONT_DOOR
+
     def miniboard(self, row: dict) -> str:
         out = []
-        for i, (edit, tn, label, slug) in enumerate(EDITS):
+        for i, (edit, tn, label, slug) in enumerate(self.families(row)):
             v = row["cells"].get(edit, {}).get("verdict", "n/a")
             cls, _full, word = CLS[v]
             out.append(f'<a class="mini {cls}" href="../edits/{slug}.html" '
@@ -154,7 +184,7 @@ class Site:
 
     def cell_table(self, row: dict) -> str:
         trs = []
-        for edit, tn, label, slug in EDITS:
+        for edit, tn, label, slug in self.families(row):
             c = row["cells"].get(edit, {})
             v = c.get("verdict", "n/a")
             cls, _full, _word = CLS[v]
@@ -179,15 +209,17 @@ class Site:
         title = (f'{c["title"]}: {c["subtitle"]}, tamper evidence measured'
                  if c["subtitle"] else f'{c["title"]}: tamper evidence, measured')
         name = c["title"] + (f', {c["subtitle"]}' if c["subtitle"] else "")
+        measured_on_short = (c.get("version") or row.get("measured_on") or "")
         desc_full = (f'{name} against nine storage-level edits (T1 to T9): '
                      f'{acc} served, {rep} reported, {rej} rejected. Detection point: '
                      f'{row.get("checked_at")}. Level {lv}. Measured on '
-                     f'{row.get("measured_on") or c.get("version")} by agmi.')
+                     f'{c.get("version") or row.get("measured_on") or ""} by agmi.'
+                     if (c.get("version") or row.get("measured_on")) else "")
         desc = truncate(
             f'{name} against nine storage-level edits (T1 to T9): {acc} served, '
             f'{rep} reported, {rej} rejected. Detection point: '
             f'{row.get("checked_at")}. Level {lv}. '
-            f'Measured on {row.get("measured_on")} by agmi.', 157)
+            f'Measured on {measured_on_short} by agmi.', 157)
         p = template
 
         for pat, rep_ in [
@@ -222,8 +254,9 @@ class Site:
         p = re.sub(r'<div class="miniboard".*?</div>', self.miniboard(row),
                    p, count=1, flags=re.S)
 
-        measured_on = row.get("measured_on") or ", ".join(
-            x for x in (c.get("version"), self.results.get("platform")) if x)
+        measured_on = (c.get("measured_on") or row.get("measured_on")
+                       or ", ".join(x for x in (c.get("version"),
+                                            self.results.get("platform")) if x))
         date = (c.get("measured_date") or row.get("measured_date")
                 or self.results.get("date"))
         facts = (f'<dl class="facts">\n'
@@ -245,7 +278,7 @@ class Site:
             # carried through from the reference build instead of generated.
             raise Unrenderable(label)
         closing = self.closing_note
-        p = re.sub(r"(<h2>The 9 verdicts</h2>\n).*?(\n</section>)",
+        p = re.sub(r"(<h2>The \d verdicts</h2>\n).*?(\n</section>)",
                    lambda m: m.group(1) + intro + "\n" + self.cell_table(row) + closing + m.group(2),
                    p, count=1, flags=re.S)
 

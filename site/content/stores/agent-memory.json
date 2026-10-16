@@ -10,5 +10,6 @@
  "label": "agent-memory",
  "version": "agent-memory-reference 0.2.0 (f2aef57)",
  "verdicts_intro": "<p><strong>Detection point:</strong> the read path: the tool itself refuses or flags the edit before the agent can act on it.</p><p><strong>Level L3, Context bound.</strong> Also rejects a record moved between owners and a metadata change: T6, T8. <a href=\"../levels/l3.html\">What L3 means</a>.</p>",
- "related": ""
+ "related": "",
+ "measured_on": "agent-memory-reference 0.2.0 (f2aef57), Darwin arm64, Python 3.12"
 }

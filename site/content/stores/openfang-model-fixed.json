@@ -10,5 +10,6 @@
  "label": "openfang(model,fixed)",
  "version": "reference model of a hash chain",
  "verdicts_intro": "<p><strong>Detection point:</strong> the read path: the tool itself refuses or flags the edit before the agent can act on it.</p><p><strong>Level L1, Bytes bound.</strong> Rejects on the read path every edit that changes or adds bytes: T1, T3, T5. <a href=\"../levels/l1.html\">What L1 means</a>.</p>",
- "related": ""
+ "related": "",
+ "measured_on": "reference model of a hash chain, Darwin arm64, Python 3.12"
 }
