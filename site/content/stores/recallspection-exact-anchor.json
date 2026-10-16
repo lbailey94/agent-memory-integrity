@@ -7,5 +7,9 @@
  "source_label": "github.com/sciencedelicmetatech/exactmemory.recallspection",
  "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
  "reproduce": "pip install agent-memory-integrity\ngit clone https://github.com/sciencedelicmetatech/exactmemory.recallspection\ncd exactmemory.recallspection &amp;&amp; git checkout c62ef7ada64928418a7e5d3251a6b65d005599b6\nexport AGMI_RECALLSPECTION_REPO=&lt;that checkout&gt;\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included\npython -m agmi.agent --target recallspection-exact+anchor --families at-rest",
- "label": "recallspection-exact+anchor"
+ "label": "recallspection-exact+anchor",
+ "version": "exactmemory.recallspection 3.2.0 at c62ef7a",
+ "measured_date": "2026-10-15",
+ "verdicts_intro": "<p><strong>Detection point:</strong> the read path. 9 of the nine edits were refused there, 0 served as genuine, 0 not applicable.</p><p><strong>Level L4.</strong> <a href=\"../levels/l4.html\">What L4 means</a>.</p>",
+ "related": "<li><a href=\"../stores/langgraph-sqlite.html\">LangGraph SqliteSaver</a></li><li><a href=\"../stores/langgraph-postgres.html\">LangGraph PostgresSaver</a></li><li><a href=\"../stores/langgraph-redis.html\">LangGraph RedisSaver</a></li><li><a href=\"../stores/openai-agents-sqlite-session.html\">OpenAI Agents SDK SQLiteSession</a></li><li><a href=\"../stores/llamaindex-memory-sqlite.html\">LlamaIndex Memory, SQLAlchemy chat store</a></li><li><a href=\"../stores/crewai-ltm-lancedb.html\">CrewAI long-term memory, LanceDB dataset</a></li>"
 }

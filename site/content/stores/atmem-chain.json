@@ -7,5 +7,9 @@
  "source_label": "github.com/aetna000/atmem",
  "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
  "reproduce": "pip install agent-memory-integrity\npip install atmem==2.3.8   # in a separate virtualenv: it pins cryptography below 49\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included\npython -m agmi.agent --target atmem-chain --families at-rest   # this row through the storage-side hunt\npython -m agmi.agent --target atmem-chain --compose             # composite moves against this row",
- "label": "atmem-chain"
+ "label": "atmem-chain",
+ "version": "atmem 2.3.8 from PyPI (wheel SHA-256 05ca2c57), remeasured 2026-10-10 on Darwin arm64 and Linux x86_64, Python 3.12",
+ "measured_date": "2026-10-10",
+ "verdicts_intro": "<p><strong>Detection point:</strong> the audit, a separate call the operator has to make; the read path serves the edit first.</p><p><strong>Level L0, Measured.</strong> The store has a published row. Any verdicts. <a href=\"../levels/l0.html\">What L0 means</a>.</p>",
+ "related": "<li><a href=\"../stores/atmem-chain-checkpoint.html\">AtMem 2.3.8, audit chain with an external checkpoint outside the attacker-controlled store directory, verify() audit</a></li><li><a href=\"../stores/langgraph-sqlite.html\">LangGraph SqliteSaver</a></li><li><a href=\"../stores/langgraph-postgres.html\">LangGraph PostgresSaver</a></li><li><a href=\"../stores/langgraph-redis.html\">LangGraph RedisSaver</a></li><li><a href=\"../stores/openai-agents-sqlite-session.html\">OpenAI Agents SDK SQLiteSession</a></li><li><a href=\"../stores/llamaindex-memory-sqlite.html\">LlamaIndex Memory, SQLAlchemy chat store</a></li>"
 }

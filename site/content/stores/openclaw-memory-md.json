@@ -7,5 +7,9 @@
  "source_label": "github.com/openclaw/openclaw",
  "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
  "reproduce": "pip install agent-memory-integrity\nnpm install --ignore-scripts openclaw@2026.10.1   # in a directory of its own, Node 24.16+\nexport AGMI_OPENCLAW_DIR=&lt;that directory&gt;\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included\npython -m agmi.agent --target openclaw-memory-md --families at-rest   # this row through the storage-side hunt\npython -m agmi.agent --target openclaw-memory-md --compose             # composite moves against this row",
- "label": "openclaw-memory-md"
+ "label": "openclaw-memory-md",
+ "version": "openclaw 2026.10.1 from npm, read through its memory_get function in a fresh Node process per read; Linux x86_64 with Node 24.21.0, reproduced on macOS arm64 with Node 26.11.0",
+ "measured_date": "2026-10-11",
+ "verdicts_intro": "<p><strong>Detection point:</strong> the read path, which checks nothing here; every applicable edit came back as genuine.</p><p><strong>Level L0, Measured.</strong> The store has a published row. Any verdicts. <a href=\"../levels/l0.html\">What L0 means</a>.</p>",
+ "related": "<li><a href=\"../stores/langgraph-sqlite.html\">LangGraph SqliteSaver</a></li><li><a href=\"../stores/langgraph-postgres.html\">LangGraph PostgresSaver</a></li><li><a href=\"../stores/langgraph-redis.html\">LangGraph RedisSaver</a></li><li><a href=\"../stores/openai-agents-sqlite-session.html\">OpenAI Agents SDK SQLiteSession</a></li><li><a href=\"../stores/llamaindex-memory-sqlite.html\">LlamaIndex Memory, SQLAlchemy chat store</a></li><li><a href=\"../stores/crewai-ltm-lancedb.html\">CrewAI long-term memory, LanceDB dataset</a></li>"
 }

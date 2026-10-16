@@ -7,5 +7,8 @@
  "source_label": "github.com/RightNow-AI/openfang",
  "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
  "reproduce": "pip install agent-memory-integrity\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included",
- "label": "openfang(model,fixed)"
+ "label": "openfang(model,fixed)",
+ "version": "reference model of a hash chain",
+ "verdicts_intro": "<p><strong>Detection point:</strong> the read path: the tool itself refuses or flags the edit before the agent can act on it.</p><p><strong>Level L1, Bytes bound.</strong> Rejects on the read path every edit that changes or adds bytes: T1, T3, T5. <a href=\"../levels/l1.html\">What L1 means</a>.</p>",
+ "related": ""
 }

@@ -7,5 +7,7 @@
  "source_label": "github.com/letta-ai/letta",
  "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
  "reproduce": "pip install agent-memory-integrity\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included",
- "label": "letta-archival"
+ "label": "letta-archival",
+ "version": "letta 0.16.8, archival memory, one agent per user, insert_passage and search_agent_archival_memory_async at defaults (no relevance floor), embeddings via a local OpenAI-compatible endpoint serving sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0",
+ "related": "<li><a href=\"../stores/letta-block-history.html\">Letta block checkpoint history</a></li><li><a href=\"../stores/langgraph-sqlite-store.html\">LangGraph SqliteStore</a></li><li><a href=\"../stores/inspeximus-defended.html\">inspeximus, trust root keyed on the label</a></li><li><a href=\"../stores/inspeximus-defended-key.html\">inspeximus, trust root keyed on an attested key</a></li><li><a href=\"../stores/naive-mem-scoped.html\">Reference store, user-scoped</a></li><li><a href=\"../stores/naive-mem-unscoped.html\">Reference store, unscoped</a></li>"
 }

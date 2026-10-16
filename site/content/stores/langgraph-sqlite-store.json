@@ -7,5 +7,7 @@
  "source_label": "github.com/langchain-ai/langgraph/tree/main/libs/checkpoint-sqlite",
  "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
  "reproduce": "pip install agent-memory-integrity\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included",
- "label": "langgraph-sqlite-store"
+ "label": "langgraph-sqlite-store",
+ "version": "langgraph-checkpoint-sqlite 3.1.1 SqliteStore with a vector index, search defaults (no relevance floor), sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0",
+ "related": "<li><a href=\"../stores/langgraph-sqlite.html\">LangGraph SqliteSaver</a></li><li><a href=\"../stores/langgraph-postgres.html\">LangGraph PostgresSaver</a></li><li><a href=\"../stores/langgraph-redis.html\">LangGraph RedisSaver</a></li><li><a href=\"../stores/langgraph-ledger.html\">langgraph-ledger over SqliteSaver, hash-chained ledger, verify_thread audit</a></li><li><a href=\"../stores/letta-archival.html\">Letta archival memory</a></li><li><a href=\"../stores/inspeximus-defended.html\">inspeximus, trust root keyed on the label</a></li>"
 }

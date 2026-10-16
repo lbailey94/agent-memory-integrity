@@ -7,5 +7,8 @@
  "source_label": "github.com/DanceNitra/inspeximus",
  "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
  "reproduce": "pip install agent-memory-integrity\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included\npython -m agmi.agent --target inspeximus-default --families at-rest   # this row through the storage-side hunt\npython -m agmi.agent --target inspeximus-default --compose             # composite moves against this row",
- "label": "inspeximus-default"
+ "label": "inspeximus-default",
+ "version": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories)",
+ "verdicts_intro": "<p><strong>Detection point:</strong> the read path, which checks nothing here; every applicable edit came back as genuine.</p><p><strong>Level L0, Measured.</strong> The store has a published row. Any verdicts. <a href=\"../levels/l0.html\">What L0 means</a>.</p>",
+ "related": "<li><a href=\"../stores/inspeximus-rcpt-dir.html\">inspeximus, receipts on, attacker holds the store directory</a></li><li><a href=\"../stores/inspeximus-rcpt-dir-home.html\">inspeximus, receipts on, attacker also holds the config home</a></li><li><a href=\"../stores/inspeximus-defended.html\">inspeximus, trust root keyed on the label</a></li><li><a href=\"../stores/inspeximus-defended-key.html\">inspeximus, trust root keyed on an attested key</a></li><li><a href=\"../stores/langgraph-sqlite.html\">LangGraph SqliteSaver</a></li><li><a href=\"../stores/langgraph-postgres.html\">LangGraph PostgresSaver</a></li>"
 }

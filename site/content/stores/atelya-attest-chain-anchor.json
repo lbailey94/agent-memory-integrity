@@ -7,5 +7,8 @@
  "source_label": "github.com/RonaldSit/atelya",
  "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
  "reproduce": "pip install agent-memory-integrity\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included",
- "label": "atelya-attest-chain+anchor"
+ "label": "atelya-attest-chain+anchor",
+ "version": "atelya-attest 0.1.1",
+ "verdicts_intro": "<p><strong>Detection point:</strong> the audit, a separate call the operator has to make; the read path serves the edit first.</p><p><strong>Level L0, Measured.</strong> The store has a published row. Any verdicts. <a href=\"../levels/l0.html\">What L0 means</a>.</p>",
+ "related": "<li><a href=\"../stores/atelya-attest-chain.html\">Atelya Attest, keyed hash chain, verify_chain audit</a></li><li><a href=\"../stores/langgraph-sqlite.html\">LangGraph SqliteSaver</a></li><li><a href=\"../stores/langgraph-postgres.html\">LangGraph PostgresSaver</a></li><li><a href=\"../stores/langgraph-redis.html\">LangGraph RedisSaver</a></li><li><a href=\"../stores/openai-agents-sqlite-session.html\">OpenAI Agents SDK SQLiteSession</a></li><li><a href=\"../stores/llamaindex-memory-sqlite.html\">LlamaIndex Memory, SQLAlchemy chat store</a></li>"
 }

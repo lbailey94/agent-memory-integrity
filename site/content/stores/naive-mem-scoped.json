@@ -7,5 +7,7 @@
  "source_label": "",
  "reproduce_intro": "Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.",
  "reproduce": "pip install agent-memory-integrity\npython agmi/full_runner.py --json results/scorecard.json   # every row, this one included",
- "label": "naive-mem(scoped)"
+ "label": "naive-mem(scoped)",
+ "version": "reference store, token-overlap ranking, no defences",
+ "related": "<li><a href=\"../stores/naive-mem-unscoped.html\">Reference store, unscoped</a></li><li><a href=\"../stores/langgraph-sqlite-store.html\">LangGraph SqliteStore</a></li><li><a href=\"../stores/letta-archival.html\">Letta archival memory</a></li><li><a href=\"../stores/inspeximus-defended.html\">inspeximus, trust root keyed on the label</a></li><li><a href=\"../stores/inspeximus-defended-key.html\">inspeximus, trust root keyed on an attested key</a></li><li><a href=\"../stores/reference-defended-model.html\">Reference store, defended</a></li>"
 }
