@@ -35,6 +35,8 @@ Method text proposed for IETF draft-han-bmwg-agent-security-benchmark metric 5.4
 - Surgical DevOps G7, signed envelopes bound to their storage position with an independent witness (surgical-dev-ops 2.6.0-rc.6 on Node v24.18.0): T1 rejected, T2 rejected, T3 rejected, T4 rejected, T5 rejected, T6 rejected, T7 rejected, T8 rejected, T9 rejected
 - Recallspection ExactMemory, anchor beside the store on the same disk (exactmemory.recallspection 3.2.0): T1 rejected, T2 rejected, T3 rejected, T4 rejected, T5 rejected, T6 rejected, T7 rejected, T8 rejected, T9 accepted
 - Recallspection ExactMemory, anchor off the store (exactmemory.recallspection 3.2.0): T1 rejected, T2 rejected, T3 rejected, T4 rejected, T5 rejected, T6 rejected, T7 rejected, T8 rejected, T9 rejected
+- HDP token store, content-addressed reference (@helixar_ai/hdp 0.2.2 on Node 22): T1 rejected, T2 accepted, T3 accepted, T4 rejected, T5 rejected, T6 rejected, T7 rejected, T8 rejected, T9 accepted
+- HDP token store, UUID reference (@helixar_ai/hdp 0.2.2 on Node 22): T1 rejected, T2 accepted, T3 accepted, T4 rejected, T5 rejected, T6 rejected, T7 rejected, T8 rejected, T9 accepted
 
 ## Front door (six attacks through the tool's own write path)
 - LangGraph SqliteStore: Planted fact surfaced, Cross-user leak kept out, Retrieval hijack surfaced, Hidden instruction surfaced, Update poisoning surfaced, Metadata poisoning surfaced

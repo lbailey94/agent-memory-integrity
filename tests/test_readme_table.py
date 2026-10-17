@@ -56,6 +56,9 @@ ROWS = {
         "recallspection-exact",
     "Recallspection ExactMemory, anchor off the store, read path":
         "recallspection-exact+anchor",
+    "HDP token store, content-addressed reference, read path":
+        "hdp-token-content-ref",
+    "HDP token store, UUID reference, read path": "hdp-token-uuid",
 }
 
 

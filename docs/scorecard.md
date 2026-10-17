@@ -36,6 +36,8 @@ Generated from the results file by `agmi.render`; do not edit by hand. Run of 20
 | bedrock-agentcore-events | read | n/a | accepted | accepted | n/a | accepted |
 | recallspection-exact | read | rejected | rejected | rejected | rejected | rejected |
 | recallspection-exact+anchor | read | rejected | rejected | rejected | rejected | rejected |
+| hdp-token-content-ref | read | rejected | accepted | accepted | rejected | rejected |
+| hdp-token-uuid | read | rejected | accepted | accepted | rejected | rejected |
 
 ## Through the front door
 
@@ -508,3 +510,31 @@ Measured on: exactmemory.recallspection 3.2.0 at c62ef7a
 - `rollback_replay`: rejected. detected on reload (TamperError: Container MAC failed).
 - `metadata_tamper`: rejected. detected on reload (TamperError: Container MAC failed).
 - `snapshot_rollback`: rejected. the store noticed it was older than its last committed state (RollbackError: Log rollback vs remote anchor: log 5 < remote 6).
+
+### hdp-token-content-ref
+
+Measured on: @helixar_ai/hdp 0.2.2 at b753ba9, Node 22
+
+- `tamper`: rejected. detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:iM1V6c5E5odnWk4rCQ6LOiiqIQJ0dC-smr088QujswE', got 'sha256:WRQlarR2khC6JAm1M_RwkkVr).
+- `truncate`: accepted. accepted silently.
+- `delete_middle`: accepted. accepted silently.
+- `reorder`: rejected. detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:LUnKHes-k4u3naCQhZWGV8gV3j70OYlJdfRO8WnOqZk', got 'sha256:5h3wbEllFKOxOBgQn9efVaB8).
+- `forge`: rejected. detected on reload (verify: verifyToken failed at step 2: Signature invalid: root signature verification failed).
+- `cross_replay`: rejected. detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:fZ189PduV9Ipx7zlViqBykLNZ3gJyOajhVhHCcjDj9A', got 'sha256:NydsOav2h8bKn6iJsMEjk30H).
+- `rollback_replay`: rejected. detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:pukrkOBlqYzLDSOjvSRpiEQIUT8YJcEVpMUTShLRRxM', got 'sha256:dzry27OM-BmhgCL-aV0Gi2Q5).
+- `metadata_tamper`: rejected. detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:uV5ZARhywm9Ry3x5zXt_9JGx0PqYfUD_vUFjNget0eo', got 'sha256:mAAZI211zjVzJYvRY6mdbLPr).
+- `snapshot_rollback`: accepted. the older copy opened as current; the newest genuine record is gone without an error.
+
+### hdp-token-uuid
+
+Measured on: @helixar_ai/hdp 0.2.2 at b753ba9, Node 22
+
+- `tamper`: rejected. detected on reload (verify: verifyToken failed at step 4: Signature invalid: hop 1 signature verification failed).
+- `truncate`: accepted. accepted silently.
+- `delete_middle`: accepted. accepted silently.
+- `reorder`: rejected. detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: UUID reference '1c448aa2-3c74-4681-b543-f67e879c609b' resolved to token_id 'f66abd50-9a02-48a8-bf17-f1a398b41118').
+- `forge`: rejected. detected on reload (verify: verifyToken failed at step 2: Signature invalid: root signature verification failed).
+- `cross_replay`: rejected. detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: UUID reference '20f1f2f9-fbde-4687-8835-b1b4f7056aaf' resolved to token_id 'de0a2a93-a49d-48e4-85f9-d9902dbea639').
+- `rollback_replay`: rejected. detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: UUID reference '6df06cd6-7f76-44f5-bb40-122fa0c25467' resolved to token_id '85b79273-a4b2-4b55-88ed-c69e1f59b5f5').
+- `metadata_tamper`: rejected. detected on reload (verify: verifyToken failed at step 2: Signature invalid: root signature verification failed).
+- `snapshot_rollback`: accepted. the older copy opened as current; the newest genuine record is gone without an error.

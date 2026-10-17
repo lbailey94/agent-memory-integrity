@@ -78,6 +78,8 @@ ROW_NAMES = {
     "surgical-devops-g7": ("Surgical DevOps G7, signed envelopes bound to their storage position with an independent witness", "surgical-dev-ops 2.6.0-rc.6 on Node v24.18.0"),
     "recallspection-exact": ("Recallspection ExactMemory, anchor beside the store on the same disk", "exactmemory.recallspection 3.2.0"),
     "recallspection-exact+anchor": ("Recallspection ExactMemory, anchor off the store", "exactmemory.recallspection 3.2.0"),
+    "hdp-token-content-ref": ("HDP token store, content-addressed reference", "@helixar_ai/hdp 0.2.2 on Node 22"),
+    "hdp-token-uuid": ("HDP token store, UUID reference", "@helixar_ai/hdp 0.2.2 on Node 22"),
     "agent-memory": ("Agent Memory reference runtime, SQLite canonical substrate, bucketed row digests, fail-closed open", "agent-memory-reference 0.2.0 (f2aef57)"),
     "langgraph-ledger": ("langgraph-ledger over SqliteSaver, hash-chained ledger, verify_thread audit", "langgraph-ledger 0.3.0"),
     "memory-blackbox-md": ("memory-blackbox memory.md watcher, agent process alive, scan audit", "memory-blackbox 0.1.1"),
@@ -524,7 +526,7 @@ def build():
     d_date, d_platform = d["date"], d["platform"]
     at_rest_keys = [k for k in ["openfang(model,fixed)", "langgraph-sqlite", "langgraph-postgres", "langgraph-redis", "openai-agents-sqlite-session", "llamaindex-memory-sqlite", "crewai-ltm-lancedb", "vertex-memory-bank", "bedrock-agentcore-events", "openclaw-memory-md", "hermes-memory-md", "letta-block-history",
                                 "mem0-qdrant-local", "inspeximus-default", "inspeximus-rcpt+dir",
-                                "inspeximus-rcpt+dir+home", "langgraph-ledger", "memory-blackbox-md", "memory-blackbox-md+restart", "atelya-attest-chain", "atelya-attest-chain+anchor", "continuum-events", "continuum-events+attest", "atmem-chain", "atmem-chain+checkpoint", "acrf-memory-guard", "agent-memory", "surgical-devops-g7", "recallspection-exact", "recallspection-exact+anchor"] if k in rows]
+                                "inspeximus-rcpt+dir+home", "langgraph-ledger", "memory-blackbox-md", "memory-blackbox-md+restart", "atelya-attest-chain", "atelya-attest-chain+anchor", "continuum-events", "continuum-events+attest", "atmem-chain", "atmem-chain+checkpoint", "acrf-memory-guard", "agent-memory", "surgical-devops-g7", "recallspection-exact", "recallspection-exact+anchor", "hdp-token-content-ref", "hdp-token-uuid"] if k in rows]
     fd_keys = [k for k in ["langgraph-sqlite-store", "letta-archival", "mem0-qdrant-local",
                            "inspeximus-default", "inspeximus-defended", "inspeximus-defended-key",
                            "naive-mem(scoped)", "naive-mem(unscoped)", "reference-defended(model)"] if k in rows]
