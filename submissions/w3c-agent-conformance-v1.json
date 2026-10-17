@@ -1,0 +1,1016 @@
+{
+ "record": "agmi submission to W3C Agent Conformance and Benchmarking CG",
+ "intake_criteria": "v2, public-agent-conformance list message 0067 (13 October 2026)",
+ "submitter": {
+  "name": "Yasha Khandelwal",
+  "email": "yasha.khandelwal@tech4biz.io",
+  "role": "maintainer of the suite; author of the method text"
+ },
+ "licence": {
+  "code": "MIT",
+  "results": "MIT",
+  "this_record": "CC0-1.0"
+ },
+ "pinned_bytes": {
+  "results_file": {
+   "path": "results/scorecard.json",
+   "alg": "sha-256",
+   "value": "b9ed7149177cb3862f137326d87d2e3b92d981321ea297bed5380318cd67ac69",
+   "input": "exact file bytes"
+  },
+  "corpus_digest": {
+   "alg": "sha-256",
+   "value": "58a3bbbe06d7c5244defed27d8c3f31b8b6e6616dc5a73096372c76203ae5541",
+   "input": "JCS({results_file digest, sorted manifest of row digests})"
+  }
+ },
+ "admitted_population": {
+  "description": "every row in results/scorecard.json at the pinned commit",
+  "count": 39,
+  "manifest": [
+   {
+    "id": "acrf-memory-guard",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "4ababbc21a2e056d3aae9bad07cdca128e55945b72f2212387c081779981a48c"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 6,
+     "rejected": 3,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "agent-memory",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "cd818ee7cca1611de3d81b4c18ca5e2d5ba4abfb149d2669106dacd1f4301af8"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 1,
+     "rejected": 8,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "atelya-attest-chain",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "f8f722573e97c213ee9420d868a047f4c71ef65ca063420dc057d181ed945582"
+    },
+    "measured_on": null,
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 2,
+     "rejected": 0,
+     "reported": 7,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "atelya-attest-chain+anchor",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "e2b5a4f418dcf3e7db99642acc86272a175980e1ab1abe419b5602a24753959e"
+    },
+    "measured_on": null,
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 9,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "atmem-chain",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "84f7bfa2ffd6e7268603593cbd1fb72ce0225c9f8dc5c72ac80cabb3fe665655"
+    },
+    "measured_on": "atmem 2.3.8 from PyPI (wheel SHA-256 05ca2c57), remeasured 2026-10-10 on Darwin arm64 and Linux x86_64, Python 3.12",
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 1,
+     "rejected": 0,
+     "reported": 8,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "atmem-chain+checkpoint",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "6d24aa93d348a7d1cc9496f95283ef80cf96bc6b54c3826bb7908988a94395b1"
+    },
+    "measured_on": "atmem 2.3.8 from PyPI (wheel SHA-256 05ca2c57), remeasured 2026-10-10 on Darwin arm64 and Linux x86_64, Python 3.12",
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 9,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "bedrock-agentcore-events",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "6614e3f6bb015224550ee1765a573571e86be5bd145365738700b3946e5ebba7"
+    },
+    "measured_on": "AWS Bedrock AgentCore Memory (events), boto3, us-east-1",
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 3,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 6
+    }
+   },
+   {
+    "id": "continuum-events",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "c19c72b7bbdbc0ecf335952fb707fb0f40685b3817e935d9559d499382a2b6d4"
+    },
+    "measured_on": null,
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 2,
+     "rejected": 0,
+     "reported": 7,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "continuum-events+attest",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "d19992639d0b7b47e6920d7f43ddda75e46dfe7f5f3a591a7e90ada7b1fed736"
+    },
+    "measured_on": null,
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 9,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "crewai-ltm-lancedb",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "29aa87e2dffef8f19b43f3e9f9a8edbf7542d71353d3da1b8256275dbced2e36"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 9,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "hdp-token-content-ref",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "531aa7e9d5fd34bba02dadb5ca93c8894195e6a6a4a889d38bf03210f8e4d356"
+    },
+    "measured_on": "@helixar_ai/hdp 0.2.2 at b753ba9, Node 22",
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 3,
+     "rejected": 6,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "hdp-token-uuid",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "f1b378545eb59411990baae8d023676747801a474260858c4fbb17eb375c1a9f"
+    },
+    "measured_on": "@helixar_ai/hdp 0.2.2 at b753ba9, Node 22",
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 3,
+     "rejected": 6,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "hermes-memory-md",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "ebf600a39a473166491b75c4292762263a236df7fe380567f23e90c0263090cc"
+    },
+    "measured_on": "hermes-agent 0.19.0 from PyPI, in a virtualenv of its own, read through MemoryStore.load_from_disk() and format_for_system_prompt() in a fresh process per read; Linux x86_64 with Python 3.12, reproduced on macOS arm64 with Python 3.12",
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 8,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 1
+    }
+   },
+   {
+    "id": "inspeximus-default",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "673b3b4005e6c49415cf1cebdb552a543abe99a3b2222490ff0da1bc941bab0c"
+    },
+    "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), Darwin arm64, Python 3.12",
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 9,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "inspeximus-defended",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "40b35869edf4ee9acc2b82522a29ecfdd3e280c6252da51dfcfdd9026f0faf5b"
+    },
+    "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), trusted_only=True, provenance recorded as the memory's source, trust_seeds=['user'], Darwin arm64, Python 3.12",
+    "detection_point": null,
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 9
+    }
+   },
+   {
+    "id": "inspeximus-defended-key",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "0c67fe280b951454a3ca4eaa47b0a729d8d654c976d759547cb39e9761c385a6"
+    },
+    "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), trusted_only=True, provenance recorded as the memory's source, signed writes attested with a per-user Ed25519 key and those keys seeded, Darwin arm64, Python 3.12",
+    "detection_point": null,
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 9
+    }
+   },
+   {
+    "id": "inspeximus-rcpt+dir",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "454bd252ab836261a5b154a41d64b0dfd4c16aa57be2f029d9e32ef897a59479"
+    },
+    "measured_on": null,
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 9,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "inspeximus-rcpt+dir+home",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "d6d37a03d4c208bf40b7ded38c9f4051e29409fa4abd51fe9f616281a8a926e0"
+    },
+    "measured_on": null,
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 2,
+     "rejected": 0,
+     "reported": 7,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "langgraph-ledger",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "1261feaa98a0905476798fc4ce6bf75bfe87f142167cc740d4f0e8066d9155a0"
+    },
+    "measured_on": null,
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 2,
+     "rejected": 0,
+     "reported": 7,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "langgraph-postgres",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "1a56958d54df6733d18848e956480c6f97a2454f31b43be24f75de8c85919a4f"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 9,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "langgraph-redis",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "5958f70f19be2370a7bf43c1ec959338fcd789f4cd43e664319290a0c340bbe5"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 9,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "langgraph-sqlite",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "370efca94669bf22002effd2e2a3b8cc6ae6e16116adb0d9ecb7f89d5fe33be9"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 9,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "langgraph-sqlite-store",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "83f8dcc2105587821c477a243d9ffee300fa8da08651ee10cefc0cba2a4d69cd"
+    },
+    "measured_on": "langgraph-checkpoint-sqlite 3.1.1 SqliteStore with a vector index, search defaults (no relevance floor), sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
+    "detection_point": null,
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 9
+    }
+   },
+   {
+    "id": "letta-archival",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "24b1d63c3cba7fd153d78f40ae2883ceb7e39e40b5c8f8ba66bf8161823e8333"
+    },
+    "measured_on": "letta 0.16.8, archival memory, one agent per user, insert_passage and search_agent_archival_memory_async at defaults (no relevance floor), embeddings via a local OpenAI-compatible endpoint serving sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
+    "detection_point": null,
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 9
+    }
+   },
+   {
+    "id": "letta-block-history",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "0258808cc835c12dadfd22a4ff981b425777374618148ffc0019195b30042e14"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 9,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "llamaindex-memory-sqlite",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "5c0414e1d841f8d32bc09e248a564facdc21d9626c4bb359656ca540149567e2"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 9,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "mem0-qdrant-local",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "03f21cc3649ea7c9b48ac84eee05cd91b661f8a25aa645a0220cb132d55ae01b"
+    },
+    "measured_on": "mem0ai 2.0.20, infer=False, default search (semantic only, no keyword or entity boosts), sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 9,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "memory-blackbox-md",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "3325a8a455840e8560fcb4495288669776dd926a65c3cf4bf195213cc623dcc2"
+    },
+    "measured_on": null,
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 9,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "memory-blackbox-md+restart",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "d09d9829dc2c3b471e58ef7eb8aac2d0ef68e7070956eb382de068c621149943"
+    },
+    "measured_on": null,
+    "detection_point": "audit",
+    "verdicts": {
+     "accepted": 1,
+     "rejected": 0,
+     "reported": 8,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "naive-mem(scoped)",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "2e08ab28413c92724d4de41aa76d0e8d6072e37be50499577dbeb6349e912d8a"
+    },
+    "measured_on": "reference store, token-overlap ranking, no defences",
+    "detection_point": null,
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 9
+    }
+   },
+   {
+    "id": "naive-mem(unscoped)",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "fdc1c56a43687969c0c3bd8c553edb5e234e6f2fcd31e4a85684284db1fd2c1f"
+    },
+    "measured_on": "reference store, token-overlap ranking, no defences",
+    "detection_point": null,
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 9
+    }
+   },
+   {
+    "id": "openai-agents-sqlite-session",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "46f072e727625c682bcf4787cd5a8927eb512f6cc899e8b3cc2bd6eedd021efb"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 9,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "openclaw-memory-md",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "22375adaa48c06e9aea8ad00a71701b3e447aaee43ef7361679e46e2e8b401ae"
+    },
+    "measured_on": "openclaw 2026.10.1 from npm, read through its memory_get function in a fresh Node process per read; Linux x86_64 with Node 24.21.0, reproduced on macOS arm64 with Node 26.11.0",
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 9,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "openfang(model,fixed)",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "6dba5bb3e1c6af56188b91afa1672675f32cda585b5aa3fe5b9a884e536adf18"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 1,
+     "rejected": 5,
+     "reported": 0,
+     "n/a": 3
+    }
+   },
+   {
+    "id": "recallspection-exact",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "1d84d6eceb1aa841102fb60faf5e16849439ca743f31c7507ad4d19845f23aa4"
+    },
+    "measured_on": "exactmemory.recallspection 3.2.0 at c62ef7a",
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 1,
+     "rejected": 8,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "recallspection-exact+anchor",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "6b32ac33fa0e1c7d8758a1a2eb9fb0b8df25644b0576d470db4b68dfad3cdfe2"
+    },
+    "measured_on": "exactmemory.recallspection 3.2.0 at c62ef7a",
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 9,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "reference-defended(model)",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "b83f3c9db8066f892fe53b55f87f6eb837fadf37e74b8e0557faec2ce667029e"
+    },
+    "measured_on": "reference store with signed-write provenance, write-time quarantine of instruction-shaped records and a stuffing check; token-overlap ranking",
+    "detection_point": null,
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 9
+    }
+   },
+   {
+    "id": "surgical-devops-g7",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "0948e771161401e49cf86ffb1eabd57ddf1e12c93e579dc2f57fd019b6610d10"
+    },
+    "measured_on": "surgical-dev-ops 2.6.0-rc.6 at f267cf38, Node v24.18.0",
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 0,
+     "rejected": 9,
+     "reported": 0,
+     "n/a": 0
+    }
+   },
+   {
+    "id": "vertex-memory-bank",
+    "digest": {
+     "alg": "sha-256",
+     "input": "JCS(row object)",
+     "value": "4580519d0ed0d1fdb658817a6428f3ad21d28e11f4e16b196498e19e57690a56"
+    },
+    "measured_on": null,
+    "detection_point": "read",
+    "verdicts": {
+     "accepted": 7,
+     "rejected": 0,
+     "reported": 0,
+     "n/a": 2
+    }
+   }
+  ],
+  "rejection_grounds": [
+   "row-missing",
+   "row-duplicated",
+   "row-not-in-manifest",
+   "row-digest-mismatch"
+  ]
+ },
+ "selector": {
+  "expression": "rows[*].label",
+  "matched": 39,
+  "rejection_grounds": [
+   "selector-matched-zero",
+   "selector-matched-multiple"
+  ]
+ },
+ "recount": {
+  "decision_rule": "Decision rule, stated so a refusal can be recomputed without the\n    tooling: a cell's verdict is the string in cells[<edit>].verdict; a row's\n    count is the number of at-rest cells carrying each verdict.",
+  "per_row": {
+   "acrf-memory-guard": {
+    "accepted": 6,
+    "rejected": 3,
+    "reported": 0,
+    "n/a": 0
+   },
+   "agent-memory": {
+    "accepted": 1,
+    "rejected": 8,
+    "reported": 0,
+    "n/a": 0
+   },
+   "atelya-attest-chain": {
+    "accepted": 2,
+    "rejected": 0,
+    "reported": 7,
+    "n/a": 0
+   },
+   "atelya-attest-chain+anchor": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 9,
+    "n/a": 0
+   },
+   "atmem-chain": {
+    "accepted": 1,
+    "rejected": 0,
+    "reported": 8,
+    "n/a": 0
+   },
+   "atmem-chain+checkpoint": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 9,
+    "n/a": 0
+   },
+   "bedrock-agentcore-events": {
+    "accepted": 3,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 6
+   },
+   "continuum-events": {
+    "accepted": 2,
+    "rejected": 0,
+    "reported": 7,
+    "n/a": 0
+   },
+   "continuum-events+attest": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 9,
+    "n/a": 0
+   },
+   "crewai-ltm-lancedb": {
+    "accepted": 9,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 0
+   },
+   "hdp-token-content-ref": {
+    "accepted": 3,
+    "rejected": 6,
+    "reported": 0,
+    "n/a": 0
+   },
+   "hdp-token-uuid": {
+    "accepted": 3,
+    "rejected": 6,
+    "reported": 0,
+    "n/a": 0
+   },
+   "hermes-memory-md": {
+    "accepted": 8,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 1
+   },
+   "inspeximus-default": {
+    "accepted": 9,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 0
+   },
+   "inspeximus-defended": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 9
+   },
+   "inspeximus-defended-key": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 9
+   },
+   "inspeximus-rcpt+dir": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 9,
+    "n/a": 0
+   },
+   "inspeximus-rcpt+dir+home": {
+    "accepted": 2,
+    "rejected": 0,
+    "reported": 7,
+    "n/a": 0
+   },
+   "langgraph-ledger": {
+    "accepted": 2,
+    "rejected": 0,
+    "reported": 7,
+    "n/a": 0
+   },
+   "langgraph-postgres": {
+    "accepted": 9,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 0
+   },
+   "langgraph-redis": {
+    "accepted": 9,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 0
+   },
+   "langgraph-sqlite": {
+    "accepted": 9,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 0
+   },
+   "langgraph-sqlite-store": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 9
+   },
+   "letta-archival": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 9
+   },
+   "letta-block-history": {
+    "accepted": 9,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 0
+   },
+   "llamaindex-memory-sqlite": {
+    "accepted": 9,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 0
+   },
+   "mem0-qdrant-local": {
+    "accepted": 9,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 0
+   },
+   "memory-blackbox-md": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 9,
+    "n/a": 0
+   },
+   "memory-blackbox-md+restart": {
+    "accepted": 1,
+    "rejected": 0,
+    "reported": 8,
+    "n/a": 0
+   },
+   "naive-mem(scoped)": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 9
+   },
+   "naive-mem(unscoped)": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 9
+   },
+   "openai-agents-sqlite-session": {
+    "accepted": 9,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 0
+   },
+   "openclaw-memory-md": {
+    "accepted": 9,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 0
+   },
+   "openfang(model,fixed)": {
+    "accepted": 1,
+    "rejected": 5,
+    "reported": 0,
+    "n/a": 3
+   },
+   "recallspection-exact": {
+    "accepted": 1,
+    "rejected": 8,
+    "reported": 0,
+    "n/a": 0
+   },
+   "recallspection-exact+anchor": {
+    "accepted": 0,
+    "rejected": 9,
+    "reported": 0,
+    "n/a": 0
+   },
+   "reference-defended(model)": {
+    "accepted": 0,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 9
+   },
+   "surgical-devops-g7": {
+    "accepted": 0,
+    "rejected": 9,
+    "reported": 0,
+    "n/a": 0
+   },
+   "vertex-memory-bank": {
+    "accepted": 7,
+    "rejected": 0,
+    "reported": 0,
+    "n/a": 2
+   }
+  },
+  "printed_totals": {
+   "stores_measured_badge": 26,
+   "rows": 39,
+   "source": "README.md badge and docs/scorecard.md; compared by tests/test_readme_table.py"
+  },
+  "carried": [
+   "per-cell verdict and detail",
+   "per-row counts",
+   "CI exit code"
+  ]
+ },
+ "native_record": "each cell's `detail` is the tool's own exception type and message, or its own reason for an n/a, carried unchanged",
+ "observation_carry": {
+  "default": "inline",
+  "note": "every cell carries verdict and detail inline; none referenced by digest; an absent cell is a fail-closed refusal in the merge tool"
+ },
+ "anchor": {
+  "git": {
+   "repository": "https://github.com/tech4biz-yasha/agent-memory-integrity",
+   "commit": "e22196c05842d6cf6011f467f32dcac33b1c7222",
+   "availability_failure": "commit does not resolve on the host",
+   "integrity_failure": "commit resolves but results/scorecard.json digest differs"
+  },
+  "pypi": {
+   "package": "agent-memory-integrity",
+   "version": "0.6.3",
+   "sdist_sha256_prefix": "422c4c5f3ead2512",
+   "wheel_sha256_prefix": "3913eb165ab91e43",
+   "note": "full digests on https://pypi.org/project/agent-memory-integrity/0.6.3/"
+  }
+ },
+ "checker": {
+  "name": "agmi full runner and merge tool",
+  "source_revision": "e22196c05842d6cf6011f467f32dcac33b1c7222",
+  "command": "PYTHONPATH=. python agmi/full_runner.py --json <out>; python -m agmi.merge_rows results/scorecard.json <out> --labels <row>",
+  "runtime": "Darwin arm64, Python 3.12",
+  "attack_versions": {
+   "tamper": 1,
+   "truncate": 1,
+   "delete_middle": 1,
+   "reorder": 1,
+   "forge": 1,
+   "cross_replay": 1,
+   "rollback_replay": 1,
+   "metadata_tamper": 1,
+   "snapshot_rollback": 1,
+   "memory_injection": 3,
+   "cross_session_bleed": 2,
+   "retrieval_hijack": 4,
+   "indirect_prompt_injection": 3,
+   "update_poisoning": 1,
+   "metadata_poisoning": 1
+  },
+  "helpers": [
+   {
+    "name": "agmi/bridges/surgical_devops_bridge.js",
+    "pinned_by": "repository commit",
+    "runtime": "Node v24.18.0 (enforced by the bridge)"
+   },
+   {
+    "name": "agmi/bridges/hdp_bridge.mjs",
+    "pinned_by": "repository commit",
+    "runtime": "Node 22 (enforced by the adapter)"
+   }
+  ],
+  "external_units": "each row's measured_on names the library version and commit the row was measured against; the adapter refuses to run against any other"
+ },
+ "canonicalization": {
+  "encoding": "RFC 8785 JCS",
+  "applies_to": "row and corpus digests in this record",
+  "note": "the results file itself is pinned by exact bytes, not canonical form"
+ },
+ "replay_stability": {
+  "claim": "the two Recallspection rows re-measured on 2026-10-17 produced cells identical, detail strings included, to the 2026-10-15 run",
+  "evidence": "git diff of results/scorecard.json across the two merges showed no changed cells for those rows",
+  "ci": "scorecard.yml re-measures every row the runner can reach on each push and weekly against latest releases; its last step fails the run if this measurement disagrees with the committed file on any cell both measured",
+  "byte_identity": "results/scorecard.json is pinned by sha-256 above",
+  "unordered_streams": "none digested; the results file is a JSON document with a fixed row order"
+ },
+ "exposure": {
+  "expected_answers_visible": true,
+  "note": "the nine edits are public code; a store's maintainer can read them. Rows submitted by a tool's own maintainer are marked as such on the scorecard and were reproduced independently before publication",
+  "fault_separation": "every edit is an injected fault with its own cell; the landed check refuses to score a cell when the edit did not land as intended, so a false pass cannot come from a failed edit",
+  "maintainer_submitted_rows": [
+   "surgical-devops-g7",
+   "recallspection-exact",
+   "recallspection-exact+anchor",
+   "hdp-token-content-ref",
+   "hdp-token-uuid"
+  ]
+ },
+ "scope": {
+  "establishes": "for each row, what the store served back to the agent after each of nine storage-level edits made beneath its own API, and whether that was noticed on the read path or only in a later audit",
+  "does_not": [
+   "rank implementations",
+   "claim coverage of the whole attack surface",
+   "speak for an attacker other than the one each row names",
+   "establish that an action happened or that its actor had authority",
+   "measure content-level attacks except where a row carries the six front-door families separately"
+  ]
+ },
+ "names_no_implementation": "the criteria above are met by the record, not by any particular store; the first suite offered under them is a procedure run against live stores rather than a static vector corpus, which is the question put to the editors",
+ "method_text": {
+  "internet_draft": "draft-khandelwal-bmwg-agent-memory-integrity-01",
+  "next_revision": "-02 in preparation for the 2 November 2026 cut-off",
+  "scorecard": "https://agentmemoryintegrity.org"
+ }
+}
