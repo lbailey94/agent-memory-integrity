@@ -74,3 +74,71 @@ def test_edited_record_is_refused(tmp_path, name, mutate, refusal):
 def test_unedited_copy_verifies(tmp_path):
     code, out = _verify(tmp_path, lambda d: None)
     assert code == 0, out
+
+
+def _leaves(o, path=()):
+    if isinstance(o, dict):
+        for k, v in o.items():
+            yield from _leaves(v, path + (k,))
+    elif isinstance(o, list):
+        for i, v in enumerate(o):
+            yield from _leaves(v, path + (i,))
+    else:
+        yield path, o
+
+
+def _containers(o, path=()):
+    if isinstance(o, (dict, list)):
+        yield path, o
+        items = o.items() if isinstance(o, dict) else enumerate(o)
+        for k, v in items:
+            yield from _containers(v, path + (k,))
+
+
+def _get(o, path):
+    for k in path:
+        o = o[k]
+    return o
+
+
+def _mutated(v):
+    if isinstance(v, bool):
+        return not v
+    if isinstance(v, (int, float)):
+        return v + 1
+    if isinstance(v, str):
+        return v + "X"
+    return "X"
+
+
+def test_every_field_is_protected():
+    """Edit every leaf, delete every key and element, insert a key into
+    every object: each must be refused, and the untouched record must not.
+    This is the sweep an outside party would run; it runs here first."""
+    import copy
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("build_record", ROOT / "submissions" / "build_record.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    rec = json.loads(RECORD.read_text())
+    fresh = mod.build()
+    assert mod.compare(rec, fresh) == []
+    slipped = []
+    for path, val in _leaves(rec):
+        d = copy.deepcopy(rec)
+        _get(d, path[:-1])[path[-1]] = _mutated(val)
+        if not mod.compare(d, fresh):
+            slipped.append(("edit", path))
+    for path, c in list(_containers(rec)):
+        keys = list(c.keys()) if isinstance(c, dict) else list(range(len(c)))
+        for k in keys:
+            d = copy.deepcopy(rec)
+            del _get(d, path)[k]
+            if not mod.compare(d, fresh):
+                slipped.append(("delete", path + (k,)))
+        if isinstance(c, dict):
+            d = copy.deepcopy(rec)
+            _get(d, path)["extra"] = "X"
+            if not mod.compare(d, fresh):
+                slipped.append(("insert", path))
+    assert not slipped, slipped

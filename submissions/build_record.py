@@ -244,46 +244,45 @@ def _diff(a, b, path=""):
         yield path
 
 
-def verify(record: pathlib.Path = RECORD) -> int:
-    """Recompute the whole record from the pinned bytes and refuse on any
-    field that differs from the stored record. Every derived field is
-    compared, not a chosen few: a stored value the derivation does not
-    reproduce is a refusal, named by its path and, for a row, by its id."""
-    stored = json.loads(record.read_text())
-    fresh = build()
-    # the anchor commit is the one the record was built at, not HEAD;
-    # it is checked below against the bytes it must hold
-    fresh["anchor"]["git"]["commit"] = stored["anchor"]["git"]["commit"]
-    fresh["checker"]["source_revision"] = stored["checker"]["source_revision"]
+def compare(stored: dict, fresh: dict) -> list[str]:
+    """Every way a stored record can differ from its fresh derivation, as
+    named refusals. Pure: no git, no files. The anchor commit and the
+    checker revision are the revision the record was built at, so the
+    fresh copy takes the stored anchor and the checker must match it."""
+    fresh = json.loads(json.dumps(fresh))
+    fresh["anchor"]["git"]["commit"] = stored.get("anchor", {}).get("git", {}).get("commit")
+    fresh["checker"]["source_revision"] = fresh["anchor"]["git"]["commit"]
     problems = []
-
-    s_ids = [m["id"] for m in stored["admitted_population"]["manifest"]]
-    f_ids = [m["id"] for m in fresh["admitted_population"]["manifest"]]
+    s_man = stored.get("admitted_population", {}).get("manifest", [])
+    f_man = fresh["admitted_population"]["manifest"]
+    s_ids = [m.get("id") for m in s_man]
+    f_ids = [m["id"] for m in f_man]
     if len(s_ids) != len(set(s_ids)):
         problems.append("row-duplicated")
-    for i in sorted(set(f_ids) - set(s_ids)):
+    for i in sorted(set(f_ids) - set(s_ids), key=str):
         problems.append(f"row-not-in-manifest: {i}")
-    for i in sorted(set(s_ids) - set(f_ids)):
+    for i in sorted(set(s_ids) - set(f_ids), key=str):
         problems.append(f"row-missing: {i}")
     if set(s_ids) == set(f_ids):
-        by_id = {m["id"]: m for m in fresh["admitted_population"]["manifest"]}
-        for m in stored["admitted_population"]["manifest"]:
-            if m["digest"] != by_id[m["id"]]["digest"]:
+        by_id = {m["id"]: m for m in f_man}
+        for m in s_man:
+            if m.get("digest") != by_id[m["id"]]["digest"]:
                 problems.append(f"row-digest-mismatch: {m['id']}")
             elif m != by_id[m["id"]]:
                 problems.append(f"row-field-mismatch: {m['id']}")
-
-    if stored["selector"]["matched"] != len(f_ids):
-        problems.append(f"selector-matched-count: stored {stored['selector']['matched']}, "
-                        f"selected {len(f_ids)}")
-
+    matched = stored.get("selector", {}).get("matched")
+    if matched != len(f_ids):
+        problems.append(f"selector-matched-count: stored {matched}, selected {len(f_ids)}")
     for path in _diff(stored, fresh):
         if path.startswith("/admitted_population/manifest") or path == "/selector/matched":
             continue  # named above
         problems.append(f"field-differs-from-derivation: {path}")
+    return problems
 
-    # anchor check: the pinned commit must resolve and must hold exactly the
-    # results bytes the record pins (criterion 7's two named failures)
+
+def anchor_check(stored: dict) -> list[str]:
+    """The pinned commit must resolve and must hold exactly the results
+    bytes the record pins (criterion 7's two named failures)."""
     commit = stored["anchor"]["git"]["commit"]
     if subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", f"{commit}^{{commit}}"],
                       capture_output=True).returncode != 0:
@@ -295,14 +294,26 @@ def verify(record: pathlib.Path = RECORD) -> int:
                                f"{commit}:results/scorecard.json"],
                               capture_output=True, check=True).stdout
     except subprocess.CalledProcessError:
-        problems.append(f"anchor availability failure: {commit[:8]} does not resolve here")
-    else:
-        if sha256(blob) != stored["pinned_bytes"]["results_file"]["value"]:
-            problems.append(f"anchor integrity failure: {commit[:8]} holds different results bytes")
+        return [f"anchor availability failure: {str(commit)[:8]} does not resolve here"]
+    if sha256(blob) != stored["pinned_bytes"]["results_file"]["value"]:
+        return [f"anchor integrity failure: {commit[:8]} holds different results bytes"]
+    return []
 
+
+def verify(record: pathlib.Path = RECORD) -> int:
+    """Recompute the whole record from the pinned bytes and refuse on any
+    field that differs from the stored record. Every derived field is
+    compared, not a chosen few: a stored value the derivation does not
+    reproduce is a refusal, named by its path and, for a row, by its id."""
+    stored = json.loads(record.read_text())
+    fresh = build()
+    problems = compare(stored, fresh)
+    problems += anchor_check(stored) if isinstance(stored.get("anchor", {}).get("git", {}).get("commit"), str) \
+        else ["anchor availability failure: no commit in record"]
     for p in problems:
         print("REFUSE:", p)
-    print("rows:", len(f_ids), "| corpus digest:", fresh["pinned_bytes"]["corpus_digest"]["value"][:16])
+    print("rows:", len(fresh["admitted_population"]["manifest"]),
+          "| corpus digest:", fresh["pinned_bytes"]["corpus_digest"]["value"][:16])
     print("verify:", "OK" if not problems else "REFUSED")
     return 1 if problems else 0
 
