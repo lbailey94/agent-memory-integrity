@@ -248,6 +248,11 @@ def verify() -> int:
     # anchor check: the pinned commit must resolve and must hold exactly the
     # results bytes the record pins (criterion 7's two named failures)
     commit = stored["anchor"]["git"]["commit"]
+    if subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", f"{commit}^{{commit}}"],
+                      capture_output=True).returncode != 0:
+        # shallow clone: pull just that commit from the origin before deciding
+        subprocess.run(["git", "-C", str(ROOT), "fetch", "--depth=1", "origin", commit],
+                       capture_output=True)
     try:
         blob = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-p",
                                f"{commit}:results/scorecard.json"],
