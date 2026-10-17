@@ -23,6 +23,7 @@ from __future__ import annotations
 import hashlib
 import json
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -67,6 +68,13 @@ def verdict_counts(row: dict) -> dict:
     return out
 
 
+def badge_count() -> int | None:
+    """The hand-maintained store count shown on the README badge, read from
+    the README bytes so the record reports what is printed, not a copy."""
+    m = re.search(r"stores%20measured-(\d+)-", (ROOT / "README.md").read_text())
+    return int(m.group(1)) if m else None
+
+
 def build() -> dict:
     results = json.loads(RESULTS.read_text())
     rows = results["rows"]
@@ -91,7 +99,14 @@ def build() -> dict:
 
     record = {
         "record": "agmi submission to W3C Agent Conformance and Benchmarking CG",
-        "intake_criteria": "v2, public-agent-conformance list message 0067 (13 October 2026)",
+        "record_version": "1.1",
+        "changes": [
+            "1.0: first record, built at e22196c",
+            "1.1: verifier compares every derived field (af7669b); printed totals state "
+            "per total whether a recount exists and agrees",
+        ],
+        "intake_criteria": "v2, public-agent-conformance list message 0067 (13 October 2026); "
+                           "v2.1 text expected 22 October 2026",
         "submitter": {"name": "Yasha Khandelwal", "email": "yasha.khandelwal@tech4biz.io",
                       "role": "maintainer of the suite; author of the method text"},
         "licence": {"code": "MIT", "results": "MIT", "this_record": "CC0-1.0"},
@@ -122,9 +137,19 @@ def build() -> dict:
             "decision_rule": verdict_counts.__doc__.strip(),
             "per_row": {m["id"]: m["verdicts"] for m in manifest},
             "printed_totals": {
-                "stores_measured_badge": 26,
-                "rows": len(rows),
-                "source": "README.md badge and docs/scorecard.md; compared by tests/test_readme_table.py",
+                "rows": {
+                    "value": len(rows),
+                    "source": "results/scorecard.json row count as printed on docs/scorecard.md",
+                    "recount_agrees": len(manifest) == len(rows),
+                },
+                "stores_measured_badge": {
+                    "value": badge_count(),
+                    "source": "README.md badge",
+                    "recount_agrees": None,
+                    "note": "no recount exists: 'store' has no decision rule in the results file "
+                            "and the badge is maintained by hand, so this total is reported here "
+                            "and not compared; a disagreement cannot be detected from the record",
+                },
             },
             "carried": ["per-cell verdict and detail", "per-row counts", "CI exit code"],
         },

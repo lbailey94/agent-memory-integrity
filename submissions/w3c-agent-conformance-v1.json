@@ -1,6 +1,11 @@
 {
  "record": "agmi submission to W3C Agent Conformance and Benchmarking CG",
- "intake_criteria": "v2, public-agent-conformance list message 0067 (13 October 2026)",
+ "record_version": "1.1",
+ "changes": [
+  "1.0: first record, built at e22196c",
+  "1.1: verifier compares every derived field (af7669b); printed totals state per total whether a recount exists and agrees"
+ ],
+ "intake_criteria": "v2, public-agent-conformance list message 0067 (13 October 2026); v2.1 text expected 22 October 2026",
  "submitter": {
   "name": "Yasha Khandelwal",
   "email": "yasha.khandelwal@tech4biz.io",
@@ -907,9 +912,17 @@
    }
   },
   "printed_totals": {
-   "stores_measured_badge": 26,
-   "rows": 39,
-   "source": "README.md badge and docs/scorecard.md; compared by tests/test_readme_table.py"
+   "rows": {
+    "value": 39,
+    "source": "results/scorecard.json row count as printed on docs/scorecard.md",
+    "recount_agrees": true
+   },
+   "stores_measured_badge": {
+    "value": 26,
+    "source": "README.md badge",
+    "recount_agrees": null,
+    "note": "no recount exists: 'store' has no decision rule in the results file and the badge is maintained by hand, so this total is reported here and not compared; a disagreement cannot be detected from the record"
+   }
   },
   "carried": [
    "per-cell verdict and detail",
@@ -925,7 +938,7 @@
  "anchor": {
   "git": {
    "repository": "https://github.com/tech4biz-yasha/agent-memory-integrity",
-   "commit": "e22196c05842d6cf6011f467f32dcac33b1c7222",
+   "commit": "af7669bfa87f1ef5b0f5a1cb3238e83201af2570",
    "availability_failure": "commit does not resolve on the host",
    "integrity_failure": "commit resolves but results/scorecard.json digest differs"
   },
@@ -939,7 +952,7 @@
  },
  "checker": {
   "name": "agmi full runner and merge tool",
-  "source_revision": "e22196c05842d6cf6011f467f32dcac33b1c7222",
+  "source_revision": "af7669bfa87f1ef5b0f5a1cb3238e83201af2570",
   "command": "PYTHONPATH=. python agmi/full_runner.py --json <out>; python -m agmi.merge_rows results/scorecard.json <out> --labels <row>",
   "runtime": "Darwin arm64, Python 3.12",
   "attack_versions": {
