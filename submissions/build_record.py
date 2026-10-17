@@ -8,6 +8,8 @@ Benchmarking Community Group, against intake criteria v2 (list message 0067).
     python submissions/build_record.py build    write the record from the repo
     python submissions/build_record.py verify   recompute everything from the
                                                 pinned bytes and compare
+    python submissions/build_record.py verify other.json
+                                                the same, against a copy
 
 The record is derived, never hand-edited. Every digest, count and label in it
 is recomputed from results/scorecard.json and the repository, so an unrelated
@@ -227,24 +229,59 @@ def build() -> dict:
     return record
 
 
-def verify() -> int:
-    stored = json.loads(RECORD.read_text())
+def _diff(a, b, path=""):
+    """Yield every path at which two JSON values differ."""
+    if isinstance(a, dict) and isinstance(b, dict):
+        for k in sorted(set(a) | set(b)):
+            if k not in a or k not in b:
+                yield f"{path}/{k}"
+            else:
+                yield from _diff(a[k], b[k], f"{path}/{k}")
+    elif isinstance(a, list) and isinstance(b, list) and len(a) == len(b):
+        for i, (x, y) in enumerate(zip(a, b)):
+            yield from _diff(x, y, f"{path}[{i}]")
+    elif a != b:
+        yield path
+
+
+def verify(record: pathlib.Path = RECORD) -> int:
+    """Recompute the whole record from the pinned bytes and refuse on any
+    field that differs from the stored record. Every derived field is
+    compared, not a chosen few: a stored value the derivation does not
+    reproduce is a refusal, named by its path and, for a row, by its id."""
+    stored = json.loads(record.read_text())
     fresh = build()
+    # the anchor commit is the one the record was built at, not HEAD;
+    # it is checked below against the bytes it must hold
+    fresh["anchor"]["git"]["commit"] = stored["anchor"]["git"]["commit"]
+    fresh["checker"]["source_revision"] = stored["checker"]["source_revision"]
     problems = []
-    if stored["pinned_bytes"] != fresh["pinned_bytes"]:
-        problems.append("row-digest-mismatch or results file changed")
+
     s_ids = [m["id"] for m in stored["admitted_population"]["manifest"]]
     f_ids = [m["id"] for m in fresh["admitted_population"]["manifest"]]
     if len(s_ids) != len(set(s_ids)):
         problems.append("row-duplicated")
-    for i in set(f_ids) - set(s_ids):
+    for i in sorted(set(f_ids) - set(s_ids)):
         problems.append(f"row-not-in-manifest: {i}")
-    for i in set(s_ids) - set(f_ids):
+    for i in sorted(set(s_ids) - set(f_ids)):
         problems.append(f"row-missing: {i}")
-    if stored["recount"]["per_row"] != fresh["recount"]["per_row"]:
-        problems.append("recount differs from stored per-row counts")
-    if stored["recount"]["printed_totals"]["rows"] != len(f_ids):
-        problems.append("printed row total differs from recount")
+    if set(s_ids) == set(f_ids):
+        by_id = {m["id"]: m for m in fresh["admitted_population"]["manifest"]}
+        for m in stored["admitted_population"]["manifest"]:
+            if m["digest"] != by_id[m["id"]]["digest"]:
+                problems.append(f"row-digest-mismatch: {m['id']}")
+            elif m != by_id[m["id"]]:
+                problems.append(f"row-field-mismatch: {m['id']}")
+
+    if stored["selector"]["matched"] != len(f_ids):
+        problems.append(f"selector-matched-count: stored {stored['selector']['matched']}, "
+                        f"selected {len(f_ids)}")
+
+    for path in _diff(stored, fresh):
+        if path.startswith("/admitted_population/manifest") or path == "/selector/matched":
+            continue  # named above
+        problems.append(f"field-differs-from-derivation: {path}")
+
     # anchor check: the pinned commit must resolve and must hold exactly the
     # results bytes the record pins (criterion 7's two named failures)
     commit = stored["anchor"]["git"]["commit"]
@@ -262,6 +299,7 @@ def verify() -> int:
     else:
         if sha256(blob) != stored["pinned_bytes"]["results_file"]["value"]:
             problems.append(f"anchor integrity failure: {commit[:8]} holds different results bytes")
+
     for p in problems:
         print("REFUSE:", p)
     print("rows:", len(f_ids), "| corpus digest:", fresh["pinned_bytes"]["corpus_digest"]["value"][:16])
@@ -276,6 +314,6 @@ if __name__ == "__main__":
         RECORD.write_text(json.dumps(build(), indent=1, ensure_ascii=False) + "\n")
         print("wrote", RECORD.relative_to(ROOT))
     elif mode == "verify":
-        sys.exit(verify())
+        sys.exit(verify(pathlib.Path(sys.argv[2]) if len(sys.argv) > 2 else RECORD))
     else:
-        sys.exit("usage: build_record.py [build|verify]")
+        sys.exit("usage: build_record.py [build|verify [record.json]]")
