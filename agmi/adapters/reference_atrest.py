@@ -132,6 +132,34 @@ class ReferenceAtRestAdapter(MemoryAdapter):
         c.close()
         self._witness = (seq, tag)
 
+    # --- hook for T10: the tool's own erasure --------------------------
+    supports_erase = True
+
+    def erase_genuine(self) -> list[str]:
+        """Erase the newest record the way the tool does: remove the row,
+        move the signed head back to the record before it, and witness that
+        new head off the store. A later read checks the head on disk against
+        the witness, so a restored copy carrying the erased record has a head
+        the tool no longer vouches for."""
+        c = self._raw()
+        rows = c.execute("SELECT seq, tag FROM rec WHERE ctx=? ORDER BY seq ASC",
+                         (CTX,)).fetchall()
+        if len(rows) < 2:
+            c.close()
+            raise RuntimeError("need at least two records to erase one")
+        if self._witness is not None and tuple(rows[-1]) != self._witness:
+            c.close()
+            raise RuntimeError("cannot erase: the chain on disk is not at the witnessed head")
+        erased_seq = rows[-1][0]
+        new_seq, new_tag = rows[-2]
+        c.execute("DELETE FROM rec WHERE ctx=? AND seq=?", (CTX, erased_seq))
+        head_sig = hmac.new(_KEY, f"{CTX}|{new_seq}|{new_tag}".encode(), hashlib.sha256).hexdigest()
+        c.execute("INSERT OR REPLACE INTO head VALUES (?,?,?,?)", (CTX, new_seq, new_tag, head_sig))
+        c.commit()
+        c.close()
+        self._witness = (new_seq, new_tag)
+        return [f"{CTX}:{erased_seq}"]
+
     def seed_other(self, n: int) -> None:
         self._seed_ctx(OTHER_CTX, OTHER_SEED, n)
 
@@ -234,6 +262,9 @@ class ReferenceAtRestAdapter(MemoryAdapter):
             self.verify_detail = "head does not match last record (truncated or rolled back)"
             return False
         if self._witness is not None and (head[0], head[1]) != self._witness:
-            self.verify_detail = "stored head is older than the witnessed head (store rolled back)"
+            self.verify_detail = (
+                "stored head is behind the witnessed head (store rolled back)"
+                if head[0] < self._witness[0] else
+                "stored head is ahead of the witnessed head (a record the store erased is back)")
             return False
         return True

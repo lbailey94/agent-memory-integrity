@@ -18,8 +18,9 @@ agmi is a scorecard. Its value is that every cell was produced the same way, so 
 2. **The tool gives the verdict.** `verify()` returns what the tool itself says after a reload. If the tool loads the altered store and raises, refuses or reports the problem, the cell is a detection. If it loads and serves the altered data, the cell is accepted. Never infer detection from the adapter's own checks.
 3. **Name the detection point.** Say where the tool would catch the edit: on the read path (the call that returns memories to the agent) or in a separate audit call the operator has to make. Both count under rule 2, but they are different guarantees and the scorecard shows which one it is.
 4. **Report rollback separately.** The whole-store rollback edit (T9) is its own column and its own verdict. Detecting a record-level edit does not stand in for it; a store that refuses every record edit can still serve a rolled-back copy, and the scorecard says so.
-5. **Pin the version.** Every row states the library version it was measured on, and the test for that row is pinned so it fails the day the library changes its behaviour. A re-measurement on a newer version is a separate PR that updates the version, the row and the README note together.
-6. **Runs offline in under a minute.** No hosted APIs, no model downloads, no Docker required in tests. An embedded database is fine.
+5. **Erasure is the tool's own operation.** T10 erases through the tool's API (a delete, a pop, a reset: whatever the tool offers, and whole-context erasure where that is all it offers) and then restores a pre-erasure copy. An adapter never deletes the record from the store by hand to stand in for an erasure the API lacks; that store reads not evaluable on T10 with the reason, and an append-only log that cannot erase says so.
+6. **Pin the version.** Every row states the library version it was measured on, and the test for that row is pinned so it fails the day the library changes its behaviour. A re-measurement on a newer version is a separate PR that updates the version, the row and the README note together.
+7. **Runs offline in under a minute.** No hosted APIs, no model downloads, no Docker required in tests. An embedded database is fine.
 
 ## Rows submitted by a tool's own maintainer
 

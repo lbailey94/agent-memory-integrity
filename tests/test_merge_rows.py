@@ -59,3 +59,24 @@ def test_a_merged_row_carries_the_date_it_was_measured():
     out = merge(base, run([("z", "reported")], date="2026-10-12"), ["z"])
     assert out["rows"][1]["measured_date"] == "2026-10-12"
     assert out["date"] == "2026-10-08" and "measured_date" not in out["rows"][0]
+
+
+def test_a_row_from_before_a_new_attack_carries_an_na_cell_for_it():
+    base = {"attack_versions": {"tamper": 1, "erase_resurrect": 1},
+            "rows": [{"label": "x", "cells": {"tamper": {"verdict": "accepted"},
+                                              "erase_resurrect": {"verdict": "accepted"}}}]}
+    extra = {"attack_versions": {"tamper": 1}, "date": "2026-10-01",
+             "rows": [{"label": "y", "cells": {"tamper": {"verdict": "reported"}}}]}
+    out = merge(base, extra, ["y"])
+    y = out["rows"][1]
+    assert y["cells"]["tamper"]["verdict"] == "reported"
+    assert y["cells"]["erase_resurrect"]["status"] == "n/a"
+    assert "before erase_resurrect@v1 existed" in y["cells"]["erase_resurrect"]["detail"]
+
+
+def test_a_run_with_an_unknown_attack_or_a_moved_version_is_refused():
+    base = {"attack_versions": {"tamper": 1}, "rows": []}
+    with pytest.raises(MergeError, match="does not know"):
+        merge(base, {"attack_versions": {"tamper": 1, "new": 1}, "rows": [{"label": "y", "cells": {}}]}, ["y"])
+    with pytest.raises(MergeError, match="different versions"):
+        merge(base, {"attack_versions": {"tamper": 2}, "rows": [{"label": "y", "cells": {}}]}, ["y"])

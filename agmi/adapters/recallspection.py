@@ -333,6 +333,30 @@ class RecallspectionAdapter(MemoryAdapter):
             raise RuntimeError("the genuine append was rejected")
         memory.save(str(self._store(CTX)))
 
+    # --- T10: the core's own erasure, if it offers one -----------------------
+    supports_erase = True
+
+    def erase_genuine(self) -> list[str]:
+        """Erase the newest record through ExactMemory's own API. The core
+        is measured at a pinned commit; if that revision exposes no erasure
+        operation the cell reads not evaluable with that reason, since
+        deleting the record from the container by hand would be an attacker
+        edit, not the tool's erasure."""
+        n = len(self._records(CTX))
+        memory = self._memory(CTX)
+        memory.load(str(self._store(CTX)), dict(KEYS))
+        erase = next((getattr(memory, m) for m in ("delete", "remove", "forget", "erase")
+                      if callable(getattr(memory, m, None))), None)
+        if erase is None:
+            raise RuntimeError("ExactMemory at the pinned revision exposes no erasure operation "
+                               "(no delete, remove, forget or erase method)")
+        key = f"{SEED_TOKEN}{n - 1}"
+        result = erase(key)
+        if result not in (None, True, "ok"):
+            raise RuntimeError(f"ExactMemory refused to erase {key!r}: {result!r}")
+        memory.save(str(self._store(CTX)))
+        return [key]
+
     # --- the agent's read path ----------------------------------------------
 
     def reload(self) -> None:

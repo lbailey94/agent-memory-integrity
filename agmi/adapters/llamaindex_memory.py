@@ -142,6 +142,17 @@ class LlamaIndexMemoryAdapter(MemoryAdapter):
         self._put(SESSION, [f"{SEED_TOKEN}{self._seeded}"])
         self._seeded += 1
 
+    # --- hook for T10: Memory's own erasure is per session -------------
+    supports_erase = True
+
+    def erase_genuine(self) -> list[str]:
+        """`Memory.areset` is the erasure the API offers: it clears the
+        session's chat history in the store, so T10 erases the whole seeded
+        session and names every message."""
+        ids = [self.identity_of(r) for r in self.read_all_raw()]
+        _run(self._memory(SESSION).areset())
+        return ids
+
     def reload(self) -> None:
         return None
 

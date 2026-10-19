@@ -39,7 +39,8 @@ jobs:
           adapter: agmi.adapters.reference_atrest:ReferenceAtRestAdapter
 
   inspeximus-receipts:
-    # Receipts on: every edit the action runs (T1 to T9) is REPORTED. Cross-context replay (T6)
+    # Receipts on: every edit the action runs is REPORTED (T1 to T9; T10 reads not
+    # evaluable until the receipts adapter carries an erase hook). Cross-context replay (T6)
     # lands on the victim's own row (the victim pool is scoped to the first
     # context, issue #5) and the receipts report it, so the action passes.
     # If this job ever fails, a receipt change has opened a cell and the

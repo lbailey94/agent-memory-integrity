@@ -162,6 +162,20 @@ class OpenAIAgentsSessionAdapter(MemoryAdapter):
         _run(s.add_items([{"role": "user", "content": f"{SEED_TOKEN}late"}]))
         s.close()
 
+    # --- hook for T10: the session's own erasure --------------------------
+    supports_erase = True
+
+    def erase_genuine(self) -> list[str]:
+        """`pop_item` is the session's per-item erasure: it removes and
+        returns the most recent item."""
+        last = self.read_all_raw()[-1]
+        s = self._session(SESSION)
+        popped = _run(s.pop_item())
+        s.close()
+        if popped is None:
+            raise RuntimeError("pop_item returned nothing")
+        return [self.identity_of(last)]
+
     # --- payload hooks --------------------------------------------------
     def mutate_payload(self, record: Record) -> Record:
         data = json.loads(record.fields["message_data"])

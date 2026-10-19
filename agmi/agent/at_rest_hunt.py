@@ -22,7 +22,7 @@ from dataclasses import dataclass, field
 
 from agmi.adapters.base import MemoryAdapter
 from agmi.agent.authz import Authorisation, authorise_library
-from agmi.attacks.at_rest import AT_REST_ATTACKS_WITH_SNAPSHOT
+from agmi.attacks.at_rest import AT_REST_ATTACKS_WITH_ERASE
 
 
 @dataclass
@@ -66,7 +66,7 @@ def hunt_at_rest(adapter: MemoryAdapter, *, target: str = "library",
     authz = authorisation or authorise_library()
     findings: list[AtRestFinding] = []
     dp = getattr(adapter, "detection_point", "read")
-    for attack_cls in AT_REST_ATTACKS_WITH_SNAPSHOT:
+    for attack_cls in AT_REST_ATTACKS_WITH_ERASE:
         result = attack_cls().run(adapter)
         if result.error is not None or result.guard is not None:
             continue  # not applicable / did not land — never a finding

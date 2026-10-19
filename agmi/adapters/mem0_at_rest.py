@@ -311,6 +311,15 @@ class Mem0AtRestAdapter(MemoryAdapter):
         self._mem.add(f"{SEED_TOKEN}{n} note about topic {n}",
                       user_id=USER, infer=False)
 
+    # --- hook for T10: Mem0's own per-memory erasure ---------------------
+    supports_erase = True
+
+    def erase_genuine(self) -> list[str]:
+        """`Memory.delete(memory_id)` erases one memory through the API."""
+        last = self.read_all_raw()[-1]
+        self._mem.delete(self.identity_of(last))
+        return [self.identity_of(last)]
+
     def reload(self) -> None:
         self._close()
         self._mem = self._open()

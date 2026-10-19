@@ -242,6 +242,17 @@ class LangGraphPostgresAdapter(MemoryAdapter):
         self._saver.put(tup.config, cp, {"source": "loop", "step": 99, "writes": {}},
                         {"state": "late"})
 
+    # --- hook for T10: the saver's own erasure is per thread -----------
+    supports_erase = True
+
+    def erase_genuine(self) -> list[str]:
+        """`delete_thread` is the checkpointer's only erasure: it removes
+        every checkpoint and write of the thread, so T10 erases the whole
+        seeded thread and names every checkpoint."""
+        ids = [self.identity_of(r) for r in self.read_all_raw()]
+        self._saver.delete_thread(THREAD)
+        return ids
+
     # --- the tool's own read path -----------------------------------------
 
     def reload(self) -> None:

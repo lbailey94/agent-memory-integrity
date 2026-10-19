@@ -211,6 +211,26 @@ class MemoryAdapter(ABC):
         after `snapshot_store`, so the restored copy is stale."""
         raise NotImplementedError
 
+    # --- T10, erasure resurrection -----------------------------------
+    # The tool erases one or more records through its OWN API (a delete
+    # call, a pop, a session reset: whatever erasure the tool offers), the
+    # attacker then restores a copy of the store taken before that
+    # erasure, and the tool reads. The erasure is the tool's own promise;
+    # the question is whether a restored copy undoes it unnoticed. An
+    # adapter that does not implement the hook reports the cell as
+    # "not evaluable" with the reason, never as a pass.
+
+    supports_erase: bool = False
+    erase_na_reason: str = ("adapter has no erasure hook: the store's own delete "
+                            "operation is not wired for this row yet")
+
+    def erase_genuine(self) -> list[str]:
+        """Erase one or more of the seeded records through the tool's own
+        API and return the identities (as `identity_of` gives them) of the
+        records erased. Whole-context erasure is allowed where that is the
+        only erasure the tool offers; the list then names every record."""
+        raise NotImplementedError
+
     # Helper for file- or directory-backed stores: copy `path` to a temp
     # location and back. Adapters call these from the two hooks above.
     @staticmethod

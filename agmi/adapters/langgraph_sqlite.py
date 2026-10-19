@@ -285,6 +285,18 @@ class LangGraphSqliteAdapter(MemoryAdapter):
         cp["channel_values"] = {"state": f"{SEED_TOKEN}late"}
         self._saver.put(tup.config, cp, {"source": "loop", "step": 99, "writes": {}}, {})
 
+    # --- hook for T10: the saver's own erasure is per thread -----------
+    supports_erase = True
+
+    def erase_genuine(self) -> list[str]:
+        """The checkpointer's only erasure is `delete_thread`, which removes
+        every checkpoint and write of the thread, so T10 erases the whole
+        seeded thread and names every checkpoint."""
+        ids = [self.identity_of(r) for r in self.read_all_raw()]
+        self.reload()
+        self._saver.delete_thread(THREAD)
+        return ids
+
     def reload(self) -> None:
         from langgraph.checkpoint.sqlite import SqliteSaver
         try:

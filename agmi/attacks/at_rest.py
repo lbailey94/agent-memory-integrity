@@ -347,6 +347,72 @@ class SnapshotRollbackAttack(Attack):
                 "the older copy opened as current; the newest genuine record is gone without an error")
 
 
+class EraseResurrectAttack(Attack):
+    """T10. The tool erases a record through its own API; the attacker
+    restores a copy of the store taken before that erasure; the tool reads.
+    Nothing in the restored copy is forged: every record, digest, chain link
+    and head is as the store wrote it. The store is simply older than its
+    own erasure, and a record it promised was gone is back.
+
+    T9 restores a copy older than a genuine write; T10 restores a copy older
+    than a genuine erasure. They part ways on what the store keeps outside
+    the attacker's reach: a head that only grows (a high-water mark, a
+    count) catches T9 and may pass T10, since erasure does not raise it; a
+    head that commits to the store's current state catches both. Erasure
+    is the operation a right-to-erasure request exercises, and this is the
+    edit that undoes it."""
+
+    name = "erase_resurrect"
+    description = ("Restore a copy of the store taken before the tool erased "
+                   "a record through its own API.")
+
+    def run(self, adapter: MemoryAdapter):
+        from agmi.attacks.base import AttackResult
+        if not getattr(adapter, "supports_snapshot", False):
+            return AttackResult(self.name, adapter.name, detected=False,
+                                error=getattr(adapter, "snapshot_na_reason",
+                                              "adapter does not support a store snapshot"),
+                                version=self.version)
+        if not getattr(adapter, "supports_erase", False):
+            return AttackResult(self.name, adapter.name, detected=False,
+                                error=getattr(adapter, "erase_na_reason",
+                                              "adapter does not support erasure"),
+                                version=self.version)
+        return super().run(adapter)
+
+    def tamper(self, adapter: MemoryAdapter) -> None:
+        token = adapter.snapshot_store()
+        self._ctx["erased"] = list(adapter.erase_genuine())
+        self._ctx["after_erase"] = snapshot(adapter, adapter.read_all_raw())
+        adapter.restore_store(token)
+
+    def check_landed(self, adapter, before, after):
+        erased: list[str] = self._ctx["erased"]
+        shrunk: list[Snap] = self._ctx["after_erase"]
+        expect(len(erased) > 0, "erase_genuine erased nothing")
+        ids_before = [s.identity for s in before]
+        expect(all(e in ids_before for e in erased),
+               "erase_genuine named a record that was not in the store")
+        expect(len(shrunk) == len(before) - len(erased),
+               f"the tool's erasure did not remove exactly {len(erased)} record(s): "
+               f"{len(before)} -> {len(shrunk)}")
+        expect(not any(s.identity in erased for s in shrunk),
+               "an erased record is still in the raw store after the tool's erasure")
+        kept = [s for s in before if s.identity not in erased]
+        expect(same_records(kept, shrunk),
+               "the tool's erasure changed records it was not asked to erase")
+        expect(len(after) == len(before),
+               f"restore did not bring the store back to {len(before)} records, found {len(after)}")
+        expect(same_records(before, after),
+               "the restored copy differs from the store as it was before the erasure")
+
+    def detail_on(self, detected: bool) -> str:
+        return ("the store noticed that a record it had erased was back"
+                if detected else
+                "the restored copy opened as current; the record the store had erased "
+                "is served again without an error")
+
+
 ALL_AT_REST_ATTACKS: list[type[Attack]] = [
     TamperAttack,
     TruncateAttack,
@@ -362,3 +428,7 @@ ALL_AT_REST_ATTACKS: list[type[Attack]] = [
 #: list stays as the pinned contract until every adapter carries the
 #: snapshot hooks, at which point T9 joins it.
 AT_REST_ATTACKS_WITH_SNAPSHOT: list[type[Attack]] = ALL_AT_REST_ATTACKS + [SnapshotRollbackAttack]
+
+#: The nine plus T10. The scorecard runs this list; an adapter without the
+#: erasure hook reads not evaluable on T10, never a pass.
+AT_REST_ATTACKS_WITH_ERASE: list[type[Attack]] = AT_REST_ATTACKS_WITH_SNAPSHOT + [EraseResurrectAttack]

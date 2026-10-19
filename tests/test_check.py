@@ -19,8 +19,10 @@ def test_openfang_model_accepts_truncation_and_fails_the_job(tmp_path):
     assert code == 1
     data = json.loads(out.read_text())
     assert data["tool"] == "openfang"
-    edits = {r["edit"][:2]: r["verdict"] for r in data["edits"]}
-    assert list(edits) == ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9"]
+    edits = {r["edit"].split()[0]: r["verdict"] for r in data["edits"]}
+    assert list(edits) == ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10"]
+    # the model has no erasure hook, so T10 reads not evaluable, never a pass
+    assert edits["T10"] == "NOT EVALUABLE"
     assert edits["T2"] == "ACCEPTED"
     assert edits["T1"] == "REJECTED"
     # OpenFang is a model/hash-chain adapter with no second context or

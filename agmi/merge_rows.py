@@ -32,8 +32,23 @@ class MergeError(Exception):
 
 
 def merge(base: dict, extra: dict, labels: list[str], measured_on: str | None = None) -> dict:
-    if base.get("attack_versions") != extra.get("attack_versions"):
-        raise MergeError("the two runs used different attack versions; re-run both")
+    """Carry rows from `extra` into `base`.
+
+    The two runs must agree on the version of every attack they both ran.
+    `extra` may predate attacks that `base` has since added (a run from
+    another environment made before a new column existed): those cells are
+    carried as not evaluable with the reason stated, never as a verdict,
+    until that row is re-measured. `extra` may not carry an attack `base`
+    does not know, and may not disagree on a version."""
+    bv, ev = base.get("attack_versions") or {}, extra.get("attack_versions") or {}
+    unknown = sorted(set(ev) - set(bv))
+    if unknown:
+        raise MergeError(f"the other run carries attacks this results file does not know: "
+                         f"{', '.join(unknown)}; re-run both")
+    moved = sorted(a for a in ev if ev[a] != bv[a])
+    if moved:
+        raise MergeError(f"the two runs used different versions of: {', '.join(moved)}; re-run both")
+    not_run = sorted(set(bv) - set(ev))
     by_label = {r["label"]: r for r in extra.get("rows", [])}
     missing = [lb for lb in labels if lb not in by_label]
     if missing:
@@ -42,6 +57,11 @@ def merge(base: dict, extra: dict, labels: list[str], measured_on: str | None = 
     index = {r["label"]: i for i, r in enumerate(rows)}
     for lb in labels:
         row = json.loads(json.dumps(by_label[lb]))
+        for a in not_run:
+            row.setdefault("cells", {})[a] = {
+                "status": "n/a", "verdict": "n/a",
+                "detail": f"not measured: this row was measured before {a}@v{bv[a]} existed",
+            }
         if measured_on is not None:
             row["measured_on"] = measured_on
         if extra.get("date"):
