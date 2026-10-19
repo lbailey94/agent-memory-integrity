@@ -20,12 +20,12 @@
   "results_file": {
    "path": "results/scorecard.json",
    "alg": "sha-256",
-   "value": "b9ed7149177cb3862f137326d87d2e3b92d981321ea297bed5380318cd67ac69",
+   "value": "8ca4e4c9017180e4a9f28a9c4c4e18cb586498cb3fd428b25c0a5d441060e749",
    "input": "exact file bytes"
   },
   "corpus_digest": {
    "alg": "sha-256",
-   "value": "58a3bbbe06d7c5244defed27d8c3f31b8b6e6616dc5a73096372c76203ae5541",
+   "value": "ba8deb7f7a53933b9b4c7c25ca6218565f72788330ccf3d370ddb33b37d8cfbf",
    "input": "JCS({results_file digest, sorted manifest of row digests})"
   }
  },
@@ -38,7 +38,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "4ababbc21a2e056d3aae9bad07cdca128e55945b72f2212387c081779981a48c"
+     "value": "d5a0d7a3778b0bdec468705a07f2df551b47b0c22f63dc50c82f17b5a7ffb3ed"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -54,7 +54,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "cd818ee7cca1611de3d81b4c18ca5e2d5ba4abfb149d2669106dacd1f4301af8"
+     "value": "4e85794ab92393fa1d84294fd17cf0ada891bb28c2eb05e50e8f30cba3b41a8f"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -70,7 +70,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "f8f722573e97c213ee9420d868a047f4c71ef65ca063420dc057d181ed945582"
+     "value": "f07ad6f525c203587c3a93b6f4b3f78fe85f42d12722e64af9964126a0227b5d"
     },
     "measured_on": null,
     "detection_point": "audit",
@@ -86,7 +86,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "e2b5a4f418dcf3e7db99642acc86272a175980e1ab1abe419b5602a24753959e"
+     "value": "a53cdb2d623dbeaf62612bf698681b9b475e499c4a23eec8c03d525341969b78"
     },
     "measured_on": null,
     "detection_point": "audit",
@@ -102,7 +102,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "84f7bfa2ffd6e7268603593cbd1fb72ce0225c9f8dc5c72ac80cabb3fe665655"
+     "value": "40cd3b0f0038798ebd42c6740a7d1dc59f051a0e314a68dd730a8f1dbc2c1c46"
     },
     "measured_on": "atmem 2.3.8 from PyPI (wheel SHA-256 05ca2c57), remeasured 2026-10-10 on Darwin arm64 and Linux x86_64, Python 3.12",
     "detection_point": "audit",
@@ -118,7 +118,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "6d24aa93d348a7d1cc9496f95283ef80cf96bc6b54c3826bb7908988a94395b1"
+     "value": "4a7d2cdc1579f6f4a9ae4f49c26e7c02fd88d631ae7fe22dc28814f61287afc2"
     },
     "measured_on": "atmem 2.3.8 from PyPI (wheel SHA-256 05ca2c57), remeasured 2026-10-10 on Darwin arm64 and Linux x86_64, Python 3.12",
     "detection_point": "audit",
@@ -134,9 +134,9 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "6614e3f6bb015224550ee1765a573571e86be5bd145365738700b3946e5ebba7"
+     "value": "bd4070fb0b5b72b1c8198007da9a82be64de4c934983db94623edba7345f6dc3"
     },
-    "measured_on": "AWS Bedrock AgentCore Memory (events), boto3, us-east-1",
+    "measured_on": "AWS Bedrock AgentCore Memory (events), boto3",
     "detection_point": "read",
     "verdicts": {
      "accepted": 3,
@@ -150,7 +150,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "c19c72b7bbdbc0ecf335952fb707fb0f40685b3817e935d9559d499382a2b6d4"
+     "value": "5352ee29eb3da7a2c863e3bc6993f7d96327e3864ad78c17495199b2b8eb413b"
     },
     "measured_on": null,
     "detection_point": "audit",
@@ -166,7 +166,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "d19992639d0b7b47e6920d7f43ddda75e46dfe7f5f3a591a7e90ada7b1fed736"
+     "value": "67d48254b0f7db1de15d0057dd189562bc2ccdac3008acb43d59abdd0dc19f62"
     },
     "measured_on": null,
     "detection_point": "audit",
@@ -182,7 +182,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "29aa87e2dffef8f19b43f3e9f9a8edbf7542d71353d3da1b8256275dbced2e36"
+     "value": "647c5c2ae0cf7f1f06547fe626bc7fa822a13427a6ff1f24937ef775a8ca9d05"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -198,7 +198,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "531aa7e9d5fd34bba02dadb5ca93c8894195e6a6a4a889d38bf03210f8e4d356"
+     "value": "32b0136d64d758b1cab80ff62cf619f426fe152143aec64ddf47e69729b0168f"
     },
     "measured_on": "@helixar_ai/hdp 0.2.2 at b753ba9, Node 22",
     "detection_point": "read",
@@ -214,7 +214,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "f1b378545eb59411990baae8d023676747801a474260858c4fbb17eb375c1a9f"
+     "value": "975df864da3cecb97cb0bc1b378279a40a899b16bf395300e03f00194116e583"
     },
     "measured_on": "@helixar_ai/hdp 0.2.2 at b753ba9, Node 22",
     "detection_point": "read",
@@ -230,9 +230,9 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "ebf600a39a473166491b75c4292762263a236df7fe380567f23e90c0263090cc"
+     "value": "6a2e21157919de029ba41e4362b4b672f859cd780e3ae27e8dd08917e4dcfe2a"
     },
-    "measured_on": "hermes-agent 0.19.0 from PyPI, in a virtualenv of its own, read through MemoryStore.load_from_disk() and format_for_system_prompt() in a fresh process per read; Linux x86_64 with Python 3.12, reproduced on macOS arm64 with Python 3.12",
+    "measured_on": "hermes-agent 0.19.0 (PyPI)",
     "detection_point": "read",
     "verdicts": {
      "accepted": 8,
@@ -246,9 +246,9 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "673b3b4005e6c49415cf1cebdb552a543abe99a3b2222490ff0da1bc941bab0c"
+     "value": "556ccda8d3a9889e22a2240c29c49ee37a0b00ca527da15946ebc772e356e8a4"
     },
-    "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), Darwin arm64, Python 3.12",
+    "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), Darwin x86_64, Python 3.12",
     "detection_point": "read",
     "verdicts": {
      "accepted": 9,
@@ -262,9 +262,9 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "40b35869edf4ee9acc2b82522a29ecfdd3e280c6252da51dfcfdd9026f0faf5b"
+     "value": "cb36f40a73c59693062232fc13acf175599df57fc7dc62349486d5a91120a7b9"
     },
-    "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), trusted_only=True, provenance recorded as the memory's source, trust_seeds=['user'], Darwin arm64, Python 3.12",
+    "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), trusted_only=True, provenance recorded as the memory's source, trust_seeds=['user'], Darwin x86_64, Python 3.12",
     "detection_point": null,
     "verdicts": {
      "accepted": 0,
@@ -278,9 +278,9 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "0c67fe280b951454a3ca4eaa47b0a729d8d654c976d759547cb39e9761c385a6"
+     "value": "f960867018cd206a3dbf3d788cdc19ad83e1e64df493dd3bd73fe259ee2b14b6"
     },
-    "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), trusted_only=True, provenance recorded as the memory's source, signed writes attested with a per-user Ed25519 key and those keys seeded, Darwin arm64, Python 3.12",
+    "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), trusted_only=True, provenance recorded as the memory's source, signed writes attested with a per-user Ed25519 key and those keys seeded, Darwin x86_64, Python 3.12",
     "detection_point": null,
     "verdicts": {
      "accepted": 0,
@@ -294,7 +294,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "454bd252ab836261a5b154a41d64b0dfd4c16aa57be2f029d9e32ef897a59479"
+     "value": "5471c83afebf5e53e8b9bdeae58984fbdd224ced8e2689f8a49876ad29ddebe1"
     },
     "measured_on": null,
     "detection_point": "audit",
@@ -310,7 +310,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "d6d37a03d4c208bf40b7ded38c9f4051e29409fa4abd51fe9f616281a8a926e0"
+     "value": "374ac7e86830f35072c7922fe9694ae31a5396390a6ebf65dcf8a8a30a9bb2df"
     },
     "measured_on": null,
     "detection_point": "audit",
@@ -326,7 +326,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "1261feaa98a0905476798fc4ce6bf75bfe87f142167cc740d4f0e8066d9155a0"
+     "value": "60cf2ccfae224d510e9afc701df5c6a665d2db2e6c94e0d63ac8004c3604ae91"
     },
     "measured_on": null,
     "detection_point": "audit",
@@ -342,7 +342,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "1a56958d54df6733d18848e956480c6f97a2454f31b43be24f75de8c85919a4f"
+     "value": "6a9cd57d35583b3b526a539167d767deed09a27eb101588e8c3a15a8771f0ae7"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -358,7 +358,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "5958f70f19be2370a7bf43c1ec959338fcd789f4cd43e664319290a0c340bbe5"
+     "value": "6e8e250d41488eeae965df22be44569100b3f43223abe34258e0b3fd4b7bd88c"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -374,7 +374,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "370efca94669bf22002effd2e2a3b8cc6ae6e16116adb0d9ecb7f89d5fe33be9"
+     "value": "0181531da16dde0b9416b344303652344787e406bb6a5ac1172f1070acb75286"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -390,7 +390,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "83f8dcc2105587821c477a243d9ffee300fa8da08651ee10cefc0cba2a4d69cd"
+     "value": "281d19bb6c0573de9ebd121b348902af1d4439fdf85399295367e3bc45ec5694"
     },
     "measured_on": "langgraph-checkpoint-sqlite 3.1.1 SqliteStore with a vector index, search defaults (no relevance floor), sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
     "detection_point": null,
@@ -406,7 +406,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "24b1d63c3cba7fd153d78f40ae2883ceb7e39e40b5c8f8ba66bf8161823e8333"
+     "value": "2fafb24bdc847c028fc44d70af7c231759ae50cdbb72ffb90b9027850e8f293a"
     },
     "measured_on": "letta 0.16.8, archival memory, one agent per user, insert_passage and search_agent_archival_memory_async at defaults (no relevance floor), embeddings via a local OpenAI-compatible endpoint serving sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
     "detection_point": null,
@@ -422,7 +422,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "0258808cc835c12dadfd22a4ff981b425777374618148ffc0019195b30042e14"
+     "value": "cc0c94aa1f168a7a6f145b8ab4b8cc2e371bbaa51ff70a2fc9516d97d1966914"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -438,7 +438,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "5c0414e1d841f8d32bc09e248a564facdc21d9626c4bb359656ca540149567e2"
+     "value": "6592bc6715143cc56b940bd9bb48465231e203efcee3d73b2bf20cd5da595be6"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -454,9 +454,9 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "03f21cc3649ea7c9b48ac84eee05cd91b661f8a25aa645a0220cb132d55ae01b"
+     "value": "331156bf92412b9c385473692ef90e725313e1f421c8b075484dcd7e82abc383"
     },
-    "measured_on": "mem0ai 2.0.20, infer=False, default search (semantic only, no keyword or entity boosts), sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
+    "measured_on": null,
     "detection_point": "read",
     "verdicts": {
      "accepted": 9,
@@ -470,7 +470,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "3325a8a455840e8560fcb4495288669776dd926a65c3cf4bf195213cc623dcc2"
+     "value": "eb1bb80690d7bd92b430bd82dda28454ecdd5917d1049455102a35edb14c812f"
     },
     "measured_on": null,
     "detection_point": "audit",
@@ -486,7 +486,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "d09d9829dc2c3b471e58ef7eb8aac2d0ef68e7070956eb382de068c621149943"
+     "value": "3f7cf51b3ee8831d47fee51d39d3c6f996b3aa83261621439464f7cdcf3ab7af"
     },
     "measured_on": null,
     "detection_point": "audit",
@@ -502,7 +502,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "2e08ab28413c92724d4de41aa76d0e8d6072e37be50499577dbeb6349e912d8a"
+     "value": "0bca023417a0ee6448aa80e23fb1a1df8d9fe946106b97269f4133a7a478e8e0"
     },
     "measured_on": "reference store, token-overlap ranking, no defences",
     "detection_point": null,
@@ -518,7 +518,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "fdc1c56a43687969c0c3bd8c553edb5e234e6f2fcd31e4a85684284db1fd2c1f"
+     "value": "34dc6a6ad849168d4ae8ce1a75dfe81f73aae352f6ef5717d55abaa9908e18c2"
     },
     "measured_on": "reference store, token-overlap ranking, no defences",
     "detection_point": null,
@@ -534,7 +534,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "46f072e727625c682bcf4787cd5a8927eb512f6cc899e8b3cc2bd6eedd021efb"
+     "value": "0bcef1cd9a9415960fa3555edb430dc92f47daa0d828982a71ccd72a4ee138ee"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -550,7 +550,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "22375adaa48c06e9aea8ad00a71701b3e447aaee43ef7361679e46e2e8b401ae"
+     "value": "492ca05959a6aa89a105448a9e614a529d1fe902897576c53a9133f64ff1bce5"
     },
     "measured_on": "openclaw 2026.10.1 from npm, read through its memory_get function in a fresh Node process per read; Linux x86_64 with Node 24.21.0, reproduced on macOS arm64 with Node 26.11.0",
     "detection_point": "read",
@@ -566,7 +566,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "6dba5bb3e1c6af56188b91afa1672675f32cda585b5aa3fe5b9a884e536adf18"
+     "value": "1ceb608b93ac0824ead365089e48d251d4f1eb2da5aef1e2f5d357e4629e5987"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -582,7 +582,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "1d84d6eceb1aa841102fb60faf5e16849439ca743f31c7507ad4d19845f23aa4"
+     "value": "bd93f5ffcb081c389c9aceade5d6f418c408e54b750022625e625c6de5312ced"
     },
     "measured_on": "exactmemory.recallspection 3.2.0 at c62ef7a",
     "detection_point": "read",
@@ -598,7 +598,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "6b32ac33fa0e1c7d8758a1a2eb9fb0b8df25644b0576d470db4b68dfad3cdfe2"
+     "value": "72a641a7da03ef3d80d703ff16d88d700df127c33214dd948f0d23f2dc1863fe"
     },
     "measured_on": "exactmemory.recallspection 3.2.0 at c62ef7a",
     "detection_point": "read",
@@ -614,7 +614,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "b83f3c9db8066f892fe53b55f87f6eb837fadf37e74b8e0557faec2ce667029e"
+     "value": "8070ef9ecc16d645f7abb06ec19060671eaef45022596ae324b13b0eb0c4b413"
     },
     "measured_on": "reference store with signed-write provenance, write-time quarantine of instruction-shaped records and a stuffing check; token-overlap ranking",
     "detection_point": null,
@@ -630,7 +630,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "0948e771161401e49cf86ffb1eabd57ddf1e12c93e579dc2f57fd019b6610d10"
+     "value": "6cdd042ce3a25fd144b5d0148b1f2c0fa2d41d0c947fe6b448f2538c24125b37"
     },
     "measured_on": "surgical-dev-ops 2.6.0-rc.6 at f267cf38, Node v24.18.0",
     "detection_point": "read",
@@ -646,7 +646,7 @@
     "digest": {
      "alg": "sha-256",
      "input": "JCS(row object)",
-     "value": "4580519d0ed0d1fdb658817a6428f3ad21d28e11f4e16b196498e19e57690a56"
+     "value": "f0c70579dbcc30000d0e74355834324bd8f898974201f72652a8275510baeba6"
     },
     "measured_on": null,
     "detection_point": "read",
@@ -938,7 +938,7 @@
  "anchor": {
   "git": {
    "repository": "https://github.com/tech4biz-yasha/agent-memory-integrity",
-   "commit": "af7669bfa87f1ef5b0f5a1cb3238e83201af2570",
+   "commit": "7f48efc5932059deb67355ca550df3fd4fd07af8",
    "availability_failure": "commit does not resolve on the host",
    "integrity_failure": "commit resolves but results/scorecard.json digest differs"
   },
@@ -952,9 +952,9 @@
  },
  "checker": {
   "name": "agmi full runner and merge tool",
-  "source_revision": "af7669bfa87f1ef5b0f5a1cb3238e83201af2570",
+  "source_revision": "7f48efc5932059deb67355ca550df3fd4fd07af8",
   "command": "PYTHONPATH=. python agmi/full_runner.py --json <out>; python -m agmi.merge_rows results/scorecard.json <out> --labels <row>",
-  "runtime": "Darwin arm64, Python 3.12",
+  "runtime": "Darwin x86_64, Python 3.12",
   "attack_versions": {
    "tamper": 1,
    "truncate": 1,
@@ -965,6 +965,7 @@
    "rollback_replay": 1,
    "metadata_tamper": 1,
    "snapshot_rollback": 1,
+   "erase_resurrect": 1,
    "memory_injection": 3,
    "cross_session_bleed": 2,
    "retrieval_hijack": 4,
