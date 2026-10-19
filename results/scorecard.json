@@ -1,6 +1,6 @@
 {
-  "date": "2026-10-08",
-  "platform": "Darwin arm64, Python 3.12",
+  "date": "2026-10-19",
+  "platform": "Darwin x86_64, Python 3.12",
   "attack_versions": {
     "tamper": 1,
     "truncate": 1,
@@ -11,6 +11,7 @@
     "rollback_replay": 1,
     "metadata_tamper": 1,
     "snapshot_rollback": 1,
+    "erase_resurrect": 1,
     "memory_injection": 3,
     "cross_session_bleed": 2,
     "retrieval_hijack": 4,
@@ -28,6 +29,7 @@
     "rollback_replay": "store-access",
     "metadata_tamper": "store-access",
     "snapshot_rollback": "store-access",
+    "erase_resurrect": "store-access",
     "memory_injection": "write-access",
     "cross_session_bleed": "write-access",
     "retrieval_hijack": "write-access",
@@ -85,6 +87,11 @@
           "status": "VULNERABLE",
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
         },
         "memory_injection": {
           "status": "n/a",
@@ -168,169 +175,10 @@
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
         },
-        "memory_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_session_bleed": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "retrieval_hijack": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "indirect_prompt_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "update_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        }
-      }
-    },
-    {
-      "label": "langgraph-postgres",
-      "checked_at": "read",
-      "measured_on": null,
-      "cells": {
-        "tamper": {
+        "erase_resurrect": {
           "status": "VULNERABLE",
           "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "truncate": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "delete_middle": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "reorder": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "forge": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "cross_replay": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "rollback_replay": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "metadata_tamper": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "snapshot_rollback": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
-        },
-        "memory_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_session_bleed": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "retrieval_hijack": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "indirect_prompt_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "update_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        }
-      }
-    },
-    {
-      "label": "langgraph-redis",
-      "checked_at": "read",
-      "measured_on": null,
-      "cells": {
-        "tamper": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "truncate": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "delete_middle": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "reorder": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "forge": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "cross_replay": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "rollback_replay": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "metadata_tamper": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "snapshot_rollback": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+          "detail": "the restored copy opened as current; the record the store had erased is served again without an error"
         },
         "memory_injection": {
           "status": "n/a",
@@ -414,6 +262,11 @@
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
         },
+        "erase_resurrect": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the restored copy opened as current; the record the store had erased is served again without an error"
+        },
         "memory_injection": {
           "status": "n/a",
           "verdict": "n/a",
@@ -495,6 +348,11 @@
           "status": "VULNERABLE",
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "erase_resurrect": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the restored copy opened as current; the record the store had erased is served again without an error"
         },
         "memory_injection": {
           "status": "n/a",
@@ -607,178 +465,106 @@
           "status": "n/a",
           "verdict": "n/a",
           "detail": ""
-        }
-      }
-    },
-    {
-      "label": "vertex-memory-bank",
-      "checked_at": "read",
-      "measured_on": null,
-      "cells": {
-        "tamper": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
         },
-        "truncate": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "delete_middle": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "reorder": {
+        "erase_resurrect": {
           "status": "n/a",
           "verdict": "n/a",
-          "detail": "not applicable: Memory Bank orders memories by create_time, which the API cannot set, so a record cannot be moved to another position"
-        },
-        "forge": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "cross_replay": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "rollback_replay": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "metadata_tamper": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "snapshot_rollback": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": "adapter does not support a store snapshot"
-        },
-        "memory_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_session_bleed": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "retrieval_hijack": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "indirect_prompt_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "update_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        }
-      }
-    },
-    {
-      "label": "openclaw-memory-md",
-      "checked_at": "read",
-      "measured_on": "openclaw 2026.10.1 from npm, read through its memory_get function in a fresh Node process per read; Linux x86_64 with Node 24.21.0, reproduced on macOS arm64 with Node 26.11.0",
-      "cells": {
-        "tamper": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "truncate": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "delete_middle": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "reorder": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "forge": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "cross_replay": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "rollback_replay": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "metadata_tamper": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "snapshot_rollback": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
-        },
-        "memory_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_session_bleed": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "retrieval_hijack": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "indirect_prompt_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "update_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
         }
       },
-      "measured_date": "2026-10-11"
+      "measured_date": "2026-10-08"
+    },
+    {
+      "label": "bedrock-agentcore-events",
+      "checked_at": "read",
+      "measured_on": "AWS Bedrock AgentCore Memory (events), boto3",
+      "cells": {
+        "tamper": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: AgentCore has no UpdateEvent, so an event's content cannot be changed in place; delete plus create yields a different eventId, which is a different edit"
+        },
+        "truncate": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "delete_middle": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "reorder": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: events are ordered by eventTimestamp, fixed at creation, so an existing event cannot be moved to another position"
+        },
+        "forge": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "cross_replay": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: AgentCore has no UpdateEvent, so an event's content cannot be changed in place; delete plus create yields a different eventId, which is a different edit"
+        },
+        "rollback_replay": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: AgentCore has no UpdateEvent, so an event's content cannot be changed in place; delete plus create yields a different eventId, which is a different edit"
+        },
+        "metadata_tamper": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: an event's actor, session, timestamp and id are fixed at creation and the API exposes no way to change them"
+        },
+        "snapshot_rollback": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: a managed store exposes no snapshot or restore of its own state"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: a managed store exposes no snapshot or restore of its own state"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        }
+      }
     },
     {
       "label": "hermes-memory-md",
       "checked_at": "read",
-      "measured_on": "hermes-agent 0.19.0 from PyPI, in a virtualenv of its own, read through MemoryStore.load_from_disk() and format_for_system_prompt() in a fresh process per read; Linux x86_64 with Python 3.12, reproduced on macOS arm64 with Python 3.12",
+      "measured_on": "hermes-agent 0.19.0 (PyPI)",
       "cells": {
         "tamper": {
           "status": "VULNERABLE",
@@ -825,6 +611,11 @@
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
         },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
+        },
         "memory_injection": {
           "status": "n/a",
           "verdict": "n/a",
@@ -854,94 +645,11 @@
           "status": "n/a",
           "verdict": "n/a",
           "detail": ""
-        }
-      },
-      "measured_date": "2026-10-12"
-    },
-    {
-      "label": "langgraph-sqlite-store",
-      "checked_at": null,
-      "measured_on": "langgraph-checkpoint-sqlite 3.1.1 SqliteStore with a vector index, search defaults (no relevance floor), sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
-      "cells": {
-        "tamper": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "truncate": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "delete_middle": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "reorder": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "forge": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_replay": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "rollback_replay": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_tamper": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "snapshot_rollback": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "memory_injection": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "planted memory served as trusted fact (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
-        },
-        "cross_session_bleed": {
-          "status": "safe",
-          "verdict": "kept out",
-          "detail": "user boundary held (cross-user: kept out 5 of 5)"
-        },
-        "retrieval_hijack": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "attacker entry took a slot from a genuine memory (external: 5 of 5, ranks 2, 3, 1, 2, 1 of 3; laundered: 4 of 5, ranks 2, out, 1, 2, 1 of 3; agent-laundered: 5 of 5, ranks 2, 3, 1, 2, 2 of 3)"
-        },
-        "indirect_prompt_injection": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "instruction-shaped content delivered into context (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
-        },
-        "update_poisoning": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "attacker's correction served for the user's question (external: 5 of 5, alongside, alongside, alongside, alongside, alongside; laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside; agent-laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside)"
-        },
-        "metadata_poisoning": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "self-tagged memory passed the trust filter (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
         }
       }
     },
     {
-      "label": "letta-block-history",
+      "label": "mem0-qdrant-local",
       "checked_at": "read",
       "measured_on": null,
       "cells": {
@@ -990,6 +698,11 @@
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
         },
+        "erase_resurrect": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the restored copy opened as current; the record the store had erased is served again without an error"
+        },
         "memory_injection": {
           "status": "n/a",
           "verdict": "n/a",
@@ -1019,177 +732,13 @@
           "status": "n/a",
           "verdict": "n/a",
           "detail": ""
-        }
-      }
-    },
-    {
-      "label": "letta-archival",
-      "checked_at": null,
-      "measured_on": "letta 0.16.8, archival memory, one agent per user, insert_passage and search_agent_archival_memory_async at defaults (no relevance floor), embeddings via a local OpenAI-compatible endpoint serving sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
-      "cells": {
-        "tamper": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "truncate": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "delete_middle": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "reorder": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "forge": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_replay": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "rollback_replay": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_tamper": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "snapshot_rollback": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "memory_injection": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "planted memory served as trusted fact (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
-        },
-        "cross_session_bleed": {
-          "status": "safe",
-          "verdict": "kept out",
-          "detail": "user boundary held (cross-user: kept out 5 of 5)"
-        },
-        "retrieval_hijack": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "attacker entry took a slot from a genuine memory (external: 4 of 5, ranks 2, 2, 1, out, 3 of 3; laundered: 4 of 5, ranks 2, 2, 1, out, 3 of 3; agent-laundered: 4 of 5, ranks 2, 2, 1, out, 3 of 3)"
-        },
-        "indirect_prompt_injection": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "instruction-shaped content delivered into context (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
-        },
-        "update_poisoning": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "attacker's correction served for the user's question (external: 5 of 5, alongside, alongside, alongside, alongside, alongside; laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside; agent-laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside)"
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": "tool has no metadata filter on retrieval"
-        }
-      }
-    },
-    {
-      "label": "mem0-qdrant-local",
-      "checked_at": "read",
-      "measured_on": "mem0ai 2.0.20, infer=False, default search (semantic only, no keyword or entity boosts), sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
-      "cells": {
-        "tamper": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "truncate": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "delete_middle": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "reorder": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "forge": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "cross_replay": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "rollback_replay": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "metadata_tamper": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "snapshot_rollback": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
-        },
-        "memory_injection": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "planted memory served as trusted fact (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
-        },
-        "cross_session_bleed": {
-          "status": "safe",
-          "verdict": "kept out",
-          "detail": "user boundary held (cross-user: kept out 5 of 5)"
-        },
-        "retrieval_hijack": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "attacker entry took a slot from a genuine memory (external: 4 of 5, ranks 2, 2, 1, out, 3 of 3; laundered: 4 of 5, ranks 2, 2, 1, out, 3 of 3; agent-laundered: 4 of 5, ranks 2, 2, 1, out, 3 of 3)"
-        },
-        "indirect_prompt_injection": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "instruction-shaped content delivered into context (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
-        },
-        "update_poisoning": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "attacker's correction served for the user's question (external: 5 of 5, alongside, alongside, alongside, alongside, alongside; laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside; agent-laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside)"
-        },
-        "metadata_poisoning": {
-          "status": "VULNERABLE",
-          "verdict": "surfaced",
-          "detail": "self-tagged memory passed the trust filter (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
         }
       }
     },
     {
       "label": "inspeximus-default",
       "checked_at": "read",
-      "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), Darwin arm64, Python 3.12",
+      "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), Darwin x86_64, Python 3.12",
       "cells": {
         "tamper": {
           "status": "VULNERABLE",
@@ -1235,6 +784,11 @@
           "status": "VULNERABLE",
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
         },
         "memory_injection": {
           "status": "VULNERABLE",
@@ -1276,7 +830,7 @@
         "tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: ['memory 6128646767: its TEXT or KEY no longer matches its write receipt (edited after write)'])"
+          "detail": "detected on reload (verify_writes: ['memory d4839ef63e: its TEXT or KEY no longer matches its write receipt (edited after write)'])"
         },
         "truncate": {
           "status": "reported",
@@ -1291,32 +845,37 @@
         "reorder": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: ['memory df719149bc: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
+          "detail": "detected on reload (verify_writes: ['memory 8dcb4a250e: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
         },
         "forge": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: [\"1 record(s) are covered by NO write receipt, so nothing here vouches for them: ['f0e51295c1']. They were inserted out of band, or written )"
+          "detail": "detected on reload (verify_writes: [\"1 record(s) are covered by NO write receipt, so nothing here vouches for them: ['f093dddc76']. They were inserted out of band, or written )"
         },
         "cross_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: ['memory 99ddd9ec2e: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
+          "detail": "detected on reload (verify_writes: ['memory 5a13b5ce63: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
         },
         "rollback_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: ['memory e6e15a6a19: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
+          "detail": "detected on reload (verify_writes: ['memory 7e2318a0a4: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
         },
         "metadata_tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: ['memory d4ca132a13: a field its receipt commits to no longer matches its write receipt (edited after write)'])"
+          "detail": "detected on reload (verify_writes: ['memory fa1d3b5095: a field its receipt commits to no longer matches its write receipt (edited after write)'])"
         },
         "snapshot_rollback": {
           "status": "reported",
           "verdict": "reported",
           "detail": "the store noticed it was older than its last committed state (verify_writes: ['write log shrank below the head kept outside the store: 5 < 6 (rolled back or truncated, receipts included); a deliberate restore is accep)"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
         },
         "memory_injection": {
           "status": "n/a",
@@ -1358,7 +917,7 @@
         "tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: ['memory cab2a8f0c3: its TEXT or KEY no longer matches its write receipt (edited after write)'])"
+          "detail": "detected on reload (verify_writes: ['memory 49f1bff888: its TEXT or KEY no longer matches its write receipt (edited after write)'])"
         },
         "truncate": {
           "status": "VULNERABLE",
@@ -1373,32 +932,37 @@
         "reorder": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: ['memory fc6995833c: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
+          "detail": "detected on reload (verify_writes: ['memory d3819196a8: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
         },
         "forge": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: [\"1 record(s) are covered by NO write receipt, so nothing here vouches for them: ['f07711d7b9']. They were inserted out of band, or written )"
+          "detail": "detected on reload (verify_writes: [\"1 record(s) are covered by NO write receipt, so nothing here vouches for them: ['f0c1fddcb1']. They were inserted out of band, or written )"
         },
         "cross_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: ['memory 67a038a7f9: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
+          "detail": "detected on reload (verify_writes: ['memory 2865f74a4d: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
         },
         "rollback_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: ['memory 460383b754: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
+          "detail": "detected on reload (verify_writes: ['memory 25cf51333b: its TEXT or KEY; its VALUE (`object`); WHEN the fact became true (`valid_from`), or where that time came from no longer)"
         },
         "metadata_tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_writes: ['memory e5c076d1a5: a field its receipt commits to no longer matches its write receipt (edited after write)'])"
+          "detail": "detected on reload (verify_writes: ['memory 43b650b94d: a field its receipt commits to no longer matches its write receipt (edited after write)'])"
         },
         "snapshot_rollback": {
           "status": "VULNERABLE",
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
         },
         "memory_injection": {
           "status": "n/a",
@@ -1435,7 +999,7 @@
     {
       "label": "inspeximus-defended",
       "checked_at": null,
-      "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), trusted_only=True, provenance recorded as the memory's source, trust_seeds=['user'], Darwin arm64, Python 3.12",
+      "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), trusted_only=True, provenance recorded as the memory's source, trust_seeds=['user'], Darwin x86_64, Python 3.12",
       "cells": {
         "tamper": {
           "status": "n/a",
@@ -1478,6 +1042,11 @@
           "detail": ""
         },
         "snapshot_rollback": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
           "status": "n/a",
           "verdict": "n/a",
           "detail": ""
@@ -1517,7 +1086,7 @@
     {
       "label": "inspeximus-defended-key",
       "checked_at": null,
-      "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), trusted_only=True, provenance recorded as the memory's source, signed writes attested with a per-user Ed25519 key and those keys seeded, Darwin arm64, Python 3.12",
+      "measured_on": "inspeximus 3.0.0, receipts off, recall defaults (lexical token overlap; mode=auto stays lexical below 300 memories), trusted_only=True, provenance recorded as the memory's source, signed writes attested with a per-user Ed25519 key and those keys seeded, Darwin x86_64, Python 3.12",
       "cells": {
         "tamper": {
           "status": "n/a",
@@ -1560,6 +1129,11 @@
           "detail": ""
         },
         "snapshot_rollback": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
           "status": "n/a",
           "verdict": "n/a",
           "detail": ""
@@ -1604,22 +1178,22 @@
         "tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_thread: checkpoint content drifted: 1f1c2e1a-6e8b-6334-8002-8a6b06d5fc67)"
+          "detail": "detected on reload (verify_thread: checkpoint content drifted: 1f1cbd58-84a8-6f0e-8002-4b126a9744d8)"
         },
         "truncate": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_thread: checkpoint missing from saver: 1f1c2e1a-6e9a-6cd0-8003-a669f51f9f37; checkpoint missing from saver: 1f1c2e1a-6e9b-63a6-8004-cc1bb16194e2)"
+          "detail": "detected on reload (verify_thread: checkpoint missing from saver: 1f1cbd58-84df-6072-8003-42290ca54ac2; checkpoint missing from saver: 1f1cbd58-84e1-62aa-8004-3ed75c094f42)"
         },
         "delete_middle": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_thread: checkpoint missing from saver: 1f1c2e1a-6ea8-6c40-8002-ac205651911c)"
+          "detail": "detected on reload (verify_thread: checkpoint missing from saver: 1f1cbd58-8513-64c6-8002-c257404a3bbd)"
         },
         "reorder": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_thread: checkpoint content drifted: 1f1c2e1a-6eb7-60d8-8001-c90b40982c00; checkpoint content drifted: 1f1c2e1a-6eb7-6cfe-8002-db884c3707f7)"
+          "detail": "detected on reload (verify_thread: checkpoint content drifted: 1f1cbd58-8544-63b4-8001-3c4334c632b6; checkpoint content drifted: 1f1cbd58-8546-654c-8002-1d6d8b0f08bb)"
         },
         "forge": {
           "status": "VULNERABLE",
@@ -1629,12 +1203,12 @@
         "cross_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_thread: checkpoint content drifted: 1f1c2e1a-6ed8-6184-8004-c9a283d65745)"
+          "detail": "detected on reload (verify_thread: checkpoint content drifted: 1f1cbd58-85b9-6524-8004-a2612c7ae9c1)"
         },
         "rollback_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_thread: checkpoint content drifted: 1f1c2e1a-6eea-624e-8004-a65d4ba2483a)"
+          "detail": "detected on reload (verify_thread: checkpoint content drifted: 1f1cbd58-85fc-669e-8004-c68bbed74f00)"
         },
         "metadata_tamper": {
           "status": "VULNERABLE",
@@ -1644,7 +1218,12 @@
         "snapshot_rollback": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "the store noticed it was older than its last committed state (verify_thread: checkpoint missing from saver: 1f1c2e1a-6f0b-6188-8063-607eab118d93)"
+          "detail": "the store noticed it was older than its last committed state (verify_thread: checkpoint missing from saver: 1f1cbd58-867b-6ea8-8063-5753641c4e4c)"
+        },
+        "erase_resurrect": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the restored copy opened as current; the record the store had erased is served again without an error"
         },
         "memory_injection": {
           "status": "n/a",
@@ -1686,47 +1265,52 @@
         "tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "truncate": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "delete_middle": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "reorder": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "forge": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "cross_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "rollback_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "metadata_tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "snapshot_rollback": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "the store noticed it was older than its last committed state (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "the store noticed it was older than its last committed state (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
         },
         "memory_injection": {
           "status": "n/a",
@@ -1768,47 +1352,52 @@
         "tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "truncate": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "delete_middle": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "reorder": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "forge": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "cross_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "rollback_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "metadata_tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a11a34))"
+          "detail": "detected on reload (scan recorded an out-of-band write to MEMORY.md (record 01a154e0))"
         },
         "snapshot_rollback": {
           "status": "VULNERABLE",
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
         },
         "memory_injection": {
           "status": "n/a",
@@ -1892,6 +1481,11 @@
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
         },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
+        },
         "memory_injection": {
           "status": "n/a",
           "verdict": "n/a",
@@ -1974,6 +1568,11 @@
           "verdict": "reported",
           "detail": "the store noticed it was older than its last committed state (anchor: chain has 5 entries but checkpoint anchors seq=5 \u2014 history truncated/vanished below an anchored checkpoint)"
         },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
+        },
         "memory_injection": {
           "status": "n/a",
           "verdict": "n/a",
@@ -2014,7 +1613,7 @@
         "tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=3 event_id='event_e94c74c30734e796c232bae0149dfc0a' detail='stored hash does not match recomputed digest')"
+          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=3 event_id='event_25d2992fcf35d0ddacad7e5c123c8663' detail='stored hash does not match recomputed digest')"
         },
         "truncate": {
           "status": "VULNERABLE",
@@ -2024,12 +1623,12 @@
         "delete_middle": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='SEQUENCE_GAP' run_id='agmi-run-A' sequence=4 event_id='event_d3b25948a5bbdd3141f665a06557c8ff' detail='expected sequence 3')"
+          "detail": "detected on reload (verify_events: kind='SEQUENCE_GAP' run_id='agmi-run-A' sequence=4 event_id='event_0763e7119ceccee45cf7e8d647f6a06f' detail='expected sequence 3')"
         },
         "reorder": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=2 event_id='event_704748657d26bbd6e77a7405a527cf23' detail='stored hash does not match recomputed digest')"
+          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=2 event_id='event_0c469d4b61bd407bcf64d99ca20ea814' detail='stored hash does not match recomputed digest')"
         },
         "forge": {
           "status": "reported",
@@ -2039,22 +1638,27 @@
         "cross_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=5 event_id='event_f4f97b758c16b7fbe77c164fa8a19d30' detail='stored hash does not match recomputed digest')"
+          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=5 event_id='event_96f58bcab976019008af1d216befa588' detail='stored hash does not match recomputed digest')"
         },
         "rollback_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=5 event_id='event_b15be351c37e58bc722cc708a9c2fece' detail='stored hash does not match recomputed digest')"
+          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=5 event_id='event_ffd0fda230015841cb787a3422d286f1' detail='stored hash does not match recomputed digest')"
         },
         "metadata_tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=3 event_id='event_61a7326fdacdf6dd5e775f5be1485e39' detail='stored hash does not match recomputed digest')"
+          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=3 event_id='event_a656460d68bcc0d473a4cbefa46a1e69' detail='stored hash does not match recomputed digest')"
         },
         "snapshot_rollback": {
           "status": "VULNERABLE",
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
         },
         "memory_injection": {
           "status": "n/a",
@@ -2096,7 +1700,7 @@
         "tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=3 event_id='event_3e858055d99eba301e4b5d2478270ed2' detail='stored hash does not match recomputed digest')"
+          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=3 event_id='event_fe6189bc355e3c357fc12eefbc560f0e' detail='stored hash does not match recomputed digest')"
         },
         "truncate": {
           "status": "reported",
@@ -2106,12 +1710,12 @@
         "delete_middle": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='SEQUENCE_GAP' run_id='agmi-run-A' sequence=4 event_id='event_216c6cc6a29f5f0b241376502a1126f3' detail='expected sequence 3')"
+          "detail": "detected on reload (verify_events: kind='SEQUENCE_GAP' run_id='agmi-run-A' sequence=4 event_id='event_8de5387f2f0af7aa2f3eceba50e93e39' detail='expected sequence 3')"
         },
         "reorder": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=2 event_id='event_386f86516e57b8e5c5be28519187acfb' detail='stored hash does not match recomputed digest')"
+          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=2 event_id='event_746df41d1ba4b965f4906c234821ef29' detail='stored hash does not match recomputed digest')"
         },
         "forge": {
           "status": "reported",
@@ -2121,22 +1725,27 @@
         "cross_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=5 event_id='event_fc4cff762533a21857f00ca7d29aafeb' detail='stored hash does not match recomputed digest')"
+          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=5 event_id='event_d2ade5c8cc0535e47299494f90aaa02b' detail='stored hash does not match recomputed digest')"
         },
         "rollback_replay": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=5 event_id='event_eb7ab54b220301f88c1888c089a11ddc' detail='stored hash does not match recomputed digest')"
+          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=5 event_id='event_72cd73ec051cd6e9b68e8e934f1cfe9d' detail='stored hash does not match recomputed digest')"
         },
         "metadata_tamper": {
           "status": "reported",
           "verdict": "reported",
-          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=3 event_id='event_416ddef411647b664313f1abe40c7762' detail='stored hash does not match recomputed digest')"
+          "detail": "detected on reload (verify_events: kind='TAMPERED_CONTENT' run_id='agmi-run-A' sequence=3 event_id='event_90da6d3af1e4ea5be7ff1517e3a93366' detail='stored hash does not match recomputed digest')"
         },
         "snapshot_rollback": {
           "status": "reported",
           "verdict": "reported",
           "detail": "the store noticed it was older than its last committed state (attest-verify: ALTERED (signed seq 6, live seq 5))"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
         },
         "memory_injection": {
           "status": "n/a",
@@ -2171,55 +1780,60 @@
       }
     },
     {
-      "label": "atmem-chain",
-      "checked_at": "audit",
-      "measured_on": "atmem 2.3.8 from PyPI (wheel SHA-256 05ca2c57), remeasured 2026-10-10 on Darwin arm64 and Linux x86_64, Python 3.12",
+      "label": "recallspection-exact",
+      "checked_at": "read",
+      "measured_on": "exactmemory.recallspection 3.2.0 at c62ef7a",
       "cells": {
         "tamper": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "truncate": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record committed by the audit chain is missing)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "delete_middle": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record committed by the audit chain is missing)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "reorder": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "forge": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record has no creation event in the audit chain)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "cross_replay": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "rollback_replay": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "metadata_tamper": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "snapshot_rollback": {
           "status": "VULNERABLE",
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
         },
+        "erase_resurrect": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the restored copy opened as current; the record the store had erased is served again without an error"
+        },
         "memory_injection": {
           "status": "n/a",
           "verdict": "n/a",
@@ -2250,58 +1864,62 @@
           "verdict": "n/a",
           "detail": ""
         }
-      },
-      "measured_date": "2026-10-10"
+      }
     },
     {
-      "label": "atmem-chain+checkpoint",
-      "checked_at": "audit",
-      "measured_on": "atmem 2.3.8 from PyPI (wheel SHA-256 05ca2c57), remeasured 2026-10-10 on Darwin arm64 and Linux x86_64, Python 3.12",
+      "label": "recallspection-exact+anchor",
+      "checked_at": "read",
+      "measured_on": "exactmemory.recallspection 3.2.0 at c62ef7a",
       "cells": {
         "tamper": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "truncate": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record committed by the audit chain is missing)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "delete_middle": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record committed by the audit chain is missing)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "reorder": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "forge": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record has no creation event in the audit chain)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "cross_replay": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "rollback_replay": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "metadata_tamper": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (TamperError: Container MAC failed)"
         },
         "snapshot_rollback": {
-          "status": "reported",
-          "verdict": "reported",
-          "detail": "the store noticed it was older than its last committed state (verify: pinned event at sequence 17 is missing (tail truncated?))"
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "the store noticed it was older than its last committed state (RollbackError: Log rollback vs remote anchor: log 5 < remote 6)"
+        },
+        "erase_resurrect": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "the store noticed that a record it had erased was back (RollbackError: Log rollback vs remote anchor: log 5 < remote 6)"
         },
         "memory_injection": {
           "status": "n/a",
@@ -2333,8 +1951,181 @@
           "verdict": "n/a",
           "detail": ""
         }
-      },
-      "measured_date": "2026-10-10"
+      }
+    },
+    {
+      "label": "hdp-token-content-ref",
+      "checked_at": "read",
+      "measured_on": "@helixar_ai/hdp 0.2.2 at b753ba9, Node 22",
+      "cells": {
+        "tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:oPLcm4W6NLezyPjRkx9KR_oyi_cWoY4M1M5-0mDtjbg', got 'sha256:Y5hgerTZMUOVLgxLq_OoRcyx)"
+        },
+        "truncate": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "delete_middle": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "reorder": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:yq40jYFM0QMlJOTdlxbqFTFuaMDL1EUgKRIpBy7dkD0', got 'sha256:Ut_cb3s6iYWuZ47zoQb0H2MN)"
+        },
+        "forge": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (verify: verifyToken failed at step 2: Signature invalid: root signature verification failed)"
+        },
+        "cross_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:ZXLuOiKGTvM-RQHi1qN6hJEbHMpt9Se5jEPJ1SQGQrQ', got 'sha256:ENqncJC1sMC_aMOT-J96p9p2)"
+        },
+        "rollback_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:Uf40Q9684qZOkLg2uWMv4Uerdj5azUWTK9Be8pQWTBg', got 'sha256:puL15rPCS9opMJ7bsTdvPsNt)"
+        },
+        "metadata_tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:ITQlm4SeBkxCWAdRjkKQH3BRQ_9A1laIE3cBTw4DzFM', got 'sha256:sQACWE2XzRF2W1oDNFn6CQBS)"
+        },
+        "snapshot_rollback": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        }
+      }
+    },
+    {
+      "label": "hdp-token-uuid",
+      "checked_at": "read",
+      "measured_on": "@helixar_ai/hdp 0.2.2 at b753ba9, Node 22",
+      "cells": {
+        "tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (verify: verifyToken failed at step 4: Signature invalid: hop 1 signature verification failed)"
+        },
+        "truncate": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "delete_middle": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "reorder": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: UUID reference '4df0b20a-a8b7-47b7-85e2-0deb37de4da6' resolved to token_id 'f9796c5b-653a-40f1-a410-34db3b1ca9a3')"
+        },
+        "forge": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (verify: verifyToken failed at step 2: Signature invalid: root signature verification failed)"
+        },
+        "cross_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: UUID reference 'eddd51f8-805b-4fb0-b41c-cb416ac6d508' resolved to token_id 'a7584276-a5a9-44ce-a030-e207914d61e0')"
+        },
+        "rollback_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: UUID reference '67755c2a-b2c6-4e87-961a-40bea73d1157' resolved to token_id 'e63399e9-2936-4b00-bd59-7b1dbb0e7cd3')"
+        },
+        "metadata_tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (verify: verifyToken failed at step 2: Signature invalid: root signature verification failed)"
+        },
+        "snapshot_rollback": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        }
+      }
     },
     {
       "label": "acrf-memory-guard",
@@ -2386,87 +2177,10 @@
           "verdict": "accepted",
           "detail": "the older copy opened as current; the newest genuine record is gone without an error"
         },
-        "memory_injection": {
+        "erase_resurrect": {
           "status": "n/a",
           "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_session_bleed": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "retrieval_hijack": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "indirect_prompt_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "update_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        }
-      }
-    },
-    {
-      "label": "agent-memory",
-      "checked_at": "read",
-      "measured_on": null,
-      "cells": {
-        "tamper": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
-        },
-        "truncate": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
-        },
-        "delete_middle": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
-        },
-        "reorder": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
-        },
-        "forge": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
-        },
-        "cross_replay": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
-        },
-        "rollback_replay": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
-        },
-        "metadata_tamper": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
-        },
-        "snapshot_rollback": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+          "detail": "adapter has no erasure hook: the store's own delete operation is not wired for this row yet"
         },
         "memory_injection": {
           "status": "n/a",
@@ -2546,6 +2260,11 @@
           "detail": ""
         },
         "snapshot_rollback": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
           "status": "n/a",
           "verdict": "n/a",
           "detail": ""
@@ -2632,6 +2351,11 @@
           "verdict": "n/a",
           "detail": ""
         },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
         "memory_injection": {
           "status": "VULNERABLE",
           "verdict": "surfaced",
@@ -2714,6 +2438,11 @@
           "verdict": "n/a",
           "detail": ""
         },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
         "memory_injection": {
           "status": "VULNERABLE",
           "verdict": "surfaced",
@@ -2745,6 +2474,886 @@
           "detail": "self-tagged memory passed the trust filter (external: kept out 5 of 5; laundered: kept out 5 of 5; agent-laundered: 5 of 5)"
         }
       }
+    },
+    {
+      "label": "langgraph-postgres",
+      "checked_at": "read",
+      "measured_on": null,
+      "cells": {
+        "tamper": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "truncate": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "delete_middle": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "reorder": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "forge": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "cross_replay": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "rollback_replay": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "metadata_tamper": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "snapshot_rollback": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
+        }
+      },
+      "measured_date": "2026-10-08"
+    },
+    {
+      "label": "langgraph-redis",
+      "checked_at": "read",
+      "measured_on": null,
+      "cells": {
+        "tamper": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "truncate": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "delete_middle": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "reorder": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "forge": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "cross_replay": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "rollback_replay": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "metadata_tamper": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "snapshot_rollback": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
+        }
+      },
+      "measured_date": "2026-10-08"
+    },
+    {
+      "label": "vertex-memory-bank",
+      "checked_at": "read",
+      "measured_on": null,
+      "cells": {
+        "tamper": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "truncate": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "delete_middle": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "reorder": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not applicable: Memory Bank orders memories by create_time, which the API cannot set, so a record cannot be moved to another position"
+        },
+        "forge": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "cross_replay": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "rollback_replay": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "metadata_tamper": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "snapshot_rollback": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "adapter does not support a store snapshot"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
+        }
+      },
+      "measured_date": "2026-10-08"
+    },
+    {
+      "label": "openclaw-memory-md",
+      "checked_at": "read",
+      "measured_on": "openclaw 2026.10.1 from npm, read through its memory_get function in a fresh Node process per read; Linux x86_64 with Node 24.21.0, reproduced on macOS arm64 with Node 26.11.0",
+      "cells": {
+        "tamper": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "truncate": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "delete_middle": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "reorder": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "forge": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "cross_replay": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "rollback_replay": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "metadata_tamper": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "snapshot_rollback": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
+        }
+      },
+      "measured_date": "2026-10-08"
+    },
+    {
+      "label": "langgraph-sqlite-store",
+      "checked_at": null,
+      "measured_on": "langgraph-checkpoint-sqlite 3.1.1 SqliteStore with a vector index, search defaults (no relevance floor), sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
+      "cells": {
+        "tamper": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "truncate": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "delete_middle": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "reorder": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "forge": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_replay": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "rollback_replay": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_tamper": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "snapshot_rollback": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "memory_injection": {
+          "status": "VULNERABLE",
+          "verdict": "surfaced",
+          "detail": "planted memory served as trusted fact (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
+        },
+        "cross_session_bleed": {
+          "status": "safe",
+          "verdict": "kept out",
+          "detail": "user boundary held (cross-user: kept out 5 of 5)"
+        },
+        "retrieval_hijack": {
+          "status": "VULNERABLE",
+          "verdict": "surfaced",
+          "detail": "attacker entry took a slot from a genuine memory (external: 5 of 5, ranks 2, 3, 1, 2, 1 of 3; laundered: 4 of 5, ranks 2, out, 1, 2, 1 of 3; agent-laundered: 5 of 5, ranks 2, 3, 1, 2, 2 of 3)"
+        },
+        "indirect_prompt_injection": {
+          "status": "VULNERABLE",
+          "verdict": "surfaced",
+          "detail": "instruction-shaped content delivered into context (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
+        },
+        "update_poisoning": {
+          "status": "VULNERABLE",
+          "verdict": "surfaced",
+          "detail": "attacker's correction served for the user's question (external: 5 of 5, alongside, alongside, alongside, alongside, alongside; laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside; agent-laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside)"
+        },
+        "metadata_poisoning": {
+          "status": "VULNERABLE",
+          "verdict": "surfaced",
+          "detail": "self-tagged memory passed the trust filter (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
+        }
+      },
+      "measured_date": "2026-10-08"
+    },
+    {
+      "label": "letta-block-history",
+      "checked_at": "read",
+      "measured_on": null,
+      "cells": {
+        "tamper": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "truncate": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "delete_middle": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "reorder": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "forge": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "cross_replay": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "rollback_replay": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "metadata_tamper": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "accepted silently"
+        },
+        "snapshot_rollback": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
+        }
+      },
+      "measured_date": "2026-10-08"
+    },
+    {
+      "label": "letta-archival",
+      "checked_at": null,
+      "measured_on": "letta 0.16.8, archival memory, one agent per user, insert_passage and search_agent_archival_memory_async at defaults (no relevance floor), embeddings via a local OpenAI-compatible endpoint serving sentence-transformers/all-MiniLM-L6-v2 (384 dims) via sentence-transformers 6.1.0, Darwin arm64, Python 3.12",
+      "cells": {
+        "tamper": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "truncate": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "delete_middle": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "reorder": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "forge": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_replay": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "rollback_replay": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_tamper": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "snapshot_rollback": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "memory_injection": {
+          "status": "VULNERABLE",
+          "verdict": "surfaced",
+          "detail": "planted memory served as trusted fact (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
+        },
+        "cross_session_bleed": {
+          "status": "safe",
+          "verdict": "kept out",
+          "detail": "user boundary held (cross-user: kept out 5 of 5)"
+        },
+        "retrieval_hijack": {
+          "status": "VULNERABLE",
+          "verdict": "surfaced",
+          "detail": "attacker entry took a slot from a genuine memory (external: 4 of 5, ranks 2, 2, 1, out, 3 of 3; laundered: 4 of 5, ranks 2, 2, 1, out, 3 of 3; agent-laundered: 4 of 5, ranks 2, 2, 1, out, 3 of 3)"
+        },
+        "indirect_prompt_injection": {
+          "status": "VULNERABLE",
+          "verdict": "surfaced",
+          "detail": "instruction-shaped content delivered into context (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)"
+        },
+        "update_poisoning": {
+          "status": "VULNERABLE",
+          "verdict": "surfaced",
+          "detail": "attacker's correction served for the user's question (external: 5 of 5, alongside, alongside, alongside, alongside, alongside; laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside; agent-laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside)"
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "tool has no metadata filter on retrieval"
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
+        }
+      },
+      "measured_date": "2026-10-08"
+    },
+    {
+      "label": "atmem-chain",
+      "checked_at": "audit",
+      "measured_on": "atmem 2.3.8 from PyPI (wheel SHA-256 05ca2c57), remeasured 2026-10-10 on Darwin arm64 and Linux x86_64, Python 3.12",
+      "cells": {
+        "tamper": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+        },
+        "truncate": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record committed by the audit chain is missing)"
+        },
+        "delete_middle": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record committed by the audit chain is missing)"
+        },
+        "reorder": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+        },
+        "forge": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record has no creation event in the audit chain)"
+        },
+        "cross_replay": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+        },
+        "rollback_replay": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+        },
+        "metadata_tamper": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+        },
+        "snapshot_rollback": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
+        }
+      },
+      "measured_date": "2026-10-08"
+    },
+    {
+      "label": "atmem-chain+checkpoint",
+      "checked_at": "audit",
+      "measured_on": "atmem 2.3.8 from PyPI (wheel SHA-256 05ca2c57), remeasured 2026-10-10 on Darwin arm64 and Linux x86_64, Python 3.12",
+      "cells": {
+        "tamper": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+        },
+        "truncate": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record committed by the audit chain is missing)"
+        },
+        "delete_middle": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record committed by the audit chain is missing)"
+        },
+        "reorder": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+        },
+        "forge": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record has no creation event in the audit chain)"
+        },
+        "cross_replay": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+        },
+        "rollback_replay": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+        },
+        "metadata_tamper": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "detected on reload (verify: record row does not match its chained integrity commitment)"
+        },
+        "snapshot_rollback": {
+          "status": "reported",
+          "verdict": "reported",
+          "detail": "the store noticed it was older than its last committed state (verify: pinned event at sequence 17 is missing (tail truncated?))"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
+        }
+      },
+      "measured_date": "2026-10-08"
+    },
+    {
+      "label": "agent-memory",
+      "checked_at": "read",
+      "measured_on": null,
+      "cells": {
+        "tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
+        },
+        "truncate": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
+        },
+        "delete_middle": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
+        },
+        "reorder": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
+        },
+        "forge": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
+        },
+        "cross_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
+        },
+        "rollback_replay": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
+        },
+        "metadata_tamper": {
+          "status": "safe",
+          "verdict": "rejected",
+          "detail": "detected on reload (RuntimeRecoveryError: SQLite canonical substrate digest mismatch)"
+        },
+        "snapshot_rollback": {
+          "status": "VULNERABLE",
+          "verdict": "accepted",
+          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
+        },
+        "memory_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "cross_session_bleed": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "retrieval_hijack": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "indirect_prompt_injection": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "update_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "metadata_poisoning": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": ""
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
+        }
+      },
+      "measured_date": "2026-10-08"
     },
     {
       "label": "surgical-devops-g7",
@@ -2825,424 +3434,14 @@
           "status": "n/a",
           "verdict": "n/a",
           "detail": ""
+        },
+        "erase_resurrect": {
+          "status": "n/a",
+          "verdict": "n/a",
+          "detail": "not measured: this row was measured before erase_resurrect@v1 existed"
         }
       },
-      "measured_date": "2026-10-15"
-    },
-    {
-      "label": "bedrock-agentcore-events",
-      "checked_at": "read",
-      "measured_on": "AWS Bedrock AgentCore Memory (events), boto3, us-east-1",
-      "cells": {
-        "tamper": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": "not applicable: AgentCore has no UpdateEvent, so an event's content cannot be changed in place; delete plus create yields a different eventId, which is a different edit"
-        },
-        "truncate": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "delete_middle": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "reorder": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": "not applicable: events are ordered by eventTimestamp, fixed at creation, so an existing event cannot be moved to another position"
-        },
-        "forge": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "cross_replay": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": "not applicable: AgentCore has no UpdateEvent, so an event's content cannot be changed in place; delete plus create yields a different eventId, which is a different edit"
-        },
-        "rollback_replay": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": "not applicable: AgentCore has no UpdateEvent, so an event's content cannot be changed in place; delete plus create yields a different eventId, which is a different edit"
-        },
-        "metadata_tamper": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": "not applicable: an event's actor, session, timestamp and id are fixed at creation and the API exposes no way to change them"
-        },
-        "snapshot_rollback": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": "not applicable: a managed store exposes no snapshot or restore of its own state"
-        },
-        "memory_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_session_bleed": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "retrieval_hijack": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "indirect_prompt_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "update_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        }
-      },
-      "measured_date": "2026-10-15"
-    },
-    {
-      "label": "recallspection-exact",
-      "checked_at": "read",
-      "measured_on": "exactmemory.recallspection 3.2.0 at c62ef7a",
-      "cells": {
-        "tamper": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "truncate": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "delete_middle": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "reorder": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "forge": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "cross_replay": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "rollback_replay": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "metadata_tamper": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "snapshot_rollback": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
-        },
-        "memory_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_session_bleed": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "retrieval_hijack": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "indirect_prompt_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "update_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        }
-      },
-      "measured_date": "2026-10-17"
-    },
-    {
-      "label": "recallspection-exact+anchor",
-      "checked_at": "read",
-      "measured_on": "exactmemory.recallspection 3.2.0 at c62ef7a",
-      "cells": {
-        "tamper": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "truncate": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "delete_middle": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "reorder": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "forge": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "cross_replay": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "rollback_replay": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "metadata_tamper": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (TamperError: Container MAC failed)"
-        },
-        "snapshot_rollback": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "the store noticed it was older than its last committed state (RollbackError: Log rollback vs remote anchor: log 5 < remote 6)"
-        },
-        "memory_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_session_bleed": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "retrieval_hijack": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "indirect_prompt_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "update_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        }
-      },
-      "measured_date": "2026-10-17"
-    },
-    {
-      "label": "hdp-token-content-ref",
-      "checked_at": "read",
-      "measured_on": "@helixar_ai/hdp 0.2.2 at b753ba9, Node 22",
-      "cells": {
-        "tamper": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:iM1V6c5E5odnWk4rCQ6LOiiqIQJ0dC-smr088QujswE', got 'sha256:WRQlarR2khC6JAm1M_RwkkVr)"
-        },
-        "truncate": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "delete_middle": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "reorder": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:LUnKHes-k4u3naCQhZWGV8gV3j70OYlJdfRO8WnOqZk', got 'sha256:5h3wbEllFKOxOBgQn9efVaB8)"
-        },
-        "forge": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (verify: verifyToken failed at step 2: Signature invalid: root signature verification failed)"
-        },
-        "cross_replay": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:fZ189PduV9Ipx7zlViqBykLNZ3gJyOajhVhHCcjDj9A', got 'sha256:NydsOav2h8bKn6iJsMEjk30H)"
-        },
-        "rollback_replay": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:pukrkOBlqYzLDSOjvSRpiEQIUT8YJcEVpMUTShLRRxM', got 'sha256:dzry27OM-BmhgCL-aV0Gi2Q5)"
-        },
-        "metadata_tamper": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: content reference digest mismatch: expected 'sha256:uV5ZARhywm9Ry3x5zXt_9JGx0PqYfUD_vUFjNget0eo', got 'sha256:mAAZI211zjVzJYvRY6mdbLPr)"
-        },
-        "snapshot_rollback": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
-        },
-        "memory_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_session_bleed": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "retrieval_hijack": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "indirect_prompt_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "update_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        }
-      },
-      "measured_date": "2026-10-17"
-    },
-    {
-      "label": "hdp-token-uuid",
-      "checked_at": "read",
-      "measured_on": "@helixar_ai/hdp 0.2.2 at b753ba9, Node 22",
-      "cells": {
-        "tamper": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (verify: verifyToken failed at step 4: Signature invalid: hop 1 signature verification failed)"
-        },
-        "truncate": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "delete_middle": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "accepted silently"
-        },
-        "reorder": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: UUID reference '1c448aa2-3c74-4681-b543-f67e879c609b' resolved to token_id 'f66abd50-9a02-48a8-bf17-f1a398b41118')"
-        },
-        "forge": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (verify: verifyToken failed at step 2: Signature invalid: root signature verification failed)"
-        },
-        "cross_replay": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: UUID reference '20f1f2f9-fbde-4687-8835-b1b4f7056aaf' resolved to token_id 'de0a2a93-a49d-48e4-85f9-d9902dbea639')"
-        },
-        "rollback_replay": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (resolve: TokenReferenceIntegrityError: TOKEN_REFERENCE_INTEGRITY: UUID reference '6df06cd6-7f76-44f5-bb40-122fa0c25467' resolved to token_id '85b79273-a4b2-4b55-88ed-c69e1f59b5f5')"
-        },
-        "metadata_tamper": {
-          "status": "safe",
-          "verdict": "rejected",
-          "detail": "detected on reload (verify: verifyToken failed at step 2: Signature invalid: root signature verification failed)"
-        },
-        "snapshot_rollback": {
-          "status": "VULNERABLE",
-          "verdict": "accepted",
-          "detail": "the older copy opened as current; the newest genuine record is gone without an error"
-        },
-        "memory_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "cross_session_bleed": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "retrieval_hijack": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "indirect_prompt_injection": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "update_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        },
-        "metadata_poisoning": {
-          "status": "n/a",
-          "verdict": "n/a",
-          "detail": ""
-        }
-      },
-      "measured_date": "2026-10-17"
+      "measured_date": "2026-10-08"
     }
   ]
 }

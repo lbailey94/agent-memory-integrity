@@ -1,7 +1,7 @@
 # Agent Memory Integrity (agmi)
 > A conformance test suite that measures whether AI agent memory and checkpoint stores notice when they are tampered with.
 
-Version 0.6.3, measured 2026-10-08. Source: https://github.com/tech4biz-yasha/agmi
+Version 0.6.3, measured 2026-10-19. Source: https://github.com/tech4biz-yasha/agmi
 Method text proposed for IETF draft-han-bmwg-agent-security-benchmark metric 5.4.7.
 
 ## At rest (nine storage-level edits, attacker has store access, no keys)
@@ -41,7 +41,7 @@ Method text proposed for IETF draft-han-bmwg-agent-security-benchmark metric 5.4
 ## Front door (six attacks through the tool's own write path)
 - LangGraph SqliteStore: Planted fact surfaced, Cross-user leak kept out, Retrieval hijack surfaced, Hidden instruction surfaced, Update poisoning surfaced, Metadata poisoning surfaced
 - Letta archival memory: Planted fact surfaced, Cross-user leak kept out, Retrieval hijack surfaced, Hidden instruction surfaced, Update poisoning surfaced, Metadata poisoning n/a
-- Mem0 local Qdrant store: Planted fact surfaced, Cross-user leak kept out, Retrieval hijack surfaced, Hidden instruction surfaced, Update poisoning surfaced, Metadata poisoning surfaced
+- Mem0 local Qdrant store: Planted fact n/a, Cross-user leak n/a, Retrieval hijack n/a, Hidden instruction n/a, Update poisoning n/a, Metadata poisoning n/a
 - inspeximus, receipts off (default): Planted fact surfaced, Cross-user leak kept out, Retrieval hijack surfaced, Hidden instruction surfaced, Update poisoning surfaced, Metadata poisoning surfaced
 - inspeximus, trust root keyed on the label: Planted fact surfaced, Cross-user leak kept out, Retrieval hijack surfaced, Hidden instruction surfaced, Update poisoning surfaced, Metadata poisoning surfaced
 - inspeximus, trust root keyed on an attested key: Planted fact surfaced, Cross-user leak kept out, Retrieval hijack surfaced, Hidden instruction surfaced, Update poisoning surfaced, Metadata poisoning surfaced
