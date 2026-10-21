@@ -1,9 +1,10 @@
 {
  "record": "agmi submission to W3C Agent Conformance and Benchmarking CG",
- "record_version": "1.1",
+ "record_version": "1.2",
  "changes": [
   "1.0: first record, built at e22196c",
-  "1.1: verifier compares every derived field (af7669b); printed totals state per total whether a recount exists and agrees"
+  "1.1: verifier compares every derived field (af7669b); printed totals state per total whether a recount exists and agrees",
+  "1.2: results file re-pinned after the T10 erase_resurrect edit was added and measured (7f48efc); the same results file is also published as a v0.1 per-check report, results/report-v01.json, held to it in CI"
  ],
  "intake_criteria": "v2, public-agent-conformance list message 0067 (13 October 2026); v2.1 text expected 22 October 2026",
  "submitter": {
@@ -938,7 +939,7 @@
  "anchor": {
   "git": {
    "repository": "https://github.com/tech4biz-yasha/agent-memory-integrity",
-   "commit": "7f48efc5932059deb67355ca550df3fd4fd07af8",
+   "commit": "ed2d2913ae15dd4888eee427900a1da39e2dae46",
    "availability_failure": "commit does not resolve on the host",
    "integrity_failure": "commit resolves but results/scorecard.json digest differs"
   },
@@ -952,7 +953,7 @@
  },
  "checker": {
   "name": "agmi full runner and merge tool",
-  "source_revision": "7f48efc5932059deb67355ca550df3fd4fd07af8",
+  "source_revision": "ed2d2913ae15dd4888eee427900a1da39e2dae46",
   "command": "PYTHONPATH=. python agmi/full_runner.py --json <out>; python -m agmi.merge_rows results/scorecard.json <out> --labels <row>",
   "runtime": "Darwin x86_64, Python 3.12",
   "attack_versions": {
