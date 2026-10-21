@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 EDITS = ["tamper", "truncate", "delete_middle", "reorder", "forge", "cross_replay",
-         "rollback_replay", "metadata_tamper", "snapshot_rollback"]
+         "rollback_replay", "metadata_tamper", "snapshot_rollback", "erase_resurrect"]
 
 # README row name -> results-file label
 ROWS = {

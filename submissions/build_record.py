@@ -99,11 +99,14 @@ def build() -> dict:
 
     record = {
         "record": "agmi submission to W3C Agent Conformance and Benchmarking CG",
-        "record_version": "1.1",
+        "record_version": "1.2",
         "changes": [
             "1.0: first record, built at e22196c",
             "1.1: verifier compares every derived field (af7669b); printed totals state "
             "per total whether a recount exists and agrees",
+            "1.2: results file re-pinned after the T10 erase_resurrect edit was added and "
+            "measured (7f48efc); the same results file is also published as a v0.1 per-check "
+            "report, results/report-v01.json, held to it in CI",
         ],
         "intake_criteria": "v2, public-agent-conformance list message 0067 (13 October 2026); "
                            "v2.1 text expected 22 October 2026",
