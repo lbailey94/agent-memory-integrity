@@ -1,11 +1,11 @@
 # agmi: Agent Memory Integrity test suite
 # Copyright (c) 2026 Yasha Khandelwal <yasha.khandelwal@tech4biz.io>
 # SPDX-License-Identifier: MIT
-"""HDP, the token-by-reference store of draft-helixar-hdp-agentic-delegation-03.
+"""The token-by-reference store of HDP (draft-helixar-hdp-agentic-delegation-03, Section 8.2).
 
-Measured at the invitation of the draft's author, Siri (Helixar), who asked
-for the reference implementation to be run through the method and for the
-results to be posted to the IETF RATS list before anything was published.
+Measured after the draft's author, Siri (Helixar), asked for the reference
+implementation to be run through the method and for the results to be posted
+to the IETF RATS list before anything was published.
 
 The store is a `TokenStore`: `put`, `get` and `delete`, keyed by a reference.
 A record is one stored token, holding the whole delegation chain to that
@@ -20,9 +20,15 @@ section 8.2 of -03 treats as two different things:
                       carrying the same token_id resolves; 8.2 calls this a
                       substitution point and steers implementers away from
                       it wherever the resolving party does not control the
-                      store. This row's attacker holds no signing key, so
-                      what reaches the read path here is caught by the
-                      signature rather than by the reference
+                      store. The signature stops a forged token, or one
+                      whose signed content was changed, but not a different
+                      genuine one: extension keeps the token_id and a chain
+                      cut at the tail still verifies, so an attacker with no
+                      key can put another snapshot of the same chain under
+                      the UUID and it resolves and verifies. None of the ten
+                      edits makes that swap (HDP's own suite does, PR #41);
+                      on the edits this row makes, the signature is what
+                      refuses the altered, forged and metadata-edited tokens
 
 Storing each token under both references is the reference implementation's
 default, not something the protocol requires.
@@ -38,12 +44,14 @@ Attacker: holds the store and rewrites entries beneath the `TokenStore` API,
 as a backing database, a mounted volume or process memory would allow, so
 the write-once check in `put` is not in the way. No key.
 
-One result on the UUID row needs stating rather than scoring, and the draft
-says so itself. A UUID reference is write-once and names the first snapshot
-stored; a later extension lives only under its own content digest. So a
-recipient resolving by UUID sees the earliest snapshot by design, and a
-rollback of the whole store cannot be distinguished from normal operation.
-That cell is not a failure, it is a property, and 8.2 is explicit about it.
+One result on the UUID row needs stating rather than scoring, and the reason
+is in 8.2's own rule: the store is write-once per reference, a UUID reference
+identifies one immutable snapshot and must not be a pointer to the latest
+chain, and a later extension lives only under its own content digest. So a
+recipient resolving by UUID sees that one snapshot by design, and a rollback
+of the whole store to an earlier set of snapshots cannot be distinguished
+from normal operation. That cell is a property of the reference, not a
+failure.
 
 Needs AGMI_HDP_REPO pointing at a checkout of Helixar-AI/HDP with
 `npm install` and a build run, and Node 22. Pinned to b753ba9, v0.2.2.
