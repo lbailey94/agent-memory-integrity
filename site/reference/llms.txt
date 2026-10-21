@@ -1,0 +1,92 @@
+# agmi, Agent Memory Integrity (0.6.3, measured 2026-10-19)
+
+> A conformance test suite and public scorecard that measures whether AI agent memory and checkpoint stores notice when they are tampered with. Ten storage-level edits (T1 to T10) with an attacker who holds the store, six front-door attacks through the tool's own API. Every number comes from results/scorecard.json.
+
+## Stores (one page each)
+- [OpenFang model, tip-persistence fix](https://agentmemoryintegrity.org/stores/openfang-model-fixed.html): reference model of a hash chain; 1 served, 0 reported, 5 rejected, detection on read, level L2
+- [LangGraph SqliteSaver](https://agentmemoryintegrity.org/stores/langgraph-sqlite.html): langgraph-checkpoint-sqlite 3.1.1; 10 served, 0 reported, 0 rejected, detection on read, level L0
+- [OpenAI Agents SDK SQLiteSession](https://agentmemoryintegrity.org/stores/openai-agents-sqlite-session.html): openai-agents 0.20.0; 10 served, 0 reported, 0 rejected, detection on read, level L0
+- [LlamaIndex Memory, SQLAlchemy chat store](https://agentmemoryintegrity.org/stores/llamaindex-memory-sqlite.html): llama-index-core 0.14.24; 10 served, 0 reported, 0 rejected, detection on read, level L0
+- [CrewAI long-term memory, LanceDB dataset](https://agentmemoryintegrity.org/stores/crewai-ltm-lancedb.html): crewai 1.15.23; 9 served, 0 reported, 0 rejected, detection on read, level L0
+- [AWS Bedrock AgentCore Memory, event plane, edits through the data-plane API](https://agentmemoryintegrity.org/stores/bedrock-agentcore-events.html): AgentCore Memory (events), us-east-1; 3 served, 0 reported, 0 rejected, detection on read, level L0
+- [Hermes Agent memory, MEMORY.md read through the system-prompt snapshot](https://agentmemoryintegrity.org/stores/hermes-memory-md.html): hermes-agent 0.19.0; 8 served, 0 reported, 0 rejected, detection on read, level L0
+- [Mem0 local Qdrant store](https://agentmemoryintegrity.org/stores/mem0-qdrant-local.html): mem0ai 2.0.20; 10 served, 0 reported, 0 rejected, detection on read, level L0
+- [inspeximus, receipts off (default)](https://agentmemoryintegrity.org/stores/inspeximus-default.html): inspeximus 3.0.0; 9 served, 0 reported, 0 rejected, detection on read, level L0
+- [inspeximus, receipts on, attacker holds the store directory](https://agentmemoryintegrity.org/stores/inspeximus-rcpt-dir.html): inspeximus 3.0.0; 0 served, 9 reported, 0 rejected, detection on audit, level L0
+- [inspeximus, receipts on, attacker also holds the config home](https://agentmemoryintegrity.org/stores/inspeximus-rcpt-dir-home.html): inspeximus 3.0.0; 2 served, 7 reported, 0 rejected, detection on audit, level L0
+- [inspeximus, trust root keyed on the label](https://agentmemoryintegrity.org/stores/inspeximus-defended.html): inspeximus 3.0.0, maintainer-contributed; 5 surfaced, 1 kept out
+- [inspeximus, trust root keyed on an attested key](https://agentmemoryintegrity.org/stores/inspeximus-defended-key.html): inspeximus 3.0.0, maintainer-contributed; 5 surfaced, 1 kept out
+- [langgraph-ledger over SqliteSaver, hash-chained ledger, verify_thread audit](https://agentmemoryintegrity.org/stores/langgraph-ledger.html): langgraph-ledger 0.3.0; 3 served, 7 reported, 0 rejected, detection on audit, level L0
+- [memory-blackbox memory.md watcher, agent process alive, scan audit](https://agentmemoryintegrity.org/stores/memory-blackbox-md.html): memory-blackbox 0.1.1; 0 served, 9 reported, 0 rejected, detection on audit, level L0
+- [memory-blackbox memory.md watcher, agent restarted before the scan, scan audit](https://agentmemoryintegrity.org/stores/memory-blackbox-md-restart.html): memory-blackbox 0.1.1; 1 served, 8 reported, 0 rejected, detection on audit, level L0
+- [Atelya Attest, keyed hash chain, verify_chain audit](https://agentmemoryintegrity.org/stores/atelya-attest-chain.html): atelya-attest 0.1.1; 2 served, 7 reported, 0 rejected, detection on audit, level L0
+- [Atelya Attest, keyed hash chain plus anchored head, verify and consistency audit](https://agentmemoryintegrity.org/stores/atelya-attest-chain-anchor.html): atelya-attest 0.1.1; 0 served, 9 reported, 0 rejected, detection on audit, level L0
+- [CONTINUUM event log, hash chain, verify_events audit](https://agentmemoryintegrity.org/stores/continuum-events.html): continuum-agent 0.1.0; 2 served, 7 reported, 0 rejected, detection on audit, level L0
+- [CONTINUUM event log, hash chain plus Ed25519-signed head, attest-verify audit](https://agentmemoryintegrity.org/stores/continuum-events-attest.html): continuum-agent 0.1.0; 0 served, 9 reported, 0 rejected, detection on audit, level L0
+- [Recallspection ExactMemory, anchor beside the store on the same disk, the default the product ships](https://agentmemoryintegrity.org/stores/recallspection-exact.html): exactmemory.recallspection 3.2.0; 2 served, 0 reported, 8 rejected, detection on read, level L3
+- [Recallspection ExactMemory, anchored, anchor off the store, on a separate volume or a remote service](https://agentmemoryintegrity.org/stores/recallspection-exact-anchor.html): exactmemory.recallspection 3.2.0; 0 served, 0 reported, 10 rejected, detection on read, level L4
+- [HDP token store, content-addressed reference, read path](https://agentmemoryintegrity.org/stores/hdp-token-content-ref.html): @helixar_ai/hdp 0.2.2; 3 served, 0 reported, 6 rejected, detection on read, level L0
+- [HDP token store, UUID reference, read path](https://agentmemoryintegrity.org/stores/hdp-token-uuid.html): @helixar_ai/hdp 0.2.2; 3 served, 0 reported, 6 rejected, detection on read, level L0
+- [acrf-memory-guard, per-entry HMAC over a JSON store](https://agentmemoryintegrity.org/stores/acrf-memory-guard.html): acrf-memory-guard 0.1.0; 6 served, 0 reported, 3 rejected, detection on read, level L0
+- [Reference store, user-scoped](https://agentmemoryintegrity.org/stores/naive-mem-scoped.html): no defence, for calibration; 5 surfaced, 1 kept out
+- [Reference store, unscoped](https://agentmemoryintegrity.org/stores/naive-mem-unscoped.html): no defence, for calibration; 6 surfaced, 0 kept out
+- [Reference store, defended](https://agentmemoryintegrity.org/stores/reference-defended-model.html): signed writes, quarantine, stuffing check; 3 surfaced, 3 kept out
+- [LangGraph PostgresSaver](https://agentmemoryintegrity.org/stores/langgraph-postgres.html): langgraph-checkpoint-postgres 3.1.2; 9 served, 0 reported, 0 rejected, detection on read, level L0
+- [LangGraph RedisSaver](https://agentmemoryintegrity.org/stores/langgraph-redis.html): langgraph-checkpoint-redis 0.5.2; 9 served, 0 reported, 0 rejected, detection on read, level L0
+- [Vertex AI Agent Engine Memory Bank, managed store, edits through the data-plane API](https://agentmemoryintegrity.org/stores/vertex-memory-bank.html): google-cloud-aiplatform 2.4.0; 7 served, 0 reported, 0 rejected, detection on read, level L0
+- [OpenClaw agent memory, MEMORY.md read through memory_get](https://agentmemoryintegrity.org/stores/openclaw-memory-md.html): openclaw 2026.10.1; 9 served, 0 reported, 0 rejected, detection on read, level L0
+- [LangGraph SqliteStore](https://agentmemoryintegrity.org/stores/langgraph-sqlite-store.html): langgraph-checkpoint-sqlite 3.1.1; 5 surfaced, 1 kept out
+- [Letta block checkpoint history](https://agentmemoryintegrity.org/stores/letta-block-history.html): letta 0.16.8; 9 served, 0 reported, 0 rejected, detection on read, level L0
+- [Letta archival memory](https://agentmemoryintegrity.org/stores/letta-archival.html): letta 0.16.8; 4 surfaced, 1 kept out
+- [AtMem 2.3.8, audit chain alone, verify() audit](https://agentmemoryintegrity.org/stores/atmem-chain.html): atmem 2.3.8; 1 served, 8 reported, 0 rejected, detection on audit, level L0
+- [AtMem 2.3.8, audit chain with an external checkpoint outside the attacker-controlled store directory, verify() audit](https://agentmemoryintegrity.org/stores/atmem-chain-checkpoint.html): atmem 2.3.8; 0 served, 9 reported, 0 rejected, detection on audit, level L0
+- [Agent Memory reference runtime, SQLite canonical substrate, bucketed row digests, fail-closed open](https://agentmemoryintegrity.org/stores/agent-memory.html): agent-memory-reference 0.2.0 (f2aef57); 1 served, 0 reported, 8 rejected, detection on read, level L3
+- [Surgical DevOps G7, signed envelopes bound to their storage position, with an independent witness](https://agentmemoryintegrity.org/stores/surgical-devops-g7.html): surgical-dev-ops 2.6.0-rc.6 on Node v24.18.0; 0 served, 0 reported, 9 rejected, detection on read, level L4
+
+## Edits and attacks
+- [T1 Content tamper](https://agentmemoryintegrity.org/edits/tamper.html): Change the text inside one existing record, keeping its encoding intact.
+- [T2 Tail truncation](https://agentmemoryintegrity.org/edits/truncate.html): Delete the newest records so an earlier state becomes current.
+- [T3 Middle deletion](https://agentmemoryintegrity.org/edits/delete-middle.html): Remove one record from the middle of the history.
+- [T4 Reordering](https://agentmemoryintegrity.org/edits/reorder.html): Swap the position of two records by editing their order keys or parent links.
+- [T5 Forged insertion](https://agentmemoryintegrity.org/edits/forge.html): Insert a new record of the attacker's authorship, in the store's own format.
+- [T6 Cross-context replay](https://agentmemoryintegrity.org/edits/cross-replay.html): Copy a genuine record from another user or thread over this one, keeping this one's identity.
+- [T7 Rollback replay](https://agentmemoryintegrity.org/edits/rollback-replay.html): Copy an older genuine record of the same context over its newest.
+- [T8 Metadata tamper](https://agentmemoryintegrity.org/edits/metadata-tamper.html): Change a record's owner, source or timestamp and leave its content untouched.
+- [T9 Snapshot rollback](https://agentmemoryintegrity.org/edits/snapshot-rollback.html): Restore an older complete copy of the store, taken before the newest genuine record was written.
+- [Planted fact](https://agentmemoryintegrity.org/edits/memory-injection.html): Write a false fact through the tool's own API and see whether recall serves it as the user's own.
+- [Cross-user leak](https://agentmemoryintegrity.org/edits/cross-session-bleed.html): Write as one user, read as another.
+- [Retrieval hijack](https://agentmemoryintegrity.org/edits/retrieval-hijack.html): Stuff an entry with a topic's question words so it outranks the genuine memory.
+- [Hidden instruction](https://agentmemoryintegrity.org/edits/indirect-prompt-injection.html): Store an instruction disguised as a memory and see whether it comes back as context.
+- [Update poisoning](https://agentmemoryintegrity.org/edits/update-poisoning.html): Write a 'correction' of a fact the user stated.
+- [Metadata poisoning](https://agentmemoryintegrity.org/edits/metadata-poisoning.html): Self-assign the trust tag a pipeline filters on.
+
+## Levels
+- [L0 Measured](https://agentmemoryintegrity.org/levels/l0.html): The store has a published row. Any verdicts.
+- [L1 Bytes bound](https://agentmemoryintegrity.org/levels/l1.html): Rejects on the read path every edit that changes or adds bytes: T1, T3, T5.
+- [L2 Sequence bound](https://agentmemoryintegrity.org/levels/l2.html): Also rejects deletion, reordering and rollback: T2, T4, T7.
+- [L3 Context bound](https://agentmemoryintegrity.org/levels/l3.html): Also rejects a record moved between owners and a metadata change: T6, T8.
+- [L4 Head anchored off the store](https://agentmemoryintegrity.org/levels/l4.html): Also rejects a rollback of the whole store to an older genuine copy: T9.
+
+## Findings
+- 2026-10-07 [A managed cloud store joins the table: Vertex AI Memory Bank serves seven edits, two have no API](https://agentmemoryintegrity.org/findings/a-managed-cloud-store-joins-the-table-vertex.html)
+- 2026-10-06 [First row to refuse all eight record-level edits on the read path: the Agent Memory reference runtime](https://agentmemoryintegrity.org/findings/first-row-to-refuse-all-eight-record-level-edits.html)
+- 2026-10-06 [T9, a rollback of the whole store that every digest still passes](https://agentmemoryintegrity.org/findings/t9-a-rollback-of-the-whole-store-that.html)
+- 2026-10-02 [A vendor fix driven by the suite: memory-blackbox restart gap, reported and fixed in a day](https://agentmemoryintegrity.org/findings/a-vendor-fix-driven-by-the-suite-memory-blackbox.html)
+- 2026-09-30 [The suite catches two of its own no-op edits (control C3)](https://agentmemoryintegrity.org/findings/the-suite-catches-two-of-its-own-no-op.html)
+- 2026-09-30 [Head deletion needs an anchor outside the store (LangGraph #9099)](https://agentmemoryintegrity.org/findings/head-deletion-needs-an-anchor-outside-the-store.html)
+- 2026-09-27 [Six of six stores accept all eight at-rest edits](https://agentmemoryintegrity.org/findings/six-of-six-stores-accept-all-eight-at-rest.html)
+- 2026-09-25 [Four of four stores accept all eight at-rest edits](https://agentmemoryintegrity.org/findings/four-of-four-stores-accept-all-eight-at-rest.html)
+- 2026-09-25 [Withdrawn: a receipt does not bind the owning user (inspeximus)](https://agentmemoryintegrity.org/findings/withdrawn-a-receipt-does-not-bind-the-owning.html)
+- 2026-09-24 [Encryption without identity binding (LangGraph #9004)](https://agentmemoryintegrity.org/findings/encryption-without-identity-binding-langgraph-9004.html)
+- 2026-09-22 [A vendor fix, caught by re-measurement (inspeximus 3.5.2)](https://agentmemoryintegrity.org/findings/a-vendor-fix-caught-by-re-measurement-inspeximus-3-5-2.html)
+- 2026-09-14 [A forward-only hash chain misses truncation (OpenFang)](https://agentmemoryintegrity.org/findings/a-forward-only-hash-chain-misses-truncation-openfang.html)
+
+## Method and use
+- [Method](https://agentmemoryintegrity.org/method.html)
+- [Run it in CI](https://agentmemoryintegrity.org/run.html)
+- [Memory agent](https://agentmemoryintegrity.org/agent.html)
+- [Architecture](https://agentmemoryintegrity.org/architecture.html)
+- [Ecosystem](https://agentmemoryintegrity.org/ecosystem.html)
+- [Cite](https://agentmemoryintegrity.org/cite.html)
+- Internet-Draft: https://www.ietf.org/archive/id/draft-khandelwal-bmwg-agent-memory-integrity-01.html
+- Code: https://github.com/tech4biz-yasha/agmi · PyPI: agent-memory-integrity · DOI: 10.5281/zenodo.23193233

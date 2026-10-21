@@ -53,15 +53,18 @@ EDITS = [
     ("rollback_replay", "T7", "Rollback replay", "rollback-replay"),
     ("metadata_tamper", "T8", "Metadata tamper", "metadata-tamper"),
     ("snapshot_rollback", "T9", "Snapshot rollback", "snapshot-rollback"),
+    ("erase_resurrect", "T10", "Erasure resurrection", "erase-resurrect"),
 ]
+WORDS = {8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve"}
+N_EDITS = len(EDITS)
+EDITS_PHRASE = f"{WORDS[N_EDITS]} storage-level edits (T1 to T{N_EDITS})"
 # The front-door families, for rows measured at the door rather than at rest.
 # Short label first, as the miniboard shows it, then the full name.
 FRONT_DOOR = [
     ("memory_injection", "Planted fact", "Planted fact", "memory-injection"),
     ("cross_session_bleed", "Cross-user", "Cross-user leak", "cross-session-bleed"),
     ("retrieval_hijack", "Retrieval", "Retrieval hijack", "retrieval-hijack"),
-    ("indirect_prompt_injection", "Indirect", "Indirect prompt injection",
-     "indirect-prompt-injection"),
+    ("indirect_prompt_injection", "Hidden", "Hidden instruction", "indirect-prompt-injection"),
     ("update_poisoning", "Update", "Update poisoning", "update-poisoning"),
     ("metadata_poisoning", "Metadata", "Metadata poisoning", "metadata-poisoning"),
 ]
@@ -210,13 +213,13 @@ class Site:
                  if c["subtitle"] else f'{c["title"]}: tamper evidence, measured')
         name = c["title"] + (f', {c["subtitle"]}' if c["subtitle"] else "")
         measured_on_short = (c.get("version") or row.get("measured_on") or "")
-        desc_full = (f'{name} against nine storage-level edits (T1 to T9): '
+        desc_full = (f'{name} against {EDITS_PHRASE}: '
                      f'{acc} served, {rep} reported, {rej} rejected. Detection point: '
                      f'{row.get("checked_at")}. Level {lv}. Measured on '
                      f'{c.get("version") or row.get("measured_on") or ""} by agmi.'
                      if (c.get("version") or row.get("measured_on")) else "")
         desc = truncate(
-            f'{name} against nine storage-level edits (T1 to T9): {acc} served, '
+            f'{name} against {EDITS_PHRASE}: {acc} served, '
             f'{rep} reported, {rej} rejected. Detection point: '
             f'{row.get("checked_at")}. Level {lv}. '
             f'Measured on {measured_on_short} by agmi.', 157)
@@ -246,7 +249,7 @@ class Site:
             p = re.sub(pat, rep_, p, count=1, flags=re.S)
 
         lede = (f'{c["title"]} was seeded through its own API and edited behind its back '
-                f'nine ways. {acc} {"edit" if acc == 1 else "edits"} served as genuine, '
+                f'{WORDS[N_EDITS]} ways. {acc} {"edit" if acc == 1 else "edits"} served as genuine, '
                 f'{rep} reported on audit, {rej} rejected on read'
                 + (f', {na} not applicable.' if na else '.'))
         p = re.sub(r'<p class="lede">.*?</p>', f'<p class="lede">{esc(lede)}</p>',
@@ -278,8 +281,9 @@ class Site:
             # carried through from the reference build instead of generated.
             raise Unrenderable(label)
         closing = self.closing_note
-        p = re.sub(r"(<h2>The \d verdicts</h2>\n).*?(\n</section>)",
-                   lambda m: m.group(1) + intro + "\n" + self.cell_table(row) + closing + m.group(2),
+        heading = f"<h2>The {len(self.families(row))} verdicts</h2>\n"
+        p = re.sub(r"<h2>The \d+ verdicts</h2>\n.*?(\n</section>)",
+                   lambda m: heading + intro + "\n" + self.cell_table(row) + closing + m.group(1),
                    p, count=1, flags=re.S)
 
         p = re.sub(r"(<h2>Where the attacker stands</h2>\n).*?(\n</section>)",
@@ -346,6 +350,8 @@ class Site:
                 shutil.copy2(self.ref / "stores" / target.name, target)
                 self.carried.append(label)
 
+        from pages import Pages  # the index, scorecard, level and edit pages
+        Pages(self, sys.modules[__name__]).build(self.ref, out)
         print(f"wrote {out} ({len(list(out.rglob('*')))} entries, "
               f"{len(self.order) - len(self.carried)} store pages generated, "
               f"{len(self.carried)} carried)")

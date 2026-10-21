@@ -10,6 +10,6 @@
  "label": "hdp-token-uuid",
  "version": "@helixar_ai/hdp 0.2.2",
  "measured_on": "@helixar_ai/hdp 0.2.2 at b753ba9, Node 22",
- "verdicts_intro": "<p><strong>Detection point:</strong> the read path. 6 of the nine edits were refused there, 3 served as genuine, 0 not applicable.</p><p><strong>Level L0.</strong> <a href=\"../levels/l0.html\">What L0 means</a>.</p>",
+ "verdicts_intro": "<p><strong>Detection point:</strong> the read path. 6 of the ten edits were refused there, 3 served as genuine, 1 not applicable.</p><p><strong>Level L0.</strong> <a href=\"../levels/l0.html\">What L0 means</a>.</p>",
  "related": "<li><a href=\"../stores/hdp-token-content-ref.html\">HDP token store, content-addressed reference</a></li><li><a href=\"../stores/recallspection-exact-anchor.html\">Recallspection ExactMemory, anchor off the store</a></li><li><a href=\"../stores/surgical-devops-g7.html\">Surgical DevOps G7</a></li><li><a href=\"../stores/agent-memory.html\">Agent Memory reference runtime</a></li><li><a href=\"../stores/langgraph-sqlite.html\">LangGraph SqliteSaver</a></li>"
 }

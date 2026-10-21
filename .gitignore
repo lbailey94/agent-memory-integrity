@@ -8,6 +8,6 @@ build/
 results/ci-*.json
 conformance-report.json
 
-# a published build, used by site/render.py --check as the comparison baseline
-site/reference/
+# site/reference is the published build, committed so the site rebuilds from the repo
+# and site/render.py --check can hold every page to results/scorecard.json in CI
 site/dist/

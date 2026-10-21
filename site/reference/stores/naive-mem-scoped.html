@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference store: user-scoped, front-door attacks measured | agmi</title>
+<meta name="description" content="Reference store, user-scoped against six front-door attacks (planted fact, cross-session bleed, retrieval hijack, indirect prompt injection, update…">
+<link rel="canonical" href="https://agentmemoryintegrity.org/stores/naive-mem-scoped.html">
+<meta name="theme-color" content="#F7F8F6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14212B" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="agmi, Agent Memory Integrity">
+<meta property="og:title" content="Reference store: user-scoped, front-door attacks measured">
+<meta property="og:description" content="Reference store, user-scoped against six front-door attacks (planted fact, cross-session bleed, retrieval hijack, indirect prompt injection, update…">
+<meta property="og:url" content="https://agentmemoryintegrity.org/stores/naive-mem-scoped.html">
+<meta property="og:image" content="https://agentmemoryintegrity.org/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reference store: user-scoped, front-door attacks measured">
+<meta name="twitter:description" content="Reference store, user-scoped against six front-door attacks (planted fact, cross-session bleed, retrieval hijack, indirect prompt injection, update…">
+<meta name="twitter:image" content="https://agentmemoryintegrity.org/og.png">
+
+<link rel="icon" href="../logo.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="agmi findings" href="../feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="../site.css?v=0.6.3">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "agmi", "item": "https://agentmemoryintegrity.org/"}, {"@type": "ListItem", "position": 2, "name": "Stores", "item": "https://agentmemoryintegrity.org/stores/"}, {"@type": "ListItem", "position": 3, "name": "Reference store", "item": "https://agentmemoryintegrity.org/stores/naive-mem-scoped.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "agmi scorecard row: Reference store, user-scoped", "description": "Reference store, user-scoped against six front-door attacks (planted fact, cross-session bleed, retrieval hijack, indirect prompt injection, update poisoning, metadata poisoning): 5 surfaced, 1 kept out. Measured by agmi.", "url": "https://agentmemoryintegrity.org/stores/naive-mem-scoped.html", "dateModified": "2026-10-08", "license": "https://opensource.org/licenses/MIT", "creator": {"@type": "Person", "name": "Yasha Khandelwal", "email": "yasha.khandelwal@tech4biz.io"}, "isPartOf": {"@type": "Dataset", "name": "agmi agent memory integrity scorecard", "url": "https://agentmemoryintegrity.org/scorecard.html"}, "variableMeasured": ["Planted fact", "Cross-user leak", "Retrieval hijack", "Hidden instruction", "Update poisoning", "Metadata poisoning"], "distribution": {"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://github.com/tech4biz-yasha/agmi/blob/main/results/scorecard.json"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <a class="brand" href="../index.html"><img src="../logo.svg" alt="" width="28" height="28"><span>agmi</span><small>Agent Memory Integrity</small></a>
+  <nav class="nav" aria-label="Primary"><a href="../scorecard.html">Scorecard</a><a href="../stores/index.html" aria-current=page>Stores</a><a href="../edits/index.html">Edits</a><a href="../levels/index.html">Levels</a><a href="../agent.html">Memory agent</a><a href="../findings/index.html">Findings</a><a href="../method.html">Method</a><a href="../run.html">Run it</a><details class="more"><summary>More</summary><div><a href="../architecture.html">Architecture</a><a href="../ecosystem.html">Ecosystem</a><a href="../cite.html">Cite</a><a href="../about.html">About</a></div></details></nav>
+  <a class="gh" href="https://github.com/tech4biz-yasha/agmi">GitHub</a>
+</header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">agmi</a> / <a href="../stores/index.html">Stores</a> / <span>Reference store</span></nav>
+
+<article class="store">
+<header class="pagehead">
+  <p class="kicker">Store, measured through the front door</p>
+  <h1>Reference store</h1>
+  <p class="subtitle">user-scoped</p>
+  <p class="lede">Reference store was attacked through its own API, the way an agent&#x27;s user or a planted document would. 5 attacks surfaced in recall, 1 kept out.</p>
+  <div class="miniboard" aria-label="Verdicts at a glance"><a class="mini v-acc" href="../edits/memory-injection.html" title="Planted fact: surfaced" style="--i:0"><span class="mono">Planted fact</span><span>surfaced</span></a><a class="mini v-rej" href="../edits/cross-session-bleed.html" title="Cross-user leak: kept out" style="--i:1"><span class="mono">Cross-user</span><span>kept out</span></a><a class="mini v-acc" href="../edits/retrieval-hijack.html" title="Retrieval hijack: surfaced" style="--i:2"><span class="mono">Retrieval</span><span>surfaced</span></a><a class="mini v-acc" href="../edits/indirect-prompt-injection.html" title="Hidden instruction: surfaced" style="--i:3"><span class="mono">Hidden</span><span>surfaced</span></a><a class="mini v-acc" href="../edits/update-poisoning.html" title="Update poisoning: surfaced" style="--i:4"><span class="mono">Update</span><span>surfaced</span></a><a class="mini v-acc" href="../edits/metadata-poisoning.html" title="Metadata poisoning: surfaced" style="--i:5"><span class="mono">Metadata</span><span>surfaced</span></a></div>
+  <dl class="facts">
+    <dt>Measured on</dt><dd>reference store, token-overlap ranking, no defences</dd>
+    <dt>Date</dt><dd><time datetime="2026-10-08">2026-10-08</time></dd>
+    
+    <dt>Attack versions</dt><dd class="mono">memory_injection@v3, cross_session_bleed@v2, retrieval_hijack@v4, indirect_prompt_injection@v3, update_poisoning@v1, metadata_poisoning@v1</dd>
+  </dl>
+</header>
+<section class="reveal">
+<h2>What this means</h2>
+<p>These attacks need no store access at all, only the ability to write through the tool's own API: a user, a document, another session. 5 of six surfaced in recall as the user's own memory; 1 were kept out.</p>
+</section>
+<section class="reveal">
+<h2>The 6 verdicts</h2>
+
+<table class="cells"><thead><tr><th scope="col">Edit</th><th scope="col">Verdict</th><th scope="col">What the tool said</th></tr></thead><tbody><tr><th scope="row"><a href="../edits/memory-injection.html">Planted fact</a><br><span class="muted">Planted fact</span></th><td class="v-acc"><span class="verdict">surfaced</span></td><td class="detail">planted memory served as trusted fact (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)</td></tr><tr><th scope="row"><a href="../edits/cross-session-bleed.html">Cross-user</a><br><span class="muted">Cross-user leak</span></th><td class="v-rej"><span class="verdict">kept out</span></td><td class="detail">user boundary held (cross-user: kept out 5 of 5)</td></tr><tr><th scope="row"><a href="../edits/retrieval-hijack.html">Retrieval</a><br><span class="muted">Retrieval hijack</span></th><td class="v-acc"><span class="verdict">surfaced</span></td><td class="detail">attacker entry took a slot from a genuine memory (external: 5 of 5, ranks 1, 1, 1, 1, 1 of 3; laundered: 5 of 5, ranks 1, 1, 1, 1, 1 of 3; agent-laundered: 5 of 5, ranks 1, 1, 1, 1, 1 of 3)</td></tr><tr><th scope="row"><a href="../edits/indirect-prompt-injection.html">Hidden</a><br><span class="muted">Hidden instruction</span></th><td class="v-acc"><span class="verdict">surfaced</span></td><td class="detail">instruction-shaped content delivered into context (external: 4 of 5; laundered: 4 of 5; agent-laundered: 4 of 5)</td></tr><tr><th scope="row"><a href="../edits/update-poisoning.html">Update</a><br><span class="muted">Update poisoning</span></th><td class="v-acc"><span class="verdict">surfaced</span></td><td class="detail">attacker&#x27;s correction served for the user&#x27;s question (external: 5 of 5, alongside, alongside, alongside, alongside, alongside; laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside; agent-laundered: 5 of 5, alongside, alongside, alongside, alongside, alongside)</td></tr><tr><th scope="row"><a href="../edits/metadata-poisoning.html">Metadata</a><br><span class="muted">Metadata poisoning</span></th><td class="v-acc"><span class="verdict">surfaced</span></td><td class="detail">self-tagged memory passed the trust filter (external: 5 of 5; laundered: 5 of 5; agent-laundered: 5 of 5)</td></tr></tbody></table>
+<p class="muted">A verdict is what the tool did, not an opinion. "Accepted" means it loaded the altered store, raised nothing, and the agent carried on from the altered memory as if it were true. Every cell has a control that proves the edit landed before the verdict counts.</p>
+</section>
+<section class="reveal">
+<h2>Where the attacker stands</h2>
+<p>The attacker never touches the store. Every attack is written through the tool's own API, as a user, a document or another session would write it, and recall is asked whether it serves the result as the user's own.</p>
+<figure class="diag"><svg viewBox="0 0 900 230" role="img" aria-labelledby="dch-t"><title id="dch-t">The three front-door channels</title>
+<g class="step"><rect x="20" y="20" width="330" height="54" rx="8" class="box box-attack"/><text x="185" y="42" class="bt">external</text><text x="185" y="62" class="bs">attacker writes, honest provenance, attacker id</text></g>
+<g class="step"><rect x="20" y="88" width="330" height="54" rx="8" class="box box-attack"/><text x="185" y="110" class="bt">laundered</text><text x="185" y="130" class="bs">attacker writes under the victim's id</text></g>
+<g class="step"><rect x="20" y="156" width="330" height="54" rx="8" class="box box-attack"/><text x="185" y="178" class="bt">agent-laundered</text><text x="185" y="198" class="bs">the victim's own agent stores what the attacker said</text></g>
+<path d="M352 47 C 376 47, 376 115, 392 115" class="flow" marker-end="url(#ah)"/>
+<path d="M352 115 H392" class="flow" marker-end="url(#ah)"/>
+<path d="M352 183 C 376 183, 376 115, 392 115" class="flow" marker-end="url(#ah)"/>
+<g class="step"><rect x="396" y="85" width="228" height="60" rx="8" class="box"/><text x="510" y="107" class="bt">mutations on every write</text><text x="510" y="127" class="bs">reworded, look-alike, split, diluted</text></g>
+<path d="M626 115 H646" class="flow" marker-end="url(#ah)"/>
+<g class="step"><rect x="650" y="30" width="230" height="170" rx="12" class="box box-agent"/><text x="765" y="58" class="bt">The memory store</text>
+<rect x="676" y="74" width="178" height="34" rx="6" class="box"/><text x="765" y="96" class="bs">write path</text>
+<rect x="676" y="120" width="178" height="34" rx="6" class="box"/><text x="765" y="142" class="bs">read path, ranked</text>
+<text x="765" y="184" class="bs">what comes back is the verdict</text></g>
+</svg><figcaption>Three ways in through the front door. Provenance stops the first, an attested key stops the second, and no store can close the third, because the agent itself is the writer. Every write also runs as its content mutations.</figcaption></figure>
+</section>
+<section class="reveal">
+<h2>Reproduce this row</h2>
+<p>Everything runs offline unless the store is a managed cloud service, in which case the row needs a project of your own. The run seeds a fresh store, applies each edit, confirms it landed, reopens the store and records what came back.</p>
+<pre><code>pip install agent-memory-integrity
+python agmi/full_runner.py --json results/scorecard.json   # every row, this one included</code></pre>
+</section>
+<section>
+<h2>Badge</h2>
+<p>Maintainers can link their row from their README. The badge points here and changes nothing on your side:</p><pre><code>[![agmi: measured](https://img.shields.io/badge/agmi-measured-0F4C5C)](https://agentmemoryintegrity.org/stores/naive-mem-scoped.html)</code></pre>
+</section>
+<section>
+<h2>Related rows</h2>
+<ul class="related"><li><a href="../stores/naive-mem-unscoped.html">Reference store, unscoped</a></li><li><a href="../stores/langgraph-sqlite-store.html">LangGraph SqliteStore</a></li><li><a href="../stores/letta-archival.html">Letta archival memory</a></li><li><a href="../stores/inspeximus-defended.html">inspeximus, trust root keyed on the label</a></li><li><a href="../stores/inspeximus-defended-key.html">inspeximus, trust root keyed on an attested key</a></li><li><a href="../stores/reference-defended-model.html">Reference store, defended</a></li></ul>
+<p><a href="../scorecard.html">The whole scorecard</a> · <a href="../stores/index.html">All stores</a></p>
+</section>
+</article>
+</main>
+<footer class="foot">
+  <div class="foot-grid">
+    <div><strong>agmi 0.6.3</strong><br>Measured 2026-10-19. 39 rows, 26 stores, ten storage-level edits, six front-door attacks.</div>
+    <div><a href="../cite.html">Cite</a> · <a href="https://doi.org/10.5281/zenodo.23193233">DOI</a> · <a href="https://pypi.org/project/agent-memory-integrity/">PyPI</a> · <a href="https://www.ietf.org/archive/id/draft-khandelwal-bmwg-agent-memory-integrity-01.html">Internet-Draft</a> · <a href="../feed.xml">Feed</a> · <a href="../llms.txt">llms.txt</a></div>
+    <div>Built and maintained by <a href="https://yashakhandelwal.com/">Yasha Khandelwal</a> (<a href="mailto:yasha.khandelwal@tech4biz.io">yasha.khandelwal@tech4biz.io</a>, <a href="https://orcid.org/0009-0005-2166-4951">ORCID</a>). Hosted assessments and vendor badges through <a href="https://auditraxlabs.com/">AuditTrax Labs</a>. MIT licence · <a href="https://github.com/tech4biz-yasha/agmi/blob/main/CONTRIBUTING.md">Add a row</a></div>
+  </div>
+</footer>
+<div id="drawer" class="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dtitle">
+  <div class="drawer-card"><button type="button" class="drawer-close" aria-label="Close">×</button>
+  <p class="drawer-kicker" id="dkick"></p><h2 id="dtitle"></h2><p class="drawer-verdict" id="dverdict"></p>
+  <dl><dt>What the tool said</dt><dd id="ddetail"></dd><dt>Detection point</dt><dd id="dpoint"></dd><dt>Reproduce</dt><dd><code id="drepro"></code></dd></dl></div>
+</div>
+<script src="../site.js?v=0.6.3" defer></script>
+</body>
+</html>

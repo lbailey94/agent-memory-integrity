@@ -48,6 +48,8 @@ jobs:
         run: python -m agmi.render results/scorecard.json docs/scorecard.md --check
       - name: The site matches the committed results file
         run: python site/build.py --check
+      - name: agentmemoryintegrity.org rebuilds from the results file and matches the published reference
+        run: python site/render.py --check --out /tmp/site
       - name: The W3C v0.1 report matches the committed results file
         if: matrix.python-version == '3.12'
         env:
