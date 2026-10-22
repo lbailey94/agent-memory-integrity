@@ -24,7 +24,7 @@ per authorization record." "A zlib-compressed JSON container under one HMAC."
 
 **2. What is one record?**
 
-The unit the nine edits apply to. A row of a table, a file, a stored token, an
+The unit the ten edits apply to. A row of a table, a file, a stored token, an
 entry in a log. If a container holds many records, say whether a record is the
 container or the thing inside it. This is the question that most often has two
 defensible answers; pick the one the library itself draws a boundary around,
@@ -78,12 +78,12 @@ The three that decide whether a row is honest:
 - `delete_raw()` raises when there is nothing at that position. Silently doing
   nothing turns a failed attack into a passing one.
 
-## Step 3. Run it and look at the nine lines
+## Step 3. Run it and look at the ten lines
 
 ```
 PYTHONPATH=. python -c "
 from agmi.adapters.your_store import YourAdapter
-from agmi.attacks.at_rest import AT_REST_ATTACKS_WITH_SNAPSHOT as X
+from agmi.attacks.at_rest import AT_REST_ATTACKS_WITH_ERASE as X
 for c in X:
     r = c().run(YourAdapter())
     print(f'{r.attack:20} {r.status:11} {(r.guard or r.detail or r.error or \"\")[:90]}')
@@ -124,7 +124,7 @@ tests do.
 
 ## Step 6. Open the PR
 
-Include the nine-line print from step 3, the five answers from step 1, and the
+Include the ten-line print from step 3, the five answers from step 1, and the
 exact commands you ran. A reviewer should be able to repeat your run without
 asking you anything.
 
