@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # One PR per agent-evidence-vectors release, so the anchored-chain
+  # vectors and the test suite run against it before it is merged.
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    allow:
+      - dependency-name: agent-evidence-vectors
