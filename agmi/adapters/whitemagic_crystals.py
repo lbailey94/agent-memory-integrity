@@ -62,7 +62,7 @@ from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 
 from agmi.adapters.base import MemoryAdapter, Record
 
-PIN = "dce6f568e84c626878ff20e0b9f0b5c513a3bb45"
+PIN = "37285918bb13b30ad50e26b15809ce9287c243ee"
 CLIENT_SHA256 = "0f2ab8971e7fa18f9907c3672538abc45777d6d12ddaa741594637ea1875dee9"
 SPEC_VERSION = "wm-crystal/1.0"
 CTX, OTHER = "a", "b"
