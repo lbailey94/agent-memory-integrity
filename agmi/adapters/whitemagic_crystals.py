@@ -62,8 +62,8 @@ from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 
 from agmi.adapters.base import MemoryAdapter, Record
 
-PIN = "0fe89e35abce9fcd2d918d79a54f8763bf1acdea"
-CLIENT_SHA256 = "ddf740898d4282ac68451cece42373c34ef03a17a610d44b8886b0c558b01b1c"
+PIN = "dce6f568e84c626878ff20e0b9f0b5c513a3bb45"
+CLIENT_SHA256 = "0f2ab8971e7fa18f9907c3672538abc45777d6d12ddaa741594637ea1875dee9"
 SPEC_VERSION = "wm-crystal/1.0"
 CTX, OTHER = "a", "b"
 STORE_FILE = "crystals.json"
